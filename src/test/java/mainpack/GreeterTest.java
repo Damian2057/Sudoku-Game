@@ -8,6 +8,6 @@ class GreeterTest {
     @Test
     void greet() {
         Greeter greeter = new Greeter();
-        assertEquals("Hellow world!",greeter.greet());
+        assertEquals("Hello world!",greeter.greet());
     }
 }

@@ -25,7 +25,7 @@ public class SudokuBoard {
         }
 
         for  (int i = 0; i < 9; i++) {
-            int numer = randomNum(9,rzad);
+            int numer = randomNum(9,rzad, board);
             //losuj po 9 liczb od 1-9 bez powtorzen(tyle ile w wierszu
             if (check(board, rzad, kolumna, numer)) {
 
@@ -81,13 +81,13 @@ public class SudokuBoard {
         }
     }
 
-    public int randomNum(int max, int rzad) {
+    public int randomNum(int max, int rzad, int[][] b) {
         Random rand = new Random();
         int intRandom = rand.nextInt(max) + 1;
         boolean f = false;
         do {
             for (int i = 0; i < 9; i++) {
-                if (board[rzad][i] == intRandom) {
+                if (b[rzad][i] == intRandom) {
                     f = true;
                     intRandom = rand.nextInt(max) + 1;
                 } else {
