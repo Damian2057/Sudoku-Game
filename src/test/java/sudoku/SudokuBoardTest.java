@@ -77,7 +77,7 @@ public class SudokuBoardTest {
 
         boolean flag = false;
 
-        for(int sprawdz = 1; sprawdz <= 9; sprawdz++) {
+        for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     if (sudoku3.getBoard()[i][j] == sprawdz) {
@@ -89,7 +89,7 @@ public class SudokuBoardTest {
                     break;
                 }
             }
-            if(!flag) {
+            if (!flag) {
                 break;
             }
         }
@@ -107,7 +107,7 @@ public class SudokuBoardTest {
 
         boolean flag = false;
 
-        for(int sprawdz = 1; sprawdz <= 9; sprawdz++) {
+        for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     if (sudoku3.getBoard()[j][i] == sprawdz) {
@@ -161,6 +161,28 @@ public class SudokuBoardTest {
         //petla sprawdza, czy gdziekolwiek w kazdym kwadracie 3x3 brakuje jakiejkolwiek
         //liczby z zakresu 1-9, w przypadku powtorzenia sie jakiejs liczby algorytm
         //i tak zwroci false, gdyz jednoczesnie brakowaloby jakiejs innej
+    }
+
+    @Test
+    public void uniqueBoard() {
+        SudokuBoard sudokuA = new SudokuBoard();
+        SudokuBoard sudokuB = new SudokuBoard();
+        sudokuA.fillBoard();
+        sudokuB.fillBoard();
+
+        int licznik = 0;
+        for(int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(sudokuA.getBoard()[i][j] == sudokuB.getBoard()[i][j]) {
+                    licznik++;
+                }
+            }
+        }
+        assertTrue(licznik < 81);
+
+        //petla sprawdza powtorzenia liczb w odpowiednich miejscach, zliczajac je
+        //w zmiennej licznik. Jesli liczba powtorzen jest mniejsza niz wielkosc
+        //tablicy, oznacza to ze obie tablice sa unikalne.
     }
 
 }
