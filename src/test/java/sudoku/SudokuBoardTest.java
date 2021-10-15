@@ -85,9 +85,12 @@ public class SudokuBoardTest {
                         break;
                     }
                 }
-                if (flag == false) {
+                if (!flag) {
                     break;
                 }
+            }
+            if(!flag) {
+                break;
             }
         }
 
@@ -112,9 +115,12 @@ public class SudokuBoardTest {
                         break;
                     }
                 }
-                if (flag == false) {
+                if (!flag) {
                     break;
                 }
+            }
+            if(!flag) {
+                break;
             }
         }
 
@@ -124,31 +130,37 @@ public class SudokuBoardTest {
         //false, gdyz jednoczesnie brakowaloby jakiejs innej
     }
 
-//    @Test
-//    public void validBoardSquare() {
-//        SudokuBoard sudoku3 = new SudokuBoard();
-//        sudoku3.fillBoard();
-//
-//        boolean flag = false;
-//        int sprawdz = 1;
-//
-//        int pomrzad = rzad - rzad % 3;
-//        int pomkol = kolumna - kolumna % 3;
-//        for (int i = 0; i < 3; i++) {        //przejscie po kwadracie 3x3
-//            for (int j = 0; j < 3; j++) {
-//                if (sudoku3.getBoard()[pomrzad + i][pomkol + j] == sprawdz) {
-//                    flag = false;
-//                }
-//            }
-//        }
-//
-//
-//
-//
-//        assertEquals(flag, true);
-//        //petla sprawdza, czy gdziekolwiek w kazdej kolumnie brakuje jakiejkolwiek liczby
-//        //z zakresu 1-9, w przypadku powtorzenia sie jakiejs liczby algorytm i tak zwroci
-//        //false, gdyz jednoczesnie brakowaloby jakiejs innej
-//    }
+    @Test
+    public void validBoardSquare() {
+        SudokuBoard sudoku3 = new SudokuBoard();
+        sudoku3.fillBoard();
+
+        boolean flag = false;
+        for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
+            for (int row = 0; row <= 6; row += 3) {
+                for (int col = 0; col <= 6; col += 3) {
+                    for (int i = row; i <= row + 2; i++) {
+                        for (int j = col; j <= col + 2; j++) {
+                            if (sudoku3.getBoard()[i][j] == sprawdz) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!flag) {
+                        break;
+                    }
+                }
+                if (!flag) {
+                    break;
+                }
+            }
+        }
+
+        assertEquals(flag, true);
+        //petla sprawdza, czy gdziekolwiek w kazdym kwadracie 3x3 brakuje jakiejkolwiek
+        //liczby z zakresu 1-9, w przypadku powtorzenia sie jakiejs liczby algorytm
+        //i tak zwroci false, gdyz jednoczesnie brakowaloby jakiejs innej
+    }
 
 }
