@@ -6,6 +6,5 @@ public class SudokuApp {
         SudokuBoard sudoku = new SudokuBoard();
         sudoku.fillBoard();
         sudoku.showBoard();
-
     }
 }

@@ -10,10 +10,10 @@ public class SudokuBoard {
     }
 
     public  void fillBoard() {
-        solveBoard(board,0,0);
+        solveBoard(0,0);
     }
 
-    public boolean solveBoard(int[][] board, int rzad, int kolumna) {
+    public boolean solveBoard(int rzad, int kolumna) {
         if (rzad == 8 && kolumna == 9) {
             //koniec sudoku wszystkie komorki uzupelnione
             return true;
@@ -25,13 +25,13 @@ public class SudokuBoard {
         }
 
         for  (int i = 0; i < 9; i++) {
-            int numer = randomNum(9,rzad, board);
+            int numer = randomNum(9,rzad);
             //losuj po 9 liczb od 1-9 bez powtorzen(tyle ile w wierszu
-            if (check(board, rzad, kolumna, numer)) {
+            if (check(rzad, kolumna, numer)) {
 
                 board[rzad][kolumna] = numer;
 
-                if (solveBoard(board, rzad, kolumna + 1)) {   //przejdz do nastepnej komorki
+                if (solveBoard(rzad, kolumna + 1)) {   //przejdz do nastepnej komorki
                     return true;
                 }
             }
@@ -43,7 +43,7 @@ public class SudokuBoard {
         return false;
     }
 
-    public boolean check(int[][] board, int rzad, int kolumna, int los) {
+    public boolean check(int rzad, int kolumna, int los) {
 
         for (int i = 0; i <= 8; i++) {        //przejscie po kolumnie
             if (board[i][kolumna] == los) {
@@ -68,8 +68,13 @@ public class SudokuBoard {
         return true;
     }
 
-    public int[][] getBoard() {
-        return board;
+
+    public void setBoard(int x, int y, int value) {
+        board[x][y] = value;
+    }
+
+    public int getBoard(int x, int y) {
+        return board[x][y];
     }
 
     public void showBoard() {
@@ -81,13 +86,13 @@ public class SudokuBoard {
         }
     }
 
-    public int randomNum(int max, int rzad, int[][] b) {
+    public int randomNum(int max, int rzad) {
         Random rand = new Random();
         int intRandom = rand.nextInt(max) + 1;
         boolean f = false;
         do {
             for (int i = 0; i < 9; i++) {
-                if (b[rzad][i] == intRandom) {
+                if (board[rzad][i] == intRandom) {
                     f = true;
                     intRandom = rand.nextInt(max) + 1;
                 } else {
