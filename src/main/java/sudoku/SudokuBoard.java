@@ -46,12 +46,12 @@ public class SudokuBoard {
     public boolean check(int rzad, int kolumna, int los) {
 
         for (int i = 0; i <= 8; i++) {        //przejscie po kolumnie
-            if (board[i][kolumna] == los) {
+            if (getBoard(i, kolumna) == los) {
                 return false;
             }
         }
         for (int i = 0; i <= 8; i++) {        //przejscie po wierszu
-            if (board[rzad][i] == los) {
+            if (getBoard(rzad, i) == los) {
                 return false;
             }
         }
@@ -60,7 +60,7 @@ public class SudokuBoard {
         int pomkol = kolumna - kolumna % 3;
         for (int i = 0; i < 3; i++) {        //przejscie po kwadracie 3x3
             for (int j = 0; j < 3; j++) {
-                if (board[pomrzad + i][pomkol + j] == los) {
+                if (getBoard(pomrzad + i, pomkol + j) == los) {
                     return false;
                 }
             }
@@ -77,13 +77,15 @@ public class SudokuBoard {
         return board[x][y];
     }
 
-    public void showBoard() {
+    public String showBoard() {
+        String s = "";
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                System.out.print(String.valueOf(board[i][j]) + "\t");
+                s += getBoard(i, j) + "\t";
             }
-            System.out.print("\n");
+            s += "\n";
         }
+        return s;
     }
 
     public int randomNum(int max, int rzad) {
@@ -92,7 +94,7 @@ public class SudokuBoard {
         boolean f = false;
         do {
             for (int i = 0; i < 9; i++) {
-                if (board[rzad][i] == intRandom) {
+                if (getBoard(rzad, i) == intRandom) {
                     f = true;
                     intRandom = rand.nextInt(max) + 1;
                 } else {
