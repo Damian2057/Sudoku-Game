@@ -8,55 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SudokuBoardTest {
 
     SudokuBoard sudoku = new SudokuBoard();
-    SudokuBoard sudoku2 = new SudokuBoard();
-    int[][] b = new int[9][9];
-
-    @Test
-    public void fillBoard() {
-
-        sudoku.fillBoard();
-        for(int i = 0; i < 9 ; i++) {
-            for(int j = 0; j < 9; j++) {
-                assertNotEquals(sudoku.getBoard(i,j), 0);
-            }
-        }
-    }
-
-    @Test
-    public void solveBoard() {
-
-        assertEquals(sudoku.solveBoard( 0, 0), true);
-        //metoda solveBoard na koncu swojego dzialania zwraca wartosc true
-    }
-
-    @Test
-    public void check() {
-
-        sudoku.fillBoard();
-        for(int i = 1; i <= 9; i++) {
-            assertEquals(sudoku.check(1, 1, i), false);
-        } //petla, w ktorej sprawdzamy, czy liczby 1-9 wystepuja juz w kolumnie, wierszu i kwadracie
-        assertEquals(sudoku.check( 1, 1, 0), true);
-        //liczba 0 jest spoza zakresu 1-9, wiec nie powinna nigdy wystapic w tablicy
-    }
-
-    @Test
-    public void getBoard() {
-
-        SudokuBoard sudokuG = new SudokuBoard();
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                assertEquals(sudokuG.getBoard(0,0), 0);
-
-            }
-        }
-        sudokuG.fillBoard();
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                assertTrue(sudokuG.getBoard(0,0)>=1 && sudokuG.getBoard(0,0)<=9);
-            }
-        }
-    }
 
     @Test
     public void setBoard() {
@@ -72,130 +23,38 @@ public class SudokuBoardTest {
 
     @Test
     public void showBoard() {
-        sudoku2.fillBoard();
+        sudoku.solveGame();
         String s = "";
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                s = s + sudoku2.getBoard(i, j)+ "\t";
+                s = s + sudoku.getBoard(i, j)+ "\t";
             }
             s+="\n";
         }
-        assertEquals(s,sudoku2.showBoard());
+        assertEquals(s,sudoku.showBoard());
     }
 
     @Test
-    public void randomNum() {
-        int liczba = 0;
-        for(int i = 0; i < 100; i++) {
-            liczba = sudoku2.randomNum(9, 0);
-            assertTrue(1 <= liczba && liczba <=9 );
+    public void getBoard() {
+
+        SudokuBoard sudokuG = new SudokuBoard();
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                assertEquals(sudokuG.getBoard(0,0), 0);
+
+            }
         }
-        //metoda dla 100 prob sprawdza, czy choc raz wylosowana liczba
-        //byla poza przedzialem [1;9]
+        sudokuG.solveGame();
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                assertTrue(sudokuG.getBoard(0,0)>=1 && sudokuG.getBoard(0,0)<=9);
+            }
+        }
     }
 
-    @Test
-    public void validBoard() {
 
-        SudokuBoard sudoku3 = new SudokuBoard();
-        sudoku3.fillBoard();
 
-        boolean flag = false;
 
-        for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (sudoku3.getBoard(i,j) == sprawdz) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    break;
-                }
-            }
-            if (!flag) {
-                break;
-            }
-        }
 
-        assertEquals(flag, true);
-        //petla sprawdza, czy gdziekolwiek w kazdym wierszu brakuje jakiejkolwiek liczby
-        //z zakresu 1-9, w przypadku powtorzenia sie jakiejs liczby algorytm i tak zwroci
-        //false, gdyz jednoczesnie brakowaloby jakiejs innej
-
-        boolean flag2 = false;
-
-        for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (sudoku3.getBoard(j,i) == sprawdz) {
-                        flag2 = true;
-                        break;
-                    }
-                }
-                if (!flag2) {
-                    break;
-                }
-            }
-            if(!flag2) {
-                break;
-            }
-        }
-
-        assertEquals(flag2, true);
-        //petla sprawdza, czy gdziekolwiek w kazdej kolumnie brakuje jakiejkolwiek liczby
-        //z zakresu 1-9, w przypadku powtorzenia sie jakiejs liczby algorytm i tak zwroci
-        //false, gdyz jednoczesnie brakowaloby jakiejs innej
-
-        boolean flag3 = false;
-        for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
-            for (int row = 0; row <= 6; row += 3) {
-                for (int col = 0; col <= 6; col += 3) {
-                    for (int i = row; i <= row + 2; i++) {
-                        for (int j = col; j <= col + 2; j++) {
-                            if (sudoku3.getBoard(i,j) == sprawdz) {
-                                flag3 = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!flag3) {
-                        break;
-                    }
-                }
-                if (!flag3) {
-                    break;
-                }
-            }
-        }
-
-        assertEquals(flag, true);
-        //petla sprawdza, czy gdziekolwiek w kazdym kwadracie 3x3 brakuje jakiejkolwiek
-        //liczby z zakresu 1-9, w przypadku powtorzenia sie jakiejs liczby algorytm
-        //i tak zwroci false, gdyz jednoczesnie brakowaloby jakiejs innej
-    }
-
-    @Test
-    public void uniqueBoard() {
-        SudokuBoard sudokuA = new SudokuBoard();
-        SudokuBoard sudokuB = new SudokuBoard();
-        sudokuA.fillBoard();
-        sudokuB.fillBoard();
-
-        int licznik = 0;
-        for(int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if(sudokuA.getBoard(i,j) == sudokuB.getBoard(i,j)) {
-                    licznik++;
-                }
-            }
-        }
-        assertTrue(licznik < 81);
-
-        //petla sprawdza powtorzenia liczb w odpowiednich miejscach, zliczajac je
-        //w zmiennej licznik. Jesli liczba powtorzen jest mniejsza niz wielkosc
-        //tablicy, oznacza to ze obie tablice sa unikalne.
-    }
 
 }
