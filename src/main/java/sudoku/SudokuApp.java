@@ -6,5 +6,7 @@ public class SudokuApp {
         SudokuBoard sudoku = new SudokuBoard();
         sudoku.solveGame();
         System.out.println(sudoku.showBoard());
+        sudoku.getBoard(0,0);
+        sudoku.setBoard(0,0,1);
     }
 }

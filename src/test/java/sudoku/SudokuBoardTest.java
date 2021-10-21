@@ -52,9 +52,28 @@ public class SudokuBoardTest {
         }
     }
 
+    @Test
+    public void solveGame() {
+        SudokuBoard sudokusG = new SudokuBoard();
+        sudokusG.solveGame();
 
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++) {
+                assertNotEquals(sudokusG.getBoard(i, j), 0);
+            }
+        }
+    }
 
+    @Test
+    public void check() {
 
+        sudoku.solveGame();
+        for(int i = 1; i <= 9; i++) {
+            assertEquals(sudoku.check(1, 1, i), false);
+        } //petla, w ktorej sprawdzamy, czy liczby 1-9 wystepuja juz w kolumnie, wierszu i kwadracie
+        assertEquals(sudoku.check( 1, 1, 0), true);
+        //liczba 0 jest spoza zakresu 1-9, wiec nie powinna nigdy wystapic w tablicy
+    }
 
 
 }
