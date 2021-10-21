@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>pierwszy</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <description>Projekt grupy laboratoryjnej Frenzy</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -112,6 +113,16 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.1.1</version>
             </plugin>
@@ -161,4 +172,16 @@
         </dependency>
     </dependencies>
 
+    <developers>
+        <developer>
+            <id>236514</id>
+            <name>Mateusz Dangreaux</name>
+            <email>236514@edu.p.lodz.pl</email>
+        </developer>
+        <developer>
+            <id>236503</id>
+            <name>Damian Biskupski</name>
+            <email>236503@edu.p.lodz.pl</email>
+        </developer>
+    </developers>
 </project>
