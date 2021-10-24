@@ -43,8 +43,8 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
     public int randomNum(int max, int rzad, SudokuBoard board) {
         Random rand = new Random();
         int intRandom = rand.nextInt(max) + 1;
-        boolean f = false;
-        do {
+        boolean f = true;
+        while (f) {
             for (int i = 0; i < 9; i++) {
                 if (board.getBoard(rzad, i) == intRandom) {
                     f = true;
@@ -53,7 +53,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
                     f = false;
                 }
             }
-        } while (f);
+        }
         return  intRandom;
     }
 
