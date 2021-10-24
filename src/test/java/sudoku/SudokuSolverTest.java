@@ -8,7 +8,5 @@ class SudokuSolverTest {
 
     @Test
     void solve() {
-        int a = 5;
-        assertEquals(a, 5);
     }
 }
