@@ -1,11 +1,22 @@
 package sudoku;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SudokuBoard {
-    private final int[][] board = new int[9][9];
-    private SudokuSolver sudokusolver = new BacktrackingSudokuSolver();
+    private SudokuField[][] board = new SudokuField[9][9];
+    private SudokuSolver sudokusolver;
 
-    public SudokuBoard() {
+    public SudokuBoard(SudokuSolver sudokusolver) {
+
+        this.sudokusolver = sudokusolver;
+
+        for(int i=0; i < 9; i++){
+            for(int j=0; j < 9; j++) {
+                board[i][j] = new SudokuField();
+            }
+        }
     }
 
     public void solveGame() {
@@ -13,34 +24,35 @@ public class SudokuBoard {
     }
 
 
-    public void setBoard(int x, int y, int value) {
-        board[x][y] = value;
+    public void set(int x, int y, int value) {
+        board[x][y].setFieldValue(value);
     }
 
-    public int getBoard(int x, int y) {
-        return board[x][y];
+    public int get(int x, int y) {
+
+        return board[x][y].getFieldValue();
     }
 
     public String showBoard() {
         String s = "";
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                s += getBoard(i, j) + "\t";
+                s += get(i, j) + "\t";
             }
             s += "\n";
         }
         return s;
     }
 
-    public boolean check(int rzad, int kolumna, int los) {
+    public boolean checkBoard(int rzad, int kolumna, int los) {
 
         for (int i = 0; i <= 8; i++) {        //przejscie po kolumnie
-            if (getBoard(i, kolumna) == los) {
+            if (get(i, kolumna) == los) {
                 return false;
             }
         }
         for (int i = 0; i <= 8; i++) {        //przejscie po wierszu
-            if (getBoard(rzad, i) == los) {
+            if (get(rzad, i) == los) {
                 return false;
             }
         }
@@ -49,7 +61,7 @@ public class SudokuBoard {
         int pomkol = kolumna - kolumna % 3;
         for (int i = 0; i < 3; i++) {        //przejscie po kwadracie 3x3
             for (int j = 0; j < 3; j++) {
-                if (getBoard(pomrzad + i, pomkol + j) == los) {
+                if (get(pomrzad + i, pomkol + j) == los) {
                     return false;
                 }
             }

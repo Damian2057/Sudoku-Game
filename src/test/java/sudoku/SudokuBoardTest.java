@@ -6,17 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SudokuBoardTest {
-
-    SudokuBoard sudoku = new SudokuBoard();
+    SudokuSolver s = new BacktrackingSudokuSolver();
+    SudokuBoard sudoku = new SudokuBoard(s);
 
     @Test
     public void setBoard() {
-
-        SudokuBoard sudokuS = new SudokuBoard();
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuS = new SudokuBoard(s);
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                sudokuS.setBoard(i,j,5);
-                assertEquals(sudokuS.getBoard(i,j), 5);
+                sudokuS.set(i,j,5);
+                assertEquals(sudokuS.get(i,j), 5);
             }
         }
     }
@@ -27,7 +27,7 @@ public class SudokuBoardTest {
         String s = "";
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                s = s + sudoku.getBoard(i, j)+ "\t";
+                s = s + sudoku.get(i, j)+ "\t";
             }
             s+="\n";
         }
@@ -36,30 +36,31 @@ public class SudokuBoardTest {
 
     @Test
     public void getBoard() {
-
-        SudokuBoard sudokuG = new SudokuBoard();
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuG = new SudokuBoard(s);
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                assertEquals(sudokuG.getBoard(0,0), 0);
+                assertEquals(sudokuG.get(0,0), 0);
 
             }
         }
         sudokuG.solveGame();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                assertTrue(sudokuG.getBoard(0,0)>=1 && sudokuG.getBoard(0,0)<=9);
+                assertTrue(sudokuG.get(0,0)>=1 && sudokuG.get(0,0)<=9);
             }
         }
     }
 
     @Test
     public void solveGame() {
-        SudokuBoard sudokusG = new SudokuBoard();
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokusG = new SudokuBoard(s);
         sudokusG.solveGame();
 
         for(int i = 0; i < 9; i++) {
             for(int j = 0; j < 9; j++) {
-                assertNotEquals(sudokusG.getBoard(i, j), 0);
+                assertNotEquals(sudokusG.get(i, j), 0);
             }
         }
     }
@@ -69,15 +70,16 @@ public class SudokuBoardTest {
 
         sudoku.solveGame();
         for(int i = 1; i <= 9; i++) {
-            assertEquals(sudoku.check(1, 1, i), false);
+            assertEquals(sudoku.checkBoard(1, 1, i), false);
         } //petla, w ktorej sprawdzamy, czy liczby 1-9 wystepuja juz w kolumnie, wierszu i kwadracie
-        assertEquals(sudoku.check( 1, 1, 0), true);
+        assertEquals(sudoku.checkBoard( 1, 1, 0), true);
         //liczba 0 jest spoza zakresu 1-9, wiec nie powinna nigdy wystapic w tablicy
     }
 
     @Test
     public void validBoard() {
-        SudokuBoard sudoku3 = new SudokuBoard();
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudoku3 = new SudokuBoard(s);
         sudoku3.solveGame();
 
         boolean flag = false;
@@ -85,7 +87,7 @@ public class SudokuBoardTest {
         for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    if (sudoku3.getBoard(i,j) == sprawdz) {
+                    if (sudoku3.get(i,j) == sprawdz) {
                         flag = true;
                         break;
                     }
@@ -109,7 +111,7 @@ public class SudokuBoardTest {
         for (int sprawdz = 1; sprawdz <= 9; sprawdz++) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    if (sudoku3.getBoard(j,i) == sprawdz) {
+                    if (sudoku3.get(j,i) == sprawdz) {
                         flag2 = true;
                         break;
                     }
@@ -134,7 +136,7 @@ public class SudokuBoardTest {
                 for (int col = 0; col <= 6; col += 3) {
                     for (int i = row; i <= row + 2; i++) {
                         for (int j = col; j <= col + 2; j++) {
-                            if (sudoku3.getBoard(i,j) == sprawdz) {
+                            if (sudoku3.get(i,j) == sprawdz) {
                                 flag3 = true;
                                 break;
                             }
@@ -158,15 +160,17 @@ public class SudokuBoardTest {
 
     @Test
     public void uniqueBoard() {
-        SudokuBoard sudokuA = new SudokuBoard();
-        SudokuBoard sudokuB = new SudokuBoard();
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuSolver d = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        SudokuBoard sudokuB = new SudokuBoard(d);
         sudokuA.solveGame();
         sudokuB.solveGame();
 
         int licznik = 0;
         for(int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if(sudokuA.getBoard(i,j) == sudokuB.getBoard(i,j)) {
+                if(sudokuA.get(i,j) == sudokuB.get(i,j)) {
                     licznik++;
                 }
             }
