@@ -17,6 +17,12 @@ public class SudokuBoard {
 
         this.sudokusolver = sudokusolver;
 
+        //utworzenie strutury board
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                board[i][j] = new SudokuField();
+            }
+        }
 
         //utworzenie wierszy kolumn boxow
         for (int i = 0; i < 9; i++) {
@@ -31,30 +37,28 @@ public class SudokuBoard {
             for (int j = 0; j < 9; j++) {
                 tmp[j] = board[i][j];
             }
-            row.get(i).init(tmp);
+            row.get(i).creation(tmp);
         }
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 tmp[j] = board[j][i];
             }
-            column.get(i).init(tmp);
+            column.get(i).creation(tmp);
         }
-//        int kk = 0;
-//        for(int i = 0; i < 3; i++){
-//            for(int j = 0; j < 3; j++){
-//                for(int k=0; k < 3; k++){
-//                    for(int z=0;z<3;z++){
-//                        tmp[kk] = board[k][z];
-//                    }
-//                }
-//            }
-//        }
-
-        //utworzenie strutury board
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                board[i][j] = new SudokuField();
+        int index = 0;
+        int t = 0;
+        for (int i = 0; i < 9; i += 3) {
+            for (int j = 0; j < 9; j += 3) {
+                for (int x = i; x < 3 + i; x++) {
+                    for (int y = j; y < 3 + j; y++) {
+                        tmp[index] = board[x][y];
+                        index++;
+                    }
+                }
+                index = 0;
+                box.get(t).creation(tmp);
+                t++;
             }
         }
     }
@@ -73,56 +77,69 @@ public class SudokuBoard {
         return board[x][y].getFieldValue();
     }
 
-    SudokuRow getRow(int x) {
-        return row.get(x);
+    public SudokuRow getRow(int y) {
+        return row.get(y);
     }
 
-    SudokuColumn getColumn(int y) {
-        return column.get(y);
+    public SudokuColumn getColumn(int x) {
+        return column.get(x);
     }
-    // 0 1 2 3 4 5 6 7 8 9
-          //y
-      // 0 1 2
-   //x// 3 4 5
-      // 6 7 8
-//    SudokuColumn getBox(int x, int y) {
-//        if(y>0){
-//            y+=2+x;
-//        }
-////        return box.get(x);
-//    }
+    //y
+    // 0 1 2
+    //x// 3 4 5
+    // 6 7 8
+
+    public SudokuBox getBox(int x, int y) {
+        if (x == 1) {
+            y = y + 3;
+        }
+        if (x == 2) {
+            y = y + 6;
+        }
+        return box.get(y);
+    }
 
     public String showBoard() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                s += get(i, j) + "\t";
+                s.append(get(i, j)).append("\t");
             }
-            s += "\n";
+            s.append("\n");
         }
-        return s;
+        return s.toString();
     }
 
-    public boolean checkBoard(int rzad, int kolumna, int los) {
+    private boolean checkBoard() {
+        if (checkRow() && checkColumn() && checkBox()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        for (int i = 0; i <= 8; i++) {        //przejscie po kolumnie
-            if (get(i, kolumna) == los) {
+    public boolean checkRow() {
+        for (int i = 0; i < 9; i++) {
+            if (!row.get(i).verify()) {
                 return false;
             }
         }
-        for (int i = 0; i <= 8; i++) {        //przejscie po wierszu
-            if (get(rzad, i) == los) {
+        return true;
+    }
+
+    public boolean checkColumn() {
+        for (int i = 0; i < 9; i++) {
+            if (!column.get(i).verify()) {
                 return false;
             }
         }
+        return true;
+    }
 
-        int pomrzad = rzad - rzad % 3;
-        int pomkol = kolumna - kolumna % 3;
-        for (int i = 0; i < 3; i++) {        //przejscie po kwadracie 3x3
-            for (int j = 0; j < 3; j++) {
-                if (get(pomrzad + i, pomkol + j) == los) {
-                    return false;
-                }
+    public boolean checkBox() {
+        for (int i = 0; i < 9; i++) {
+            if (!box.get(i).verify()) {
+                return false;
             }
         }
         return true;

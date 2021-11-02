@@ -8,21 +8,26 @@ public class SudokuElement {
     protected List<SudokuField> fields = Arrays.asList(new SudokuField[9]);
 
 
-    protected void init(SudokuField[] value) {
+    protected void creation(SudokuField[] value) {
         for (int i = 0; i < 9; i++) {
             fields.set(i, value[i]);
         }
+
     }
 
-    boolean verify() {
+    public boolean verify() {
+        int value = 362880; // 9!
+        int begin = 1;
+
         for (int i = 0; i < 9; i++) {
-            for (int j = i + 1; j < 9; j++) {
-                if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue()) {
-                    return true;
-                }
-            }
+            begin *= fields.get(i).getFieldValue();
         }
-        return false;
+
+        if (value != begin) {
+            return false;
+        }
+
+        return true;
     }
 
 }

@@ -22,10 +22,9 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         for  (int i = 0; i < 9; i++) {
             int numer = randomNum(9, rzad, board);
             //losuj po 9 liczb od 1-9 bez powtorzen(tyle ile w wierszu
-            if (board.checkBoard(rzad, kolumna, numer)) {
+            if (checkCorrect(rzad, kolumna, numer, board)) {
 
                 board.set(rzad, kolumna, numer);
-
                 if (solveBoard(rzad, kolumna + 1, board)) {   //przejdz do nastepnej komorki
                     return true;
                 }
@@ -55,5 +54,30 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             }
         }
         return  intRandom;
+    }
+
+    public boolean checkCorrect(int rzad, int kolumna, int numer, SudokuBoard board) {
+
+        for (int i = 0; i <= 8; i++) {        //przejscie po kolumnie
+            if (board.get(i, kolumna) == numer) {
+                return false;
+            }
+        }
+        for (int i = 0; i <= 8; i++) {        //przejscie po wierszu
+            if (board.get(rzad, i) == numer) {
+                return false;
+            }
+        }
+
+        int pomrzad = rzad - rzad % 3;
+        int pomkol = kolumna - kolumna % 3;
+        for (int i = 0; i < 3; i++) {        //przejscie po kwadracie 3x3
+            for (int j = 0; j < 3; j++) {
+                if (board.get(pomrzad + i, pomkol + j) == numer) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

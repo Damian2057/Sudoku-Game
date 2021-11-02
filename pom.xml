@@ -19,6 +19,18 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>9.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
@@ -56,19 +68,6 @@
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!-- tutaj dodalismy -->
-                    <!-- tutaj dodalismy -->
-                    <!-- tutaj dodalismy -->
-<!--                    <execution>-->
-<!--                        <id>generate-code-coverage-report</id>-->
-<!--                        <phase>test</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>report</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-                    <!-- tutaj dodalismy -->
-                    <!-- tutaj dodalismy -->
-                    <!-- tutaj dodalismy -->
                     <execution>
                         <id>default-report</id>
                         <goals>
