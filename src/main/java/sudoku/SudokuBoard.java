@@ -110,8 +110,14 @@ public class SudokuBoard {
         return s.toString();
     }
 
+    public boolean publicCheckBoard() {
+        return checkBoard();
+    }
+
     private boolean checkBoard() {
-        if (checkRow() && checkColumn() && checkBox()) {
+        //nasz if ma jedynie checkRow, gdyz jezeli wadliwa bedzie komorka
+        //to jednoczesnie zepsuje ona kolumne, wiersz i boxa.
+        if (checkRow()) {
             return true;
         } else {
             return false;

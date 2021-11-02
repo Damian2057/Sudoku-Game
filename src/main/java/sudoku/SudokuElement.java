@@ -15,6 +15,10 @@ public class SudokuElement {
 
     }
 
+    public int getFields(int i) {
+        return fields.get(i).getFieldValue();
+    }
+
     public boolean verify() {
         int value = 362880; // 9!
         int begin = 1;

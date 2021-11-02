@@ -25,13 +25,12 @@ public class SudokuBoardTest {
     public void showBoard() {
         sudoku.solveGame();
         String s = "";
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                s = s + sudoku.get(i, j)+ "\t";
+        for(int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                s = s + sudoku.get(i, j) + "\t";
             }
-            s+="\n";
+            s += "\n";
         }
-        System.out.print(sudoku.showBoard());
         assertEquals(s,sudoku.showBoard());
     }
 
@@ -65,17 +64,6 @@ public class SudokuBoardTest {
             }
         }
     }
-
-//    @Test
-//    public void check() {
-//
-//        sudoku.solveGame();
-//        for(int i = 1; i <= 9; i++) {
-//            assertEquals(sudoku.checkBoard(), false);
-//        } //petla, w ktorej sprawdzamy, czy liczby 1-9 wystepuja juz w kolumnie, wierszu i kwadracie
-//        assertEquals(sudoku.checkBoard(), true);
-//        //liczba 0 jest spoza zakresu 1-9, wiec nie powinna nigdy wystapic w tablicy
-//    }
 
     @Test
     public void validBoard() {
@@ -180,6 +168,103 @@ public class SudokuBoardTest {
         //petla sprawdza powtorzenia liczb w odpowiednich miejscach, zliczajac je
         //w zmiennej licznik. Jesli liczba powtorzen jest mniejsza niz wielkosc
         //tablicy, oznacza to ze obie tablice sa unikalne.
+    }
+
+    @Test
+    public void checkRow() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+        assertTrue(sudokuA.checkRow());
+        sudokuA.set(0,0,0);
+        assertFalse(sudokuA.checkRow());
+
+    }
+
+    @Test
+    public void checkColumn() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+        assertTrue(sudokuA.checkColumn());
+        sudokuA.set(0,0,0);
+        assertFalse(sudokuA.checkColumn());
+    }
+
+    @Test
+    public void checkBox() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+        assertTrue(sudokuA.checkBox());
+        sudokuA.set(0,0,0);
+        assertFalse(sudokuA.checkBox());
+    }
+
+    @Test
+    public void getRow() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                assertEquals(sudokuA.get(i,j), sudokuA.getRow(i).getFields(j));
+            }
+        }
+    }
+
+    @Test
+    public void getColumn() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                assertEquals(sudokuA.get(j,i), sudokuA.getColumn(i).getFields(j));
+            }
+        }
+    }
+
+    @Test
+    public void getBox() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+
+        int index1 = 0, index2 = 0, k = 0;
+        for (int i = 0; i < 9; i += 3) {
+            for (int j = 0; j < 9; j += 3) {
+                for (int x = i; x < 3 + i; x++) {
+                    for (int y = j; y < 3 + j; y++) {
+                        assertEquals(sudokuA.get(x, y), sudokuA.getBox(index1, index2).getFields(k));
+                        k++;
+                    }
+                }
+                k = 0;
+                index2 ++;
+            }
+            index2 = 0;
+            index1 ++;
+        }
+
+    }
+
+    @Test
+    public void checkBoard() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+
+        assertTrue(sudokuA.publicCheckBoard());
+
+        sudokuA.set(0,0,0);
+        assertFalse(sudokuA.publicCheckBoard());
     }
 
 }
