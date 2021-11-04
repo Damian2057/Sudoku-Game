@@ -3,6 +3,7 @@ package sudoku;
 import java.util.Arrays;
 import java.util.List;
 
+
 public abstract class SudokuElement {
 
     protected List<SudokuField> fields = Arrays.asList(new SudokuField[9]);

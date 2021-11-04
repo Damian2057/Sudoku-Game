@@ -255,16 +255,24 @@ public class SudokuBoardTest {
 
     }
 
+
     @Test
-    public void checkBoard() {
+    public void getSudokuField() {
         SudokuSolver s = new BacktrackingSudokuSolver();
         SudokuBoard sudokuA = new SudokuBoard(s);
         sudokuA.solveGame();
-
-        assertTrue(sudokuA.publicCheckBoard());
-
-        sudokuA.set(0,0,0);
-        assertFalse(sudokuA.publicCheckBoard());
+        assertTrue( sudokuA.getSudokuField(1,1) != null);
     }
+
+//    @Test
+//    public void ObserverUpdate() {
+//        SudokuSolver s = new BacktrackingSudokuSolver();
+//        SudokuBoard sudokuA = new SudokuBoard(s);
+//        sudokuA.solveGame();
+//        System.out.println("\n\ntest");
+//        sudokuA.getSudokuField(0,0).deleteObserver(sudokuA);
+//        sudokuA.set(0,0,5);
+//        sudokuA.set(0,1,5);
+//    }
 
 }

@@ -3,14 +3,13 @@ package sudoku;
 import java.util.Arrays;
 import java.util.List;
 
-public class SudokuBoard {
+public class SudokuBoard implements Observer {
 
     private SudokuField[][] board = new SudokuField[9][9];
     private SudokuSolver sudokusolver;
     private List<SudokuRow> row = Arrays.asList(new SudokuRow[9]);
     private List<SudokuColumn> column = Arrays.asList(new SudokuColumn[9]);
     private List<SudokuBox> box = Arrays.asList(new SudokuBox[9]);
-
 
 
     public SudokuBoard(SudokuSolver sudokusolver) {
@@ -21,6 +20,7 @@ public class SudokuBoard {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 board[i][j] = new SudokuField();
+                board[i][j].addObserver(this);
             }
         }
 
@@ -62,6 +62,9 @@ public class SudokuBoard {
         sudokusolver.solve(this);
     }
 
+    public SudokuField getSudokuField(int i, int j) {
+        return board[i][j];
+    }
 
     public void set(int x, int y, int value) {
         board[x][y].setFieldValue(value);
@@ -105,18 +108,11 @@ public class SudokuBoard {
         return s.toString();
     }
 
-    public boolean publicCheckBoard() {
-        return checkBoard();
-    }
 
     private boolean checkBoard() {
         //nasz if ma jedynie checkRow, gdyz jezeli wadliwa bedzie komorka
         //to jednoczesnie zepsuje ona kolumne, wiersz i boxa.
-        if (checkRow()) {
-            return true;
-        } else {
-            return false;
-        }
+        return checkRow();
     }
 
     public boolean checkRow() {
@@ -146,4 +142,10 @@ public class SudokuBoard {
         return true;
     }
 
+    @Override
+    public void update() {
+        checkBoard();
+        //System.out.println("UPDATE");
+
+    }
 }
