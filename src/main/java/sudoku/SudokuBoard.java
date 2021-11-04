@@ -24,30 +24,24 @@ public class SudokuBoard {
             }
         }
 
-        //utworzenie wierszy kolumn boxow
-        for (int i = 0; i < 9; i++) {
-            row.set(i, new SudokuRow());
-            column.set(i, new SudokuColumn());
-            box.set(i, new SudokuBox());
-        }
-
         SudokuField[] tmp = new SudokuField[9];
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 tmp[j] = board[i][j];
             }
-            row.get(i).creation(tmp);
+            row.set(i, new SudokuRow(tmp));
         }
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 tmp[j] = board[j][i];
             }
-            column.get(i).creation(tmp);
+            column.set(i, new SudokuColumn(tmp));
         }
         int index = 0;
         int t = 0;
+        int pom = 0;
         for (int i = 0; i < 9; i += 3) {
             for (int j = 0; j < 9; j += 3) {
                 for (int x = i; x < 3 + i; x++) {
@@ -57,7 +51,8 @@ public class SudokuBoard {
                     }
                 }
                 index = 0;
-                box.get(t).creation(tmp);
+                box.set(pom, new SudokuBox(tmp));
+                pom++;
                 t++;
             }
         }
