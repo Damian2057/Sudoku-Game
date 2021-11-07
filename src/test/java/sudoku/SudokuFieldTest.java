@@ -20,32 +20,18 @@ class SudokuFieldTest {
     }
 
     @Test
-    void addObserver() {
-        SudokuField b = new SudokuField();
-        SudokuSolver s = new BacktrackingSudokuSolver();
-        SudokuBoard sudokuS = new SudokuBoard(s);
-        b.addObserver(sudokuS);
-        assertTrue(b.deleteObserver(sudokuS));
-        assertFalse(b.deleteObserver(sudokuS));
+    void addPropertyChangeListener() {
+        SudokuField s = new SudokuField();
+        assertTrue(s.getChanges() != null);
     }
 
     @Test
-    void deleteObserver() {
-        SudokuField b = new SudokuField();
-        SudokuSolver s = new BacktrackingSudokuSolver();
-        SudokuBoard sudokuS = new SudokuBoard(s);
-
-        SudokuBoard sudokuB = new SudokuBoard(s);
-
-        b.addObserver(sudokuS);
-        assertTrue(b.deleteObserver(sudokuS));
-        assertFalse(b.deleteObserver(sudokuS));
-
-        assertFalse(b.deleteObserver(sudokuB));
-    }
-
-    @Test
-    void updateObserver() {
+    void removePropertyChangeListener() {
+        SudokuSolver b = new BacktrackingSudokuSolver();
+        SudokuBoard sudo = new SudokuBoard(b);
+        sudo.getSudokuField(0,0).removePropertyChangeListener(sudo);
+        assertFalse(sudo.getSudokuField(0,0).getChanges() == null);
 
     }
+
 }

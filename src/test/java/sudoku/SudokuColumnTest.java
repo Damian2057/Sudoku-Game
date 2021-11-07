@@ -17,7 +17,7 @@ class SudokuColumnTest {
         SudokuElement element = new SudokuColumn(tablica);
         assertTrue(element.verify());
 
-        tablica[0].setFieldValue(0);
+        tablica[1].setFieldValue(1);
 
         assertFalse(element.verify());
     }

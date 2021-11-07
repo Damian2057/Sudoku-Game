@@ -14,17 +14,15 @@ public abstract class SudokuElement {
     }
 
     public boolean verify() {
-        int value = 362880; // 9!
-        int begin = 1;
 
         for (int i = 0; i < 9; i++) {
-            begin *= fields.get(i).getFieldValue();
+            for (int j = i + 1; j < 9; j++) {
+                if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue()
+                        && fields.get(j).getFieldValue() != 0) {
+                    return false;
+                }
+            }
         }
-
-        if (value != begin) {
-            return false;
-        }
-
         return true;
     }
 

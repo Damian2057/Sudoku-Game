@@ -1,11 +1,11 @@
 package sudoku;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-public class SudokuField implements Observant {
+public class SudokuField {
     private int value = 0;
-    private List<Observer> observers = new ArrayList<>();
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     public SudokuField() {
         value = 0;
@@ -16,27 +16,19 @@ public class SudokuField implements Observant {
     }
 
     public void setFieldValue(int value) {
+        changes.firePropertyChange("value",this.value,value);
         this.value = value;
-        updateObserver();
     }
 
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        changes.addPropertyChangeListener(l);
     }
 
-    @Override
-    public boolean deleteObserver(Observer observer) {
-
-        if (observers.contains(observer)) {
-            observers.remove(observer);
-            return true;
-        }
-        return observers.contains(observer);
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        changes.removePropertyChangeListener(l);
     }
 
-    @Override
-    public void updateObserver() {
-        observers.forEach(Observer::update);
+    public PropertyChangeSupport getChanges() {
+        return changes;
     }
 }

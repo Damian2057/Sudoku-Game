@@ -2,6 +2,9 @@ package sudoku;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -171,13 +174,28 @@ public class SudokuBoardTest {
     }
 
     @Test
+    public void checkBoard() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        SudokuSolver d = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(d);
+        sudokuA.solveGame();
+        Method checkBoardMethod = SudokuBoard.class.getDeclaredMethod("checkBoard");
+        checkBoardMethod.setAccessible(true);
+        assertTrue((Boolean) checkBoardMethod.invoke(sudokuA));
+        sudokuA.set(0,0,1);
+        sudokuA.set(1,1,1);
+        assertFalse((Boolean) checkBoardMethod.invoke(sudokuA));
+
+    }
+
+    @Test
     public void checkRow() {
         SudokuSolver s = new BacktrackingSudokuSolver();
         SudokuBoard sudokuA = new SudokuBoard(s);
         sudokuA.solveGame();
 
         assertTrue(sudokuA.checkRow());
-        sudokuA.set(0,0,0);
+        sudokuA.set(0,0,sudokuA.get(0,1));
         assertFalse(sudokuA.checkRow());
 
     }
@@ -189,7 +207,7 @@ public class SudokuBoardTest {
         sudokuA.solveGame();
 
         assertTrue(sudokuA.checkColumn());
-        sudokuA.set(0,0,0);
+        sudokuA.set(0,0,sudokuA.get(0,1));
         assertFalse(sudokuA.checkColumn());
     }
 
@@ -200,7 +218,7 @@ public class SudokuBoardTest {
         sudokuA.solveGame();
 
         assertTrue(sudokuA.checkBox());
-        sudokuA.set(0,0,0);
+        sudokuA.set(0,0,sudokuA.get(0,1));
         assertFalse(sudokuA.checkBox());
     }
 
@@ -263,16 +281,5 @@ public class SudokuBoardTest {
         sudokuA.solveGame();
         assertTrue( sudokuA.getSudokuField(1,1) != null);
     }
-
-//    @Test
-//    public void ObserverUpdate() {
-//        SudokuSolver s = new BacktrackingSudokuSolver();
-//        SudokuBoard sudokuA = new SudokuBoard(s);
-//        sudokuA.solveGame();
-//        System.out.println("\n\ntest");
-//        sudokuA.getSudokuField(0,0).deleteObserver(sudokuA);
-//        sudokuA.set(0,0,5);
-//        sudokuA.set(0,1,5);
-//    }
 
 }

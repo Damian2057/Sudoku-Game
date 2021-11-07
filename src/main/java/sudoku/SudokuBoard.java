@@ -1,9 +1,11 @@
 package sudoku;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.List;
 
-public class SudokuBoard implements Observer {
+public class SudokuBoard implements PropertyChangeListener {
 
     private SudokuField[][] board = new SudokuField[9][9];
     private SudokuSolver sudokusolver;
@@ -20,7 +22,7 @@ public class SudokuBoard implements Observer {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 board[i][j] = new SudokuField();
-                board[i][j].addObserver(this);
+                board[i][j].addPropertyChangeListener(this);
             }
         }
 
@@ -40,7 +42,6 @@ public class SudokuBoard implements Observer {
             column.set(i, new SudokuColumn(tmp));
         }
         int index = 0;
-        int t = 0;
         int pom = 0;
         for (int i = 0; i < 9; i += 3) {
             for (int j = 0; j < 9; j += 3) {
@@ -53,7 +54,6 @@ public class SudokuBoard implements Observer {
                 index = 0;
                 box.set(pom, new SudokuBox(tmp));
                 pom++;
-                t++;
             }
         }
     }
@@ -143,9 +143,7 @@ public class SudokuBoard implements Observer {
     }
 
     @Override
-    public void update() {
+    public void propertyChange(PropertyChangeEvent evt) {
         checkBoard();
-        //System.out.println("UPDATE");
-
     }
 }
