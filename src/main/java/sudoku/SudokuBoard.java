@@ -9,9 +9,9 @@ public class SudokuBoard implements PropertyChangeListener {
 
     private SudokuField[][] board = new SudokuField[9][9];
     private SudokuSolver sudokusolver;
-    private List<SudokuRow> row = Arrays.asList(new SudokuRow[9]);
-    private List<SudokuColumn> column = Arrays.asList(new SudokuColumn[9]);
-    private List<SudokuBox> box = Arrays.asList(new SudokuBox[9]);
+    private List<SudokuRow> rows = Arrays.asList(new SudokuRow[9]);
+    private List<SudokuColumn> columns = Arrays.asList(new SudokuColumn[9]);
+    private List<SudokuBox> boxes = Arrays.asList(new SudokuBox[9]);
 
 
     public SudokuBoard(SudokuSolver sudokusolver) {
@@ -32,14 +32,14 @@ public class SudokuBoard implements PropertyChangeListener {
             for (int j = 0; j < 9; j++) {
                 tmp[j] = board[i][j];
             }
-            row.set(i, new SudokuRow(tmp));
+            rows.set(i, new SudokuRow(tmp));
         }
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 tmp[j] = board[j][i];
             }
-            column.set(i, new SudokuColumn(tmp));
+            columns.set(i, new SudokuColumn(tmp));
         }
         int index = 0;
         int pom = 0;
@@ -52,7 +52,7 @@ public class SudokuBoard implements PropertyChangeListener {
                     }
                 }
                 index = 0;
-                box.set(pom, new SudokuBox(tmp));
+                boxes.set(pom, new SudokuBox(tmp));
                 pom++;
             }
         }
@@ -76,11 +76,13 @@ public class SudokuBoard implements PropertyChangeListener {
     }
 
     public SudokuRow getRow(int y) {
-        return row.get(y);
+        List<SudokuRow> copyr = List.copyOf(rows);
+        return copyr.get(y);
     }
 
     public SudokuColumn getColumn(int x) {
-        return column.get(x);
+        List<SudokuColumn> copyC = List.copyOf(columns);
+        return copyC.get(x);
     }
     //y
     // 0 1 2
@@ -94,7 +96,8 @@ public class SudokuBoard implements PropertyChangeListener {
         if (x == 2) {
             y = y + 6;
         }
-        return box.get(y);
+        List<SudokuBox> copyB = List.copyOf(boxes);
+        return copyB.get(y);
     }
 
     public String showBoard() {
@@ -117,7 +120,7 @@ public class SudokuBoard implements PropertyChangeListener {
 
     public boolean checkRow() {
         for (int i = 0; i < 9; i++) {
-            if (!row.get(i).verify()) {
+            if (!rows.get(i).verify()) {
                 return false;
             }
         }
@@ -126,7 +129,7 @@ public class SudokuBoard implements PropertyChangeListener {
 
     public boolean checkColumn() {
         for (int i = 0; i < 9; i++) {
-            if (!column.get(i).verify()) {
+            if (!columns.get(i).verify()) {
                 return false;
             }
         }
@@ -135,7 +138,7 @@ public class SudokuBoard implements PropertyChangeListener {
 
     public boolean checkBox() {
         for (int i = 0; i < 9; i++) {
-            if (!box.get(i).verify()) {
+            if (!boxes.get(i).verify()) {
                 return false;
             }
         }
@@ -145,5 +148,6 @@ public class SudokuBoard implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         checkBoard();
+        //cos w checkstylu nie dziala
     }
 }

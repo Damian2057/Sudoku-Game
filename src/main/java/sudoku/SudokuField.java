@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class SudokuField {
-    private int value = 0;
+    private int value;
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     public SudokuField() {
@@ -16,8 +16,10 @@ public class SudokuField {
     }
 
     public void setFieldValue(int value) {
-        changes.firePropertyChange("value",this.value,value);
-        this.value = value;
+        if (value != this.value) {
+            changes.firePropertyChange("value",this.value,value);
+            this.value = value;
+        }
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {

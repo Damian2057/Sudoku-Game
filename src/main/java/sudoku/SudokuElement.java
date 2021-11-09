@@ -9,7 +9,7 @@ public abstract class SudokuElement {
     protected List<SudokuField> fields = Arrays.asList(new SudokuField[9]);
 
 
-    public int getFields(int i) {
+    public int getFieldValue(int i) {
         return fields.get(i).getFieldValue();
     }
 

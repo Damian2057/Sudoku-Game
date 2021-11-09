@@ -33,7 +33,7 @@ class SudokuRowTest {
         SudokuElement element = new SudokuRow(tablica);
 
         for (int i = 0; i < 9; i++) {
-            assertEquals(tablica[i].getFieldValue(), element.getFields(i));
+            assertEquals(tablica[i].getFieldValue(), element.getFieldValue(i));
         }
     }
 }
