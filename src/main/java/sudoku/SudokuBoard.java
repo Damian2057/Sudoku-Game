@@ -2,6 +2,7 @@ package sudoku;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -149,5 +150,17 @@ public class SudokuBoard implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         checkBoard();
         //cos w checkstylu nie dziala
+    }
+
+    public List<SudokuRow> getRows() {
+        return rows;
+    }
+
+    public List<SudokuColumn> getColumns() {
+        return columns;
+    }
+
+    public List<SudokuBox> getBoxes() {
+        return boxes;
     }
 }
