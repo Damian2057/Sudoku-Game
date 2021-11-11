@@ -36,4 +36,22 @@ class SudokuBoxTest {
             assertEquals(tablica[i].getFieldValue(), element.getFieldValue(i));
         }
     }
+
+    @Test
+    void addSetBoxTest() {
+        SudokuField[] tablica = new SudokuField[9];
+
+        for(int i = 0; i < 9; i++) {
+            tablica[i] = new SudokuField();
+            tablica[i].setFieldValue(i+1);
+        }
+
+        SudokuElement element = new SudokuBox(tablica);
+
+        assertEquals(element.fields.size(), 9);
+
+        assertDoesNotThrow(()->element.fields.set(5, new SudokuField()));
+
+        assertThrows(UnsupportedOperationException.class, ()->element.fields.add(5, new SudokuField()));
+    }
 }

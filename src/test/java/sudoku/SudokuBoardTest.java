@@ -286,4 +286,34 @@ public class SudokuBoardTest {
         assertTrue( sudokuA.getSudokuField(1,1) != null);
     }
 
+    @Test
+    public void addSetTest() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+
+        SudokuField[] tmp = new SudokuField[9];
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                tmp[j] = new SudokuField();
+            }
+
+            assertEquals(sudokuA.getRows().size(), 9);
+            assertDoesNotThrow(() -> sudokuA.getRows().set(0, new SudokuRow(tmp)));
+            assertThrows(UnsupportedOperationException.class,
+                    ()->sudokuA.getRows().add(0, new SudokuRow(tmp)));
+
+            assertEquals(sudokuA.getColumns().size(), 9);
+            assertDoesNotThrow(() -> sudokuA.getColumns().set(0, new SudokuColumn(tmp)));
+            assertThrows(UnsupportedOperationException.class,
+                    ()->sudokuA.getColumns().add(0, new SudokuColumn(tmp)));
+
+            assertEquals(sudokuA.getBoxes().size(), 9);
+            assertDoesNotThrow(() -> sudokuA.getBoxes().set(0, new SudokuBox(tmp)));
+            assertThrows(UnsupportedOperationException.class,
+                    ()->sudokuA.getBoxes().add(0, new SudokuBox(tmp)));
+        }
+    }
+
+
 }
