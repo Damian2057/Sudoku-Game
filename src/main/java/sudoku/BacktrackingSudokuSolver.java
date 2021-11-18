@@ -1,8 +1,30 @@
 package sudoku;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
+
+    private List<Integer> randList  =  Arrays.asList();
+
+    public void fillRandList() {
+            randList = IntStream.rangeClosed(1, 9)
+                    .boxed().collect(Collectors.toList());
+    }
+
+    public int getElement() {
+        if (randList.size() == 0) {
+            fillRandList();
+        }
+        Random randomizer = new Random();
+        int i = randList.get(randomizer.nextInt(randList.size()));
+        Integer integer = Integer.valueOf(i);
+        randList.remove(integer);
+        return i;
+    }
 
     public void solve(SudokuBoard board) {
         solveBoard(0, 0, board);
@@ -18,9 +40,8 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             rzad++;
             kolumna = 0;
         }
-
         for  (int i = 0; i < 9; i++) {
-            int numer = randomNum(9, rzad, board);
+            int numer = getElement();
             //losuj po 9 liczb od 1-9 bez powtorzen(tyle ile w wierszu
             if (checkCorrect(rzad, kolumna, numer, board)) {
 
@@ -35,25 +56,6 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             //zaczynamy sie cofac
         }
         return false;
-    }
-
-
-
-    public int randomNum(int max, int rzad, SudokuBoard board) {
-        Random rand = new Random();
-        int intRandom = rand.nextInt(max) + 1;
-        boolean f = true;
-        while (f) {
-            for (int i = 0; i < 9; i++) {
-                if (board.get(rzad, i) == intRandom) {
-                    f = true;
-                    intRandom = rand.nextInt(max) + 1;
-                } else {
-                    f = false;
-                }
-            }
-        }
-        return  intRandom;
     }
 
     public boolean checkCorrect(int rzad, int kolumna, int numer, SudokuBoard board) {
