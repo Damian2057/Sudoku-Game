@@ -1,18 +1,22 @@
 package sudoku;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
 
     private List<Integer> randList  =  Arrays.asList();
 
     public void fillRandList() {
-            randList = IntStream.rangeClosed(1, 9)
-                    .boxed().collect(Collectors.toList());
+            randList = IntStream.rangeClosed(1, 9).boxed().collect(Collectors.toList());
     }
 
     public int getElement() {
@@ -24,6 +28,31 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         Integer integer = Integer.valueOf(i);
         randList.remove(integer);
         return i;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     public void solve(SudokuBoard board) {
