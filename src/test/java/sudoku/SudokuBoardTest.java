@@ -315,5 +315,15 @@ public class SudokuBoardTest {
         }
     }
 
+    @Test
+    public void toStringTest() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        SudokuBoard sudokuB = new SudokuBoard(s);
+
+        System.out.println(sudokuA.equals(sudokuA));
+    }
+
+
 
 }
