@@ -285,6 +285,48 @@ public class ObjectMethodTest {
         assertFalse(s1.equals(null));
         assertFalse(s2.equals(b2));
         assertFalse(s2.equals(b1));
+
+
+    }
+
+    @Test
+    public void cohesionTest() {
+        //test dla BacktrackingSudokuSolver
+        BacktrackingSudokuSolver b1 = new BacktrackingSudokuSolver();
+        BacktrackingSudokuSolver b2 = new BacktrackingSudokuSolver();
+        assertTrue(b1.equals(b2) && (b1.hashCode()==b2.hashCode()));
+        b2.getElement();
+        assertFalse(b1.equals(b2) && (b1.hashCode()==b2.hashCode()));
+
+        //test dla SudokuBoard
+        SudokuBoard s1 = new SudokuBoard(b1);
+        SudokuBoard s2 = new SudokuBoard(b2);
+        assertTrue(s1.equals(s1) && (s1.hashCode()==s1.hashCode()));
+        assertFalse(s1.equals(s2) && (s1.hashCode()==s2.hashCode()));
+
+        //test dla SudokuField
+        SudokuField f1 = new SudokuField();
+        SudokuField f2 = new SudokuField();
+        assertTrue(f1.equals(f1) && (f1.hashCode()==f1.hashCode()));
+        assertFalse(f1.equals(f2) && (f1.hashCode()==f2.hashCode()));
+
+        //test dla SudokuElement
+        SudokuField[] t = new SudokuField[9];
+        SudokuField[] t2 = new SudokuField[9];
+
+        for(int i = 0; i < 9; i++) {
+            t[i] = new SudokuField();
+            t2[i] = new SudokuField();
+            t[i].setFieldValue(i);
+            t2[i].setFieldValue(9-i);
+        }
+
+        SudokuElement r1 = new SudokuRow(t);
+        SudokuElement r2 = new SudokuRow(t);
+        SudokuElement r3 = new SudokuRow(t2);
+
+        assertTrue(r1.equals(r2) && (r1.hashCode()==r2.hashCode()));
+        assertFalse(r1.equals(r3) && (r1.hashCode()==r3.hashCode()));
     }
 
 }

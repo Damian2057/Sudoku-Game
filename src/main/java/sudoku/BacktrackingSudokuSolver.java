@@ -15,7 +15,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
 
     private List<Integer> randList  =  Arrays.asList();
 
-    public void fillRandList() {
+    private void fillRandList() {
             randList = IntStream.rangeClosed(1, 9).boxed().collect(Collectors.toList());
     }
 
