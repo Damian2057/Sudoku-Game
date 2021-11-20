@@ -119,6 +119,7 @@ public class ObjectMethodTest {
         SudokuField s2 = new SudokuField();
 
         assertNotEquals(s1.toString(), s2.toString());
+        assertEquals(s1.toString(), s1.toString());
     }
 
     @Test
@@ -171,4 +172,119 @@ public class ObjectMethodTest {
         assertEquals(box1.toString(), box2.toString());
         assertNotEquals(box1.toString(), box3.toString());
     }
+
+    @Test
+    public void equalsBacktrackingSudokuSolverTest() {
+        BacktrackingSudokuSolver s1 = new BacktrackingSudokuSolver();
+        BacktrackingSudokuSolver s2 = new BacktrackingSudokuSolver();
+        SudokuSolver s3 = new BacktrackingSudokuSolver();
+        SudokuBoard b1 = new SudokuBoard(s2);
+        s2.getElement();
+
+        assertTrue(s1.equals(s1));
+        assertFalse(s1.equals(null));
+        assertFalse(s1.equals(s2));
+        assertFalse(s2.equals(s1));
+        assertTrue(s3.equals(s1));
+        assertTrue(s1.equals(s3));
+        assertFalse(s1.equals(s3.getClass()));
+        assertFalse(s1.equals(b1));
+    }
+
+    @Test
+    public void equalsSudokuFieldTest() {
+        SudokuField s1 = new SudokuField();
+        SudokuField s2 = new SudokuField();
+        BacktrackingSudokuSolver b1 = new BacktrackingSudokuSolver();
+
+        assertTrue(s1.equals(s1));
+        assertTrue(s2.equals(s2));
+        assertFalse(s1.equals(s2));
+        assertFalse(s2.equals(s1));
+        assertFalse(s1.equals(null));
+        assertFalse(s1.equals(s2.getClass()));
+        assertFalse(s1.equals(b1));
+
+    }
+
+    @Test
+    public void equalsSudokuElementTest() {
+        SudokuField[] t = new SudokuField[9];
+        SudokuField[] t2 = new SudokuField[9];
+
+        for(int i = 0; i < 9; i++) {
+            t[i] = new SudokuField();
+            t2[i] = new SudokuField();
+            t[i].setFieldValue(i);
+            t2[i].setFieldValue(9-i);
+        }
+        BacktrackingSudokuSolver b1 = new BacktrackingSudokuSolver();
+
+        //test dla row
+        SudokuElement row1 = new SudokuRow(t);
+        SudokuElement row2 = new SudokuRow(t);
+        SudokuElement row3 = new SudokuRow(t2);
+
+
+        assertTrue(row1.equals(row1));
+        assertTrue(row1.equals(row2));
+        assertTrue(row2.equals(row1));
+        assertFalse(row3.equals(row2));
+        assertFalse(row1.equals(row3));
+        assertFalse(row1.equals(null));
+        assertFalse(row3.equals(null));
+        assertFalse(row3.equals(b1));
+
+        //test dla column
+        SudokuElement column1 = new SudokuColumn(t);
+        SudokuElement column2 = new SudokuColumn(t);
+        SudokuElement column3 = new SudokuColumn(t2);
+
+
+        assertTrue(column1.equals(column1));
+        assertTrue(column1.equals(column2));
+        assertTrue(column2.equals(column1));
+        assertFalse(column3.equals(column2));
+        assertFalse(column1.equals(column3));
+        assertFalse(column1.equals(null));
+        assertFalse(column3.equals(null));
+        assertFalse(column3.equals(b1));
+
+        //test dla box
+        SudokuElement box1 = new SudokuBox(t);
+        SudokuElement box2 = new SudokuBox(t);
+        SudokuElement box3 = new SudokuBox(t2);
+
+
+        assertTrue(box1.equals(box1));
+        assertTrue(box1.equals(box2));
+        assertTrue(box2.equals(box1));
+        assertFalse(box3.equals(box2));
+        assertFalse(box1.equals(box3));
+        assertFalse(box1.equals(null));
+        assertFalse(box3.equals(null));
+        assertFalse(box3.equals(b1));
+
+        //mieszane asercje
+        assertFalse(row1.equals(column1));
+        assertFalse(column1.equals(box1));
+        assertFalse(row1.equals(box1));
+    }
+
+    @Test
+    public void equalsSudokuBoardTest() {
+        BacktrackingSudokuSolver b1 = new BacktrackingSudokuSolver();
+        BacktrackingSudokuSolver b2 = new BacktrackingSudokuSolver();
+        SudokuBoard s1 = new SudokuBoard(b1);
+        SudokuBoard s2 = new SudokuBoard(b2);
+
+        assertTrue(s1.equals(s1));
+        assertTrue(s2.equals(s2));
+        assertFalse(s1.equals(s2));
+        assertFalse(s2.equals(s1));
+        assertFalse(s1.equals(null));
+        assertFalse(s2.equals(b2));
+        assertFalse(s2.equals(b1));
+    }
+
 }
