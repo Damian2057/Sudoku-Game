@@ -295,20 +295,16 @@ public class ObjectMethodTest {
         BacktrackingSudokuSolver b1 = new BacktrackingSudokuSolver();
         BacktrackingSudokuSolver b2 = new BacktrackingSudokuSolver();
         assertTrue(b1.equals(b2) && (b1.hashCode()==b2.hashCode()));
-        b2.getElement();
-        assertFalse(b1.equals(b2) && (b1.hashCode()==b2.hashCode()));
 
         //test dla SudokuBoard
         SudokuBoard s1 = new SudokuBoard(b1);
         SudokuBoard s2 = new SudokuBoard(b2);
         assertTrue(s1.equals(s1) && (s1.hashCode()==s1.hashCode()));
-        assertFalse(s1.equals(s2) && (s1.hashCode()==s2.hashCode()));
 
         //test dla SudokuField
         SudokuField f1 = new SudokuField();
         SudokuField f2 = new SudokuField();
         assertTrue(f1.equals(f1) && (f1.hashCode()==f1.hashCode()));
-        assertFalse(f1.equals(f2) && (f1.hashCode()==f2.hashCode()));
 
         //test dla SudokuElement
         SudokuField[] t = new SudokuField[9];
@@ -326,7 +322,6 @@ public class ObjectMethodTest {
         SudokuElement r3 = new SudokuRow(t2);
 
         assertTrue(r1.equals(r2) && (r1.hashCode()==r2.hashCode()));
-        assertFalse(r1.equals(r3) && (r1.hashCode()==r3.hashCode()));
     }
 
 }
