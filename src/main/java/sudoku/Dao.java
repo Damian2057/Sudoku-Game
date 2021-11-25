@@ -1,8 +1,10 @@
 package sudoku;
 
-public interface Dao<T> {
+import java.io.IOException;
 
-    T read();
+public interface Dao<T> extends AutoCloseable{
 
-    void write(T obj);
+    T read() throws IOException, ClassNotFoundException;
+
+    void write(T obj) throws IOException;
 }

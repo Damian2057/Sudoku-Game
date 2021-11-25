@@ -1,22 +1,34 @@
 package sudoku;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
-public class FileSudokuBoardDao implements Dao<SudokuBoard> {
+public class FileSudokuBoardDao<T> implements Dao<T> {
 
     private File file;
+    private final String fileName;
 
-    public FileSudokuBoardDao(String pathToFile) {
-        file = new File(pathToFile);
+    public FileSudokuBoardDao(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
-    public SudokuBoard read() {
-        return null;
+    public T read() throws IOException, ClassNotFoundException {
+        FileInputStream fos = new FileInputStream(fileName);
+        ObjectInputStream os = new ObjectInputStream(fos);
+        return (T) os.readObject();
     }
 
     @Override
-    public void write(SudokuBoard obj) {
+    public void write(T obj) throws IOException {
+
+    }
+
+    @Override
+    public void close() throws Exception {
 
     }
 }
+
