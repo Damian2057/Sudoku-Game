@@ -23,7 +23,7 @@ public class FileTest {
             SudokuBoard sudoku2 = file.read();
             System.out.println(sudoku2.showBoard());
 
-            //assertEquals(sudoku, sudoku2);
+            assertEquals(sudoku.hashCode(), sudoku2.hashCode());
         } catch (IOException e) {
             e.printStackTrace();
     }

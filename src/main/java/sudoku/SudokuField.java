@@ -43,16 +43,18 @@ public class SudokuField implements Serializable {
         if (o == null) {
             return false;
         }
-        if (getClass() != o.getClass()) {
+        if (!(o instanceof SudokuField)) {
             return false;
         }
+        SudokuField that = (SudokuField) o;
 
-        return EqualsBuilder.reflectionEquals(this, o);
+        return new EqualsBuilder().append(this.value, that.value).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder().append(this.value).toHashCode();
+
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {

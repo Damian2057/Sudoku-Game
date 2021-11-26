@@ -6,11 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 public class FileSudokuBoardDao<T> implements Dao<T> { //, AutoCloseable
 
-    private File file;
     private final String fileName;
 
     public FileSudokuBoardDao(String fileName) {

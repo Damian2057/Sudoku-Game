@@ -1,11 +1,6 @@
 package sudoku;
 
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ls.LSOutput;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,6 +28,8 @@ public class ObjectMethodTest {
 
         assertEquals(s1, s1);
         assertEquals(s1.hashCode(), s1.hashCode());
+        assertEquals(s1,s2);
+        s2.setFieldValue(5);
         assertNotEquals(s1, s2);
         assertNotEquals(s1.hashCode(), s2.hashCode());
     }
@@ -46,8 +43,9 @@ public class ObjectMethodTest {
 
         assertEquals(s1, s1);
         assertEquals(s1.hashCode(), s1.hashCode());
-        assertNotEquals(s1, s2);
-        assertNotEquals(s1.hashCode(), s2.hashCode());
+        assertEquals(s1,s2);
+        s2.set(0,0,0);
+        assertEquals(s1.hashCode(),s2.hashCode());
     }
 
     @Test
@@ -181,14 +179,15 @@ public class ObjectMethodTest {
         SudokuBoard b1 = new SudokuBoard(s2);
         s2.getElement();
 
-        assertTrue(s1.equals(s1));
+        assertEquals(s1, s1);
+        assertNotEquals(null, s1);
         assertFalse(s1.equals(null));
-        assertFalse(s1.equals(s2));
-        assertFalse(s2.equals(s1));
-        assertTrue(s3.equals(s1));
-        assertTrue(s1.equals(s3));
-        assertFalse(s1.equals(s3.getClass()));
-        assertFalse(s1.equals(b1));
+        assertNotEquals(s1, s2);
+        assertNotEquals(s2, s1);
+        assertEquals(s3, s1);
+        assertEquals(s1, s3);
+        assertNotEquals(s1, s3.getClass());
+        assertNotEquals(s1, b1);
     }
 
     @Test
@@ -197,13 +196,14 @@ public class ObjectMethodTest {
         SudokuField s2 = new SudokuField();
         BacktrackingSudokuSolver b1 = new BacktrackingSudokuSolver();
 
-        assertTrue(s1.equals(s1));
-        assertTrue(s2.equals(s2));
-        assertFalse(s1.equals(s2));
-        assertFalse(s2.equals(s1));
+        assertEquals(s1, s1);
+        assertEquals(s2, s2);
+        assertEquals(s1, s2);
+        s2.setFieldValue(5);
+        assertNotEquals(s2, s1);
+        assertNotEquals(null, s1);
         assertFalse(s1.equals(null));
-        assertFalse(s1.equals(s2.getClass()));
-        assertFalse(s1.equals(b1));
+        assertNotEquals(s1, b1);
 
     }
 
@@ -226,14 +226,14 @@ public class ObjectMethodTest {
         SudokuElement row3 = new SudokuRow(t2);
 
 
-        assertTrue(row1.equals(row1));
-        assertTrue(row1.equals(row2));
-        assertTrue(row2.equals(row1));
-        assertFalse(row3.equals(row2));
-        assertFalse(row1.equals(row3));
+        assertEquals(row1, row1);
+        assertEquals(row1, row2);
+        assertEquals(row2, row1);
+        assertNotEquals(row3, row2);
+        assertNotEquals(row1, row3);
         assertFalse(row1.equals(null));
-        assertFalse(row3.equals(null));
-        assertFalse(row3.equals(b1));
+        assertNotEquals(null, row3);
+        assertNotEquals(row3, b1);
 
         //test dla column
         SudokuElement column1 = new SudokuColumn(t);
@@ -241,14 +241,14 @@ public class ObjectMethodTest {
         SudokuElement column3 = new SudokuColumn(t2);
 
 
-        assertTrue(column1.equals(column1));
-        assertTrue(column1.equals(column2));
-        assertTrue(column2.equals(column1));
-        assertFalse(column3.equals(column2));
-        assertFalse(column1.equals(column3));
+        assertEquals(column1, column1);
+        assertEquals(column1, column2);
+        assertEquals(column2, column1);
+        assertNotEquals(column3, column2);
+        assertNotEquals(column1, column3);
         assertFalse(column1.equals(null));
-        assertFalse(column3.equals(null));
-        assertFalse(column3.equals(b1));
+        assertNotEquals(null, column3);
+        assertNotEquals(column3, b1);
 
         //test dla box
         SudokuElement box1 = new SudokuBox(t);
@@ -256,19 +256,25 @@ public class ObjectMethodTest {
         SudokuElement box3 = new SudokuBox(t2);
 
 
-        assertTrue(box1.equals(box1));
-        assertTrue(box1.equals(box2));
-        assertTrue(box2.equals(box1));
-        assertFalse(box3.equals(box2));
-        assertFalse(box1.equals(box3));
+        assertEquals(box1, box1);
+        assertEquals(box1, box2);
+        assertEquals(box2, box1);
+        assertNotEquals(box3, box2);
+        assertNotEquals(box1, box3);
         assertFalse(box1.equals(null));
-        assertFalse(box3.equals(null));
-        assertFalse(box3.equals(b1));
+        assertNotEquals(null, box3);
+        assertNotEquals(box3, b1);
 
         //mieszane asercje
-        assertFalse(row1.equals(column1));
-        assertFalse(column1.equals(box1));
-        assertFalse(row1.equals(box1));
+        SudokuField s = new SudokuField();
+        s.setFieldValue(10);
+        column1.fields.set(5, s);
+        assertNotEquals(row1, column1);
+        assertNotEquals(column1, box1);
+        SudokuField b = new SudokuField();
+        b.setFieldValue(11);
+        box1.fields.set(5,b);
+        assertNotEquals(row1, box1);
     }
 
     @Test
@@ -278,13 +284,14 @@ public class ObjectMethodTest {
         SudokuBoard s1 = new SudokuBoard(b1);
         SudokuBoard s2 = new SudokuBoard(b2);
 
-        assertTrue(s1.equals(s1));
-        assertTrue(s2.equals(s2));
-        assertFalse(s1.equals(s2));
-        assertFalse(s2.equals(s1));
+        assertEquals(s1, s1);
+        assertEquals(s2, s2);
+        s2.set(0,0,10);
+        assertNotEquals(s1, s2);
+        assertNotEquals(null, s1);
         assertFalse(s1.equals(null));
-        assertFalse(s2.equals(b2));
-        assertFalse(s2.equals(b1));
+        assertNotEquals(s2, b2);
+        assertNotEquals(s2, b1);
 
 
     }

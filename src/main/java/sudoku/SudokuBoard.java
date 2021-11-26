@@ -80,16 +80,23 @@ public class SudokuBoard implements PropertyChangeListener, Serializable {
         if (o == null) {
             return false;
         }
-        if (getClass() != o.getClass()) {
+        if (!(o instanceof SudokuBoard)) {
             return false;
         }
+        SudokuBoard that = (SudokuBoard) o;
 
-        return EqualsBuilder.reflectionEquals(this, o);
+        return new EqualsBuilder().append(this.board, that.board).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder()
+                .append(this.board)
+                .append(this.rows)
+                .append(this.columns)
+                .append(this.boxes)
+                .append(sudokusolver)
+                .toHashCode();
     }
 
 
@@ -183,7 +190,6 @@ public class SudokuBoard implements PropertyChangeListener, Serializable {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         checkBoard();
-        //cos w checkstylu nie dziala
     }
 
     public List<SudokuRow> getRows() {

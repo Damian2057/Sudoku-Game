@@ -45,16 +45,17 @@ public abstract class SudokuElement implements Serializable {
         if (o == null) {
             return false;
         }
-        if (getClass() != o.getClass()) {
+        if (!(o instanceof SudokuElement)) {
             return false;
         }
+        SudokuElement that = (SudokuElement) o;
 
-        return EqualsBuilder.reflectionEquals(this, o);
+        return new EqualsBuilder().append(this.fields, that.fields).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder().append(this.fields).toHashCode();
     }
 
 }
