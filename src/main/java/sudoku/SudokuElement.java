@@ -2,6 +2,7 @@ package sudoku;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -9,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
-public abstract class SudokuElement {
+public abstract class SudokuElement implements Serializable {
 
     protected List<SudokuField> fields = Arrays.asList(new SudokuField[9]);
 
