@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,9 +13,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
 
-public class SudokuBoard implements PropertyChangeListener {
+public class SudokuBoard implements PropertyChangeListener, Serializable {
 
-    private SudokuField[][] board = new SudokuField[9][9];
+    private SudokuField[][] board;
     private SudokuSolver sudokusolver;
     private List<SudokuRow> rows = Arrays.asList(new SudokuRow[9]);
     private List<SudokuColumn> columns = Arrays.asList(new SudokuColumn[9]);
@@ -24,12 +25,13 @@ public class SudokuBoard implements PropertyChangeListener {
     public SudokuBoard(SudokuSolver sudokusolver) {
 
         this.sudokusolver = sudokusolver;
-
+        this.board = new SudokuField[9][9];
         //utworzenie strutury board
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                board[i][j] = new SudokuField();
-                board[i][j].addPropertyChangeListener(this);
+                SudokuField field = new SudokuField();
+                field.addPropertyChangeListener(this);
+                this.board[i][j] = field;
             }
         }
 
@@ -78,16 +80,23 @@ public class SudokuBoard implements PropertyChangeListener {
         if (o == null) {
             return false;
         }
-        if (getClass() != o.getClass()) {
+        if (!(o instanceof SudokuBoard)) {
             return false;
         }
+        SudokuBoard that = (SudokuBoard) o;
 
-        return EqualsBuilder.reflectionEquals(this, o);
+        return new EqualsBuilder().append(this.board, that.board).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder()
+                .append(this.board)
+                .append(this.rows)
+                .append(this.columns)
+                .append(this.boxes)
+                .append(sudokusolver)
+                .toHashCode();
     }
 
 
@@ -181,7 +190,6 @@ public class SudokuBoard implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         checkBoard();
-        //cos w checkstylu nie dziala
     }
 
     public List<SudokuRow> getRows() {

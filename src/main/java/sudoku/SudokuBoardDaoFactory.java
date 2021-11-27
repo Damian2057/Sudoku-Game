@@ -1,7 +1,7 @@
 package sudoku;
 
-public class SudokuBoardDaoFactory {
-    public static FileSudokuBoardDao getFileDao(String pathToFile) {
-        return new FileSudokuBoardDao(pathToFile);
+public class SudokuBoardDaoFactory<T> {
+    Dao<T> getFileDao(String fileName) {
+        return new FileSudokuBoardDao<T>(fileName);
     }
 }
