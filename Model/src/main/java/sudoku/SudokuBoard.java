@@ -85,7 +85,13 @@ public class SudokuBoard implements PropertyChangeListener, Serializable {
         }
         SudokuBoard that = (SudokuBoard) o;
 
-        return new EqualsBuilder().append(this.board, that.board).isEquals();
+        return new EqualsBuilder()
+                .append(this.sudokusolver, that.sudokusolver)
+                .append(this.rows, that.rows)
+                .append(this.boxes, that.boxes)
+                .append(this.columns, that.columns)
+                .append(this.board, that.board)
+                .isEquals();
     }
 
     @Override

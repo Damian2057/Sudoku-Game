@@ -1,6 +1,8 @@
-package sudoku;
 
 import org.junit.jupiter.api.Test;
+import sudoku.BacktrackingSudokuSolver;
+import sudoku.SudokuBoard;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileTest {

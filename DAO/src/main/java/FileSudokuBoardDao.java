@@ -1,4 +1,3 @@
-package sudoku;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +32,6 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
 
     @Override
     public void close() throws Exception {
-        System.out.println("close");
         fis.close();
         ois.close();
     }
