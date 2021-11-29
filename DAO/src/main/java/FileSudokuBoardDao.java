@@ -10,6 +10,8 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
     private final String fileName;
     private FileInputStream fis;
     private ObjectInputStream ois;
+    private FileOutputStream fos;
+    private ObjectOutputStream os;
 
     public FileSudokuBoardDao(String fileName) {
         this.fileName = fileName;
@@ -24,8 +26,8 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
 
     @Override
     public void write(T obj) throws IOException {
-            FileOutputStream fos = new FileOutputStream(fileName);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
+            fos = new FileOutputStream(fileName);
+            os = new ObjectOutputStream(fos);
             os.writeObject(obj);
     }
 
@@ -34,5 +36,7 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
     public void close() throws Exception {
         fis.close();
         ois.close();
+        fos.close();
+        os.close();
     }
 }

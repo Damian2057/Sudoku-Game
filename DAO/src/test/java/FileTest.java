@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileTest {
     @Test
-    public void WriteTest() {
+    public void FileTest() {
         SudokuBoardDaoFactory<SudokuBoard> factory = new SudokuBoardDaoFactory<>();
         try (Dao<SudokuBoard> file = factory.getFileDao("test.txt")){
             SudokuBoard sudoku = new SudokuBoard(new BacktrackingSudokuSolver());
