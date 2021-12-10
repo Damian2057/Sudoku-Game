@@ -1,8 +1,8 @@
 package sudoku.level;
 
+import java.util.Random;
 import sudoku.SudokuBoard;
 
-import java.util.Random;
 
 public class Level {
     protected int numberOfFieldsToRemove;

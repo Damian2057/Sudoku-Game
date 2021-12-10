@@ -1,5 +1,4 @@
 package com.example.gui;
 
-public class EventHandler {
-
+public class MainMenu {
 }

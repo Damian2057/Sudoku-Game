@@ -1,4 +1,4 @@
 package com.example.gui;
 
-public class MainApp {
+public class Game {
 }
