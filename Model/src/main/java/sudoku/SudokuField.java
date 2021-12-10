@@ -5,13 +5,14 @@ import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.Arrays;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
 
-public class SudokuField implements Serializable {
+public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
     private int value;
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
@@ -68,4 +69,22 @@ public class SudokuField implements Serializable {
     public PropertyChangeSupport getChanges() {
         return changes;
     }
+
+    @Override
+    public int compareTo(SudokuField o) {
+        return this.getFieldValue() - o.getFieldValue();
+    }
+
+    @Override
+    public SudokuField clone() {
+        try {
+            SudokuField clone = (SudokuField) super.clone();
+            clone.changes = new PropertyChangeSupport(clone);
+            return clone;
+
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
 }

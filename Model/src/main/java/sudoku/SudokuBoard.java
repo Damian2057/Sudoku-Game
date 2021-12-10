@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
 
-public class SudokuBoard implements PropertyChangeListener, Serializable {
+public class SudokuBoard implements PropertyChangeListener, Serializable, Cloneable {
 
     private SudokuField[][] board;
     private SudokuSolver sudokusolver;
@@ -209,4 +209,45 @@ public class SudokuBoard implements PropertyChangeListener, Serializable {
     public List<SudokuBox> getBoxes() {
         return boxes;
     }
+
+    @Override
+    public SudokuBoard clone() {
+        try {
+            SudokuBoard clone = (SudokuBoard) super.clone();
+            clone.board = new SudokuField[9][9];
+            clone.sudokusolver = sudokusolver;
+            clone.rows = Arrays.asList(new SudokuRow[9]);
+            clone.columns = Arrays.asList(new SudokuColumn[9]);
+            clone.boxes = Arrays.asList(new SudokuBox[9]);
+            SudokuField[] pomR = new SudokuField[9];
+            SudokuField[] pomC = new SudokuField[9];
+
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    clone.board[i][j] = board[i][j].clone();
+                    pomR[j] = board[i][j].clone();
+                    pomC[j] = board[j][i].clone();
+                }
+
+                clone.rows.set(i, (SudokuRow) getRow(i).clone());
+                clone.columns.set(i,(SudokuColumn) getColumn(i).clone());
+                //clone.columns.set(i, new SudokuColumn(pomC));
+
+
+            }
+            int indeks = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    clone.boxes.set(indeks, (SudokuBox) getBox(i,j).clone());
+                    indeks++;
+                }
+            }
+
+            return clone;
+
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
 }

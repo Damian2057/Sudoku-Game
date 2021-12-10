@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
-public abstract class SudokuElement implements Serializable {
+public abstract class SudokuElement implements Serializable, Cloneable {
 
     protected List<SudokuField> fields = Arrays.asList(new SudokuField[9]);
 
@@ -56,6 +56,23 @@ public abstract class SudokuElement implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(this.fields).toHashCode();
+    }
+
+    @Override
+    public SudokuElement clone() {
+        try {
+            SudokuElement clone = (SudokuElement) super.clone();
+            clone.fields = Arrays.asList(new SudokuField[9]);
+            int i = 0;
+            for (SudokuField type : fields) {
+                clone.fields.set(i, type.clone());
+                i++;
+            }
+            return clone;
+
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+            }
     }
 
 }
