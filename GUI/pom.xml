@@ -116,7 +116,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.gui/com.example.gui.HelloApplication</mainClass>
+                            <mainClass>com.example.gui/com.example.gui.MainApp</mainClass>
                         </configuration>
                     </execution>
                 </executions>
