@@ -22,6 +22,7 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
     private List<SudokuBox> boxes = Arrays.asList(new SudokuBox[9]);
 
 
+
     public SudokuBoard(SudokuSolver sudokusolver) {
 
         this.sudokusolver = sudokusolver;
@@ -249,5 +250,4 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
             throw new AssertionError();
         }
     }
-
 }
