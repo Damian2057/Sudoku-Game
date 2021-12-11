@@ -8,30 +8,27 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sudoku.level.*;
-
+import sudoku.level.Easy;
+import sudoku.level.Hard;
+import sudoku.level.Level;
+import sudoku.level.Medium;
+import sudoku.level.VeryEasy;
 
 public class MainMenu {
-
-
     private Level level;
 
     @FXML
     public MenuButton levelBar;
 
     public void gameStart(ActionEvent actionEvent) throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
-        Parent root = loader.load();
-
-        if(level == null) {
+        if (level == null) {
             level = new VeryEasy();
         }
+        Parent root = loader.load();
         Game game = loader.getController();
-        game.StartGame(level);
-
+        game.startGame(level);
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -44,17 +41,17 @@ public class MainMenu {
         levelBar.setText("VeryEasy");
     }
 
-    public void Easy(ActionEvent actionEvent) {
+    public void easy(ActionEvent actionEvent) {
         level = new Easy();
         levelBar.setText("Easy");
     }
 
-    public void Medium(ActionEvent actionEvent) {
+    public void medium(ActionEvent actionEvent) {
         level = new Medium();
         levelBar.setText("Medium");
     }
 
-    public void Hard(ActionEvent actionEvent) {
+    public void hard(ActionEvent actionEvent) {
         level = new Hard();
         levelBar.setText("Hard");
     }

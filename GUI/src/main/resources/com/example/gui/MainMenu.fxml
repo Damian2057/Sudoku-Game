@@ -18,9 +18,9 @@
       <MenuButton id="levelBar" fx:id="levelBar" layoutX="173.0" layoutY="210.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="155.0" text="Wybierz Level">
         <items>
           <MenuItem mnemonicParsing="false" text="Very Easy" onAction="#veryEasy"/>
-            <MenuItem mnemonicParsing="false" text="Easy" onAction="#Easy"/>
-            <MenuItem mnemonicParsing="false" text="Medium" onAction="#Medium"/>
-            <MenuItem mnemonicParsing="false" text="Hard" onAction="#Hard"/>
+            <MenuItem mnemonicParsing="false" text="Easy" onAction="#easy"/>
+            <MenuItem mnemonicParsing="false" text="Medium" onAction="#medium"/>
+            <MenuItem mnemonicParsing="false" text="Hard" onAction="#hard"/>
         </items>
       </MenuButton>
    </children>
