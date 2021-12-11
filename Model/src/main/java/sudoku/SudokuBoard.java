@@ -250,4 +250,8 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
             throw new AssertionError();
         }
     }
+
+    public SudokuField[][] getBoard() {
+        return board;
+    }
 }
