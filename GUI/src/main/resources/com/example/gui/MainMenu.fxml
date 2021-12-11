@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="525.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.MainMenu">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="145.0" layoutY="116.0" prefHeight="67.0" prefWidth="211.0" text="Wybierz poziom" textAlignment="CENTER">
@@ -18,8 +17,10 @@
       <Button id="startButton" fx:id="startButton" layoutX="156.0" layoutY="434.0" mnemonicParsing="false" onAction="#gameStart" prefHeight="56.0" prefWidth="188.0" text="Start" />
       <MenuButton id="levelBar" fx:id="levelBar" layoutX="173.0" layoutY="210.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="155.0" text="Wybierz Level">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
+          <MenuItem mnemonicParsing="false" text="Very Easy" onAction="#veryEasy"/>
+            <MenuItem mnemonicParsing="false" text="Easy" onAction="#Easy"/>
+            <MenuItem mnemonicParsing="false" text="Medium" onAction="#Medium"/>
+            <MenuItem mnemonicParsing="false" text="Hard" onAction="#Hard"/>
         </items>
       </MenuButton>
    </children>

@@ -16,7 +16,7 @@
          </font>
       </Label>
       <Label layoutX="211.0" layoutY="101.0" text="Poziom" />
-      <Label fx:id="gameLevel" layoutX="260.0" layoutY="101.0" prefHeight="18.0" prefWidth="40.0" text="text" />
+      <Label fx:id="gameLevel" layoutX="260.0" layoutY="101.0" prefHeight="17.0" prefWidth="74.0" text="text" />
       <Button fx:id="closeButton" layoutX="7.0" layoutY="592.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="37.0" prefWidth="62.0" text="EXIT" />
       <GridPane fx:id="plansza" layoutX="23.0" layoutY="136.0" prefHeight="442.0" prefWidth="474.0">
         <columnConstraints>
