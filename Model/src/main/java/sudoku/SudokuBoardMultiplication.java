@@ -1,14 +1,12 @@
 package sudoku;
 
 public class SudokuBoardMultiplication {
-    private SudokuBoard sudokuboard;
 
-    public SudokuBoardMultiplication(SudokuBoard sudokuboard) {
-        this.sudokuboard = new SudokuBoard(new BacktrackingSudokuSolver());
+    public SudokuBoardMultiplication() {
+
     }
 
-    public SudokuBoard createSudoku() {
-        sudokuboard.solveGame();
-        return sudokuboard.clone();
+    public SudokuBoard createSudoku(SudokuBoard sb) {
+        return sb.clone();
     }
 }

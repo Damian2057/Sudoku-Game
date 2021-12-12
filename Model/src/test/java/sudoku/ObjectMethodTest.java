@@ -331,4 +331,24 @@ public class ObjectMethodTest {
         assertTrue(r1.equals(r2) && (r1.hashCode()==r2.hashCode()));
     }
 
+    @Test
+    void cloneTest() {
+        SudokuField[] t = new SudokuField[9];
+
+        for(int i = 0; i < 9; i++) {
+            t[i] = new SudokuField();
+            t[i].setFieldValue(i);
+        }
+
+        SudokuElement row1 = new SudokuRow(t);
+
+        SudokuElement c1 = row1.clone();
+
+        assertEquals(row1, c1);
+
+        c1.fields.get(0).setFieldValue(10);
+
+        assertNotEquals(row1, c1);
+    }
+
 }

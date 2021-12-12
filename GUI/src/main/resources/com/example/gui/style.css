@@ -1,3 +1,8 @@
 .bodybg{
     -fx-background-image: url(background.jpg);
 }
+
+.logopng{
+    -fx-background-image: url(logo_frenzy.png);
+    -fx-background-size: cover;
+}

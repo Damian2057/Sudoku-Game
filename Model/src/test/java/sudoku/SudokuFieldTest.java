@@ -41,8 +41,8 @@ class SudokuFieldTest {
         SudokuField f1 = new SudokuField();
         SudokuField f2 = new SudokuField();
 
-        assertThrows(NullPointerException.class, ()-> f1.compareTo(null));
-        assertDoesNotThrow(()->f2.compareTo(f1));
+        assertThrows(NullPointerException.class, () -> f1.compareTo(null));
+        assertDoesNotThrow(() -> f2.compareTo(f1));
 
         assertTrue(f2.compareTo(f2) == 0 && f2.equals(f2) == true);
         assertTrue(f1.compareTo(f1) == 0 && f1.equals(f1) == true);
@@ -53,4 +53,14 @@ class SudokuFieldTest {
         assertTrue(f2.compareTo(f1) != 0 && f2.equals(f1) == false);
     }
 
+    @Test
+    void cloneTest() {
+        SudokuField f1 = new SudokuField();
+
+        SudokuField c1 = f1.clone();
+        assertEquals(f1, c1);
+
+        c1.setFieldValue(5);
+        assertNotEquals(f1, c1);
+    }
 }

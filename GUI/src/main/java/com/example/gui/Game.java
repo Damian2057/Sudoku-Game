@@ -1,5 +1,6 @@
 package com.example.gui;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
 import sudoku.level.Level;
 
+
 public class Game {
     @FXML
     public Label gameLevel;
@@ -21,7 +23,7 @@ public class Game {
 
     private static SudokuBoard sudokuBoard;
 
-    public void startGame(Level level) {
+    public void startGame(Level level) throws IOException {
         sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
         sudokuBoard.solveGame();
         gameLevel.setText(level.toString());
@@ -45,7 +47,7 @@ public class Game {
         }
     }
 
-    public void closeApp(ActionEvent actionEvent) {
+    public void closeApp(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }

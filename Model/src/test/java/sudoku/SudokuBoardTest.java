@@ -253,6 +253,14 @@ public class SudokuBoardTest {
     }
 
     @Test
+    public void getBoardTest() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+
+        assertEquals(sudokuA.getBoard()[0][0].getFieldValue(), 0);
+    }
+
+    @Test
     public void getBox() {
         SudokuSolver s = new BacktrackingSudokuSolver();
         SudokuBoard sudokuA = new SudokuBoard(s);
@@ -324,6 +332,29 @@ public class SudokuBoardTest {
         System.out.println(sudokuA.equals(sudokuA));
     }
 
+    @Test
+    public void cloneTest() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard s1 = new SudokuBoard(s);
+
+        SudokuBoard c1 = s1.clone();
+
+        assertEquals(c1, s1);
+        c1.solveGame();
+
+        assertNotEquals(s1, c1);
+    }
+
+    @Test
+    public void czyJuzUsunietoTest() {
+        SudokuBoard s1 = new SudokuBoard(new BacktrackingSudokuSolver());
+
+        assertFalse(s1.isCzyJuzUsunietoPola());
+
+        s1.setCzyJuzUsunietoPola(true);
+
+        assertTrue(s1.isCzyJuzUsunietoPola());
+    }
 
 
 }
