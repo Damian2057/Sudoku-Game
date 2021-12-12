@@ -11,11 +11,15 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-            Scene scene = new Scene(root,500,700);
+            Scene scene = new Scene(root,500,600);
+            stage.setResizable(false);
+            stage.setTitle("SUDOKUGAME");
             stage.setScene(scene);
             stage.show();
+
 
         } catch (Exception e) {
             e.printStackTrace();

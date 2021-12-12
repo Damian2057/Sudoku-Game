@@ -6,9 +6,10 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="635.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Game">
+<AnchorPane prefHeight="635.0" prefWidth="521.0" styleClass="bodysu" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Game">
    <children>
       <Label alignment="CENTER" layoutX="159.0" layoutY="23.0" prefHeight="78.0" prefWidth="201.0" text="Sudoku">
          <font>
@@ -42,5 +43,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+      <Line endX="-124.0" endY="37.0" layoutX="124.0" layoutY="84.0" startX="397.0" startY="37.0" />
    </children>
 </AnchorPane>

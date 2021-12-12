@@ -31,7 +31,8 @@ public class MainMenu {
         game.startGame(level);
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
         Stage stage = new Stage();
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root,525,650));
+        stage.setResizable(false);
         stage.setTitle("SUDOKUGAME");
         stage.show();
     }
