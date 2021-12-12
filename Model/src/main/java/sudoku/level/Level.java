@@ -26,4 +26,8 @@ public class Level {
             }
         }
     }
+
+    public int getNumberOfFieldsToRemove() {
+        return numberOfFieldsToRemove;
+    }
 }
