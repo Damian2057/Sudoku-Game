@@ -20,8 +20,15 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
     private List<SudokuRow> rows = Arrays.asList(new SudokuRow[9]);
     private List<SudokuColumn> columns = Arrays.asList(new SudokuColumn[9]);
     private List<SudokuBox> boxes = Arrays.asList(new SudokuBox[9]);
+    private boolean czyJuzUsunietoPola = false;
 
+    public boolean isCzyJuzUsunietoPola() {
+        return czyJuzUsunietoPola;
+    }
 
+    public void setCzyJuzUsunietoPola(boolean czyJuzUsunietoPola) {
+        this.czyJuzUsunietoPola = czyJuzUsunietoPola;
+    }
 
     public SudokuBoard(SudokuSolver sudokusolver) {
 

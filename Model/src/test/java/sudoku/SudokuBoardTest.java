@@ -345,4 +345,16 @@ public class SudokuBoardTest {
         assertNotEquals(s1, c1);
     }
 
+    @Test
+    public void czyJuzUsunietoTest() {
+        SudokuBoard s1 = new SudokuBoard(new BacktrackingSudokuSolver());
+
+        assertFalse(s1.isCzyJuzUsunietoPola());
+
+        s1.setCzyJuzUsunietoPola(true);
+
+        assertTrue(s1.isCzyJuzUsunietoPola());
+    }
+
+
 }

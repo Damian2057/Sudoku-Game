@@ -37,22 +37,22 @@ public class MainMenu {
         stage.show();
     }
 
-    public void veryEasy(ActionEvent actionEvent) {
+    public void veryEasy(ActionEvent actionEvent) throws IOException {
         level = new VeryEasy();
         levelBar.setText("VeryEasy");
     }
 
-    public void easy(ActionEvent actionEvent) {
+    public void easy(ActionEvent actionEvent) throws IOException {
         level = new Easy();
         levelBar.setText("Easy");
     }
 
-    public void medium(ActionEvent actionEvent) {
+    public void medium(ActionEvent actionEvent) throws IOException {
         level = new Medium();
         levelBar.setText("Medium");
     }
 
-    public void hard(ActionEvent actionEvent) {
+    public void hard(ActionEvent actionEvent) throws IOException {
         level = new Hard();
         levelBar.setText("Hard");
     }

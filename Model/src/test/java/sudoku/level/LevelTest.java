@@ -41,5 +41,15 @@ public class LevelTest {
         assertEquals(hard.toString(), "Hard");
     }
 
+    @Test
+    public void czyJuzUsunieteTest() {
+        SudokuBoard s1 = new SudokuBoard(new BacktrackingSudokuSolver());
 
+        Level ez = new Easy();
+
+        s1.solveGame();
+        assertTrue(ez.removeFields(s1));
+        assertFalse(ez.removeFields(s1));
+
+    }
 }
