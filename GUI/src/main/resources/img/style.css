@@ -26,16 +26,20 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
+
 .menu-item .label {
     -fx-text-fill: white;
 }
 
-.menu-item:focused {
+.menu-item:hover {
     -fx-background-color:#ff9b0f;
 }
 
-.menu-item:focused .label {
-    -fx-text-fill: black;
+
+.allbtn:hover {
+    -fx-background-color:#f8ab3f;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
 }
 
 .context-menu {

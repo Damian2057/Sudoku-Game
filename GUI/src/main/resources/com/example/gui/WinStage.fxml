@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="150.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.WinWindow">
+   <children>
+      <Text layoutX="37.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GRATULACJE WYGRAŁEŚ!" textAlignment="CENTER" wrappingWidth="146.63671875">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

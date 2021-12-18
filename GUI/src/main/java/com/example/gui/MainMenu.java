@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -20,6 +21,7 @@ import sudoku.level.VeryEasy;
 public class MainMenu {
 
     public Pane setPane;
+    public Button startButton;
     private Level level;
 
     @FXML
@@ -34,10 +36,11 @@ public class MainMenu {
         Game game = loader.getController();
         game.startGame(level);
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
         Stage stage = new Stage();
-        stage.setScene(new Scene(root,497,525));
+        stage.setScene(new Scene(root,525,650));
         stage.setResizable(false);
-        stage.setTitle("SUDOKUGAME");
+        stage.setTitle("SudokuGame");
         stage.show();
     }
 
