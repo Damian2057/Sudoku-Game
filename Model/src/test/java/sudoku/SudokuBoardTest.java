@@ -230,7 +230,7 @@ public class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                assertEquals(sudokuA.get(i,j), sudokuA.getRow(i).getFieldValue(j));
+                assertEquals(sudokuA.get(i,j), sudokuA.getRow(j).getFieldValue(i));
             }
         }
 
@@ -247,7 +247,7 @@ public class SudokuBoardTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                assertEquals(sudokuA.get(j,i), sudokuA.getColumn(i).getFieldValue(j));
+                assertEquals(sudokuA.get(j,i), sudokuA.getColumn(j).getFieldValue(i));
             }
         }
     }

@@ -21,7 +21,7 @@ public class Level {
                 int y = r.nextInt(9);
 
                 if (s.getSudokuField(x, y).getFieldValue() != 0) {
-                    s.set(y, x, 0);
+                    s.set(x, y, 0);
                 } else {
                     i--;
                 }

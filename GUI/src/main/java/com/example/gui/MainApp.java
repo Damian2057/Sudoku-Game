@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 
 public class MainApp extends Application {
 
@@ -13,7 +15,7 @@ public class MainApp extends Application {
     public void start(Stage stage) {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
             Scene scene = new Scene(root,500,600);
             stage.setResizable(false);
             stage.setTitle("SUDOKUGAME");

@@ -25,9 +25,7 @@ public class Game {
     private static SudokuBoard sudokuBoard;
 
     public void startGame(Level level) throws IOException {
-        System.out.println("init1");
         initBoard(level);
-        System.out.println("init2");
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (sudokuBoard.getSudokuField(i,j).getFieldValue() == 0) {
@@ -40,8 +38,9 @@ public class Game {
                     textField.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            setBoard(plansza.getRowIndex(textField),plansza.getColumnIndex(textField),
-                                    Integer.valueOf(textField.getText()));
+                            setBoard(GridPane.getRowIndex(textField),
+                                    GridPane.getColumnIndex(textField),
+                                    Integer.parseInt(textField.getText()));
                         }
                     });
                 } else {
@@ -76,7 +75,7 @@ public class Game {
     }
 
     public void checkBoard(ActionEvent actionEvent) {
-        if(sudokuBoard.checkvalid()){
+        if (sudokuBoard.checkvalid()) {
             System.out.println("SUPER");
         } else {
             System.out.println("BAD");

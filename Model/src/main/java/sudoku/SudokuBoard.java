@@ -5,7 +5,6 @@ import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -81,16 +80,6 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
         return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
     }
 
-
-    public boolean checker() {
-        int sum = 0;
-        for(int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                sum = sum + board[i][j].getFieldValue();
-            }
-        }
-        return sum == 405;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -254,10 +243,8 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
 
                 clone.rows.set(i, (SudokuRow) getRow(i).clone());
                 clone.columns.set(i,(SudokuColumn) getColumn(i).clone());
-                //clone.columns.set(i, new SudokuColumn(pomC));
-
-
             }
+
             int indeks = 0;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {

@@ -15,7 +15,7 @@ public class LevelTest {
         Level med = new Medium();
         Level hard = new Hard();
 
-        assertEquals(tooez.getNumberOfFieldsToRemove(), 10);
+        assertEquals(tooez.getNumberOfFieldsToRemove(), 1);
         assertEquals(ez.getNumberOfFieldsToRemove(), 40);
         assertEquals(med.getNumberOfFieldsToRemove(), 50);
         assertEquals(hard.getNumberOfFieldsToRemove(), 55);
