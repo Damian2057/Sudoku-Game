@@ -14,14 +14,14 @@ public class Level {
     public boolean removeFields(final SudokuBoard s) {
 
         Random r = new Random();
-        if (!s.isCzyJuzUsunietoPola()) {
-            s.setCzyJuzUsunietoPola(true);
+        if (!s.isAlreadyDeleted()) {
+            s.setAlreadyDeleted(true);
             for (int i = 0; i < numberOfFieldsToRemove; i++) {
                 int x = r.nextInt(9);
                 int y = r.nextInt(9);
 
                 if (s.getSudokuField(x, y).getFieldValue() != 0) {
-                    s.set(x, y, 0);
+                    s.set(y, x, 0);
                 } else {
                     i--;
                 }

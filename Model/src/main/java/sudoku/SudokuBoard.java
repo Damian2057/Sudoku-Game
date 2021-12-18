@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -20,14 +21,14 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
     private List<SudokuRow> rows = Arrays.asList(new SudokuRow[9]);
     private List<SudokuColumn> columns = Arrays.asList(new SudokuColumn[9]);
     private List<SudokuBox> boxes = Arrays.asList(new SudokuBox[9]);
-    private boolean czyJuzUsunietoPola = false;
+    private boolean alreadyDeleted = false;
 
-    public boolean isCzyJuzUsunietoPola() {
-        return czyJuzUsunietoPola;
+    public boolean isAlreadyDeleted() {
+        return alreadyDeleted;
     }
 
-    public void setCzyJuzUsunietoPola(boolean czyJuzUsunietoPola) {
-        this.czyJuzUsunietoPola = czyJuzUsunietoPola;
+    public void setAlreadyDeleted(boolean alreadyDeleted) {
+        this.alreadyDeleted = alreadyDeleted;
     }
 
     public SudokuBoard(SudokuSolver sudokusolver) {
@@ -47,14 +48,14 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                tmp[j] = board[i][j];
+                tmp[j] = board[j][i];
             }
             rows.set(i, new SudokuRow(tmp));
         }
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                tmp[j] = board[j][i];
+                tmp[j] = board[i][j];
             }
             columns.set(i, new SudokuColumn(tmp));
         }
@@ -80,6 +81,17 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
         return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
     }
 
+
+    public boolean checker() {
+        int sum = 0;
+        for(int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sum = sum + board[i][j].getFieldValue();
+            }
+        }
+        return sum == 405;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,6 +113,7 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
                 .append(this.board, that.board)
                 .isEquals();
     }
+
 
     @Override
     public int hashCode() {
@@ -169,9 +182,11 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
 
 
     private boolean checkBoard() {
-        //nasz if ma jedynie checkRow, gdyz jezeli wadliwa bedzie komorka
-        //to jednoczesnie zepsuje ona kolumne, wiersz i boxa.
         return checkRow();
+    }
+
+    public boolean checkvalid() {
+        return checkColumn() && checkBox() && checkRow();
     }
 
     public boolean checkRow() {

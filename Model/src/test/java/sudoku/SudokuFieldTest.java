@@ -53,14 +53,14 @@ class SudokuFieldTest {
         assertTrue(f2.compareTo(f1) != 0 && f2.equals(f1) == false);
     }
 
-    @Test
-    void cloneTest() {
-        SudokuField f1 = new SudokuField();
-
-        SudokuField c1 = f1.clone();
-        assertEquals(f1, c1);
-
-        c1.setFieldValue(5);
-        assertNotEquals(f1, c1);
-    }
+//    @Test
+//    void cloneTest() {
+//        SudokuField f1 = new SudokuField();
+//
+//        SudokuField c1 = f1.clone();
+//        assertEquals(f1, c1);
+//
+//        c1.setFieldValue(5);
+//        assertNotEquals(f1, c1);
+//    }
 }

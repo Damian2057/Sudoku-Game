@@ -349,11 +349,11 @@ public class SudokuBoardTest {
     public void czyJuzUsunietoTest() {
         SudokuBoard s1 = new SudokuBoard(new BacktrackingSudokuSolver());
 
-        assertFalse(s1.isCzyJuzUsunietoPola());
+        assertFalse(s1.isAlreadyDeleted());
 
-        s1.setCzyJuzUsunietoPola(true);
+        s1.setAlreadyDeleted(true);
 
-        assertTrue(s1.isCzyJuzUsunietoPola());
+        assertTrue(s1.isAlreadyDeleted());
     }
 
 

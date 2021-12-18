@@ -24,7 +24,7 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
     }
 
     public void setFieldValue(int value) {
-        if (value != this.value) {
+         if (value != this.value) {
             changes.firePropertyChange("value",this.value,value);
             this.value = value;
         }

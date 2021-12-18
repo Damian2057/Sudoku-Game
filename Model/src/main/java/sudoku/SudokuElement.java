@@ -20,15 +20,16 @@ public abstract class SudokuElement implements Serializable, Cloneable {
     }
 
     public boolean verify() {
+        int expected = 362880;
+        int begin = 1;
 
-        for (int i = 0; i < 9; i++) {
-            for (int j = i + 1; j < 9; j++) {
-                if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue()
-                        && fields.get(j).getFieldValue() != 0) {
-                    return false;
-                }
-            }
+        for (SudokuField field : fields) {
+            begin *= field.getFieldValue();
         }
+        if (expected != begin) {
+            return false;
+        }
+
         return true;
     }
 
