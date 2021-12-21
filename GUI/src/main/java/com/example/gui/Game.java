@@ -40,7 +40,7 @@ public class Game {
     private void putValues() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (sudokuBoard.getSudokuField(i,j).getFieldValue() == 0) {
+                if (sudokuBoard.getSudokuField(i,j).isEditable() == true) {
                     fullTextField(i,j);
                 } else {
                     patchyTextField(i,j);
@@ -55,19 +55,30 @@ public class Game {
 
 
     private void fullTextField(int i, int j) {
-        TextField textField = new TextField("");
-        textField.setMaxSize(100,100);
-        textField.setAlignment(Pos.CENTER);
+        TextField textField = null;
+
+        textField = new TextField("");
         textField.getStyleClass().add("custom");
 
+        if(sudokuBoard.getSudokuField(i,j).getFieldValue() != 0) {
+            textField = new TextField(String.valueOf(sudokuBoard.getSudokuField(i,j).getFieldValue()));
+            textField.getStyleClass().remove("custom");
+            textField.getStyleClass().add("done");
+        }
+
+
+        textField.setMaxSize(100,100);
+        textField.setAlignment(Pos.CENTER);
         plansza.add(textField, i, j);
+        TextField finalTextField = textField;
+
         textField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
                     //KeyEvent inputMethodEvent
-                    setBoard(GridPane.getRowIndex(textField),
-                            GridPane.getColumnIndex(textField), fieldVerification(textField));
+                    setBoard(GridPane.getRowIndex(finalTextField),
+                            GridPane.getColumnIndex(finalTextField), fieldVerification(finalTextField));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

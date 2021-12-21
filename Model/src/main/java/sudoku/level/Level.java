@@ -22,6 +22,7 @@ public class Level {
 
                 if (s.getSudokuField(x, y).getFieldValue() != 0) {
                     s.set(x, y, 0);
+                    s.getSudokuField(x,y).setEditable(true);
                 } else {
                     i--;
                 }

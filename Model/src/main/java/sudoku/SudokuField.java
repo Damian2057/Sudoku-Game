@@ -14,6 +14,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
     private int value;
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
+    private boolean editable = false;
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 
     public SudokuField() {
         value = 0;
