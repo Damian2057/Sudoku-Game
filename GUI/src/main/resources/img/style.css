@@ -34,6 +34,11 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
 }
 
+.startcontbtn {
+    -fx-background-image: url(saveStart.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
+}
 
 .allbtn{
     -fx-color:black;
@@ -79,4 +84,15 @@
 .savetbtn:hover {
     -fx-scale-y: 1.3;
     -fx-scale-x: 1.3;
+}
+
+.startcontbtn:hover {
+    -fx-scale-y: 1.3;
+    -fx-scale-x: 1.3;
+}
+
+.name {
+    -fx-background-image: url(Name.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
 }

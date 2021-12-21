@@ -1,11 +1,6 @@
 package com.example.gui;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.NoSuchFileException;
-import factories.Dao;
 import factories.FileSudokuBoardDao;
-import factories.SudokuBoardDaoFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,6 +15,9 @@ import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
 import sudoku.level.Level;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 
 public class Game {
     @FXML
@@ -29,39 +27,41 @@ public class Game {
     @FXML
     private javafx.scene.control.Button closeButton;
 
-    private static SudokuBoard sudokuBoard;
+    private static SudokuBoard sudokuBoardActual;
+    private static SudokuBoard sudokuBoardStart;
 
-    public void startGame(Level level) throws IOException {
+    public void startGame(Level level) {
         initBoard(level);
 
-        putValues();
+        putValues(sudokuBoardActual);
+        sudokuBoardStart = sudokuBoardActual.clone();
     }
 
-    private void putValues() {
+    private void putValues(SudokuBoard board) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (sudokuBoard.getSudokuField(i,j).isEditable() == true) {
-                    fullTextField(i,j);
+                if (board.getSudokuField(i, j).isEditable()) {
+                    fullTextField(board,i,j);
                 } else {
-                    patchyTextField(i,j);
+                    patchyTextField(board,i,j);
                 }
             }
         }
     }
 
-    private void setBoard(int x, int y, int value) {
-        sudokuBoard.set(y,x,value);
+    private void setBoard(SudokuBoard board, int x, int y, int value) {
+        board.set(y,x,value);
     }
 
 
-    private void fullTextField(int i, int j) {
+    private void fullTextField(SudokuBoard board, int i, int j) {
         TextField textField = null;
 
         textField = new TextField("");
         textField.getStyleClass().add("custom");
 
-        if(sudokuBoard.getSudokuField(i,j).getFieldValue() != 0) {
-            textField = new TextField(String.valueOf(sudokuBoard.getSudokuField(i,j).getFieldValue()));
+        if(board.getSudokuField(i,j).getFieldValue() != 0) {
+            textField = new TextField(String.valueOf(board.getSudokuField(i,j).getFieldValue()));
             textField.getStyleClass().remove("custom");
             textField.getStyleClass().add("done");
         }
@@ -76,8 +76,7 @@ public class Game {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    //KeyEvent inputMethodEvent
-                    setBoard(GridPane.getRowIndex(finalTextField),
+                    setBoard(board, GridPane.getRowIndex(finalTextField),
                             GridPane.getColumnIndex(finalTextField), fieldVerification(finalTextField));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -103,8 +102,8 @@ public class Game {
         return num;
     }
 
-    private void patchyTextField(int i, int j) {
-        TextField textField = new TextField(String.valueOf(sudokuBoard
+    private void patchyTextField(SudokuBoard board, int i, int j) {
+        TextField textField = new TextField(String.valueOf(board
                 .getSudokuField(i,j).getFieldValue()));
         textField.setAlignment(Pos.CENTER);
         textField.setMaxSize(100,100);
@@ -115,10 +114,10 @@ public class Game {
     private void initBoard(Level level) {
         plansza.setHgap(3);
         plansza.setVgap(3);
-        sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        sudokuBoard.solveGame();
+        sudokuBoardActual = new SudokuBoard(new BacktrackingSudokuSolver());
+        sudokuBoardActual.solveGame();
         gameLevel.setText(level.toString());
-        level.removeFields(sudokuBoard);
+        level.removeFields(sudokuBoardActual);
     }
 
     public void closeApp(ActionEvent actionEvent) throws IOException {
@@ -127,7 +126,7 @@ public class Game {
     }
 
     public void checkBoard(ActionEvent actionEvent) throws IOException {
-        if (sudokuBoard.checkvalid()) {
+        if (sudokuBoardActual.checkvalid()) {
             WinWindow w = new WinWindow();
             w.show();
         } else {
@@ -140,16 +139,33 @@ public class Game {
         System.out.println("load");
         try {
             FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save1.txt");
-            sudokuBoard = loader.read();
-            putValues();
-        } catch (Exception e) {
-            return;
+            sudokuBoardActual = loader.read();
+            putValues(sudokuBoardActual);
+        } catch (Exception ignored) {
         }
     }
 
     public void saveBoard(MouseEvent mouseEvent) throws IOException, FileNotFoundException {
         System.out.println("save");
             FileSudokuBoardDao<SudokuBoard> saver = new FileSudokuBoardDao<>("@../../saves/save1.txt");
-            saver.write(sudokuBoard);
+            saver.write(sudokuBoardActual);
+            saver.setFileName("@../../saves/save2.txt");
+            saver.write(sudokuBoardStart);
+    }
+
+    public void startConf(MouseEvent mouseEvent) {
+        System.out.println("startConf");
+        sudokuBoardActual = sudokuBoardStart.clone();
+        putValues(sudokuBoardActual);
+    }
+
+    public void startOldConf(MouseEvent mouseEvent) {
+        System.out.println("loadOldConf");
+        try {
+            FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save2.txt");
+            sudokuBoardActual = loader.read();
+            putValues(sudokuBoardActual);
+        } catch (Exception ignored) {
+        }
     }
 }
