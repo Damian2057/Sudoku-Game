@@ -1,3 +1,4 @@
+package factories;
 
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;

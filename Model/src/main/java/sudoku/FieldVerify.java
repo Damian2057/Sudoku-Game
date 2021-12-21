@@ -22,7 +22,11 @@ public class FieldVerify {
     public int verifyTextField(String textField) {
         int matches = runTest("[1-9]", textField);
         if (matches == 1) {
-            return Integer.parseInt(textField);
+            if (Integer.parseInt(textField) > 0) {
+                return Integer.parseInt(textField);
+            } else {
+                return -1;
+            }
         } else {
             return -1;
         }

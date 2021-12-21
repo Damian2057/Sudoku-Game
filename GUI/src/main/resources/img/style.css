@@ -12,11 +12,28 @@
     -fx-control-inner-background: rgb(200,200,200);
 }
 
+.done {
+    -fx-control-inner-background: rgb(162, 88, 208);
+}
+
 .settbtn {
     -fx-background-image: url(settings.png);
     -fx-background-size: cover;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
 }
+
+.savetbtn {
+    -fx-background-image: url(load.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
+}
+
+.loadtbtn {
+    -fx-background-image: url(save.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
+}
+
 
 .allbtn{
     -fx-color:black;
@@ -50,6 +67,16 @@
 }
 
 .settbtn:hover {
+    -fx-scale-y: 1.3;
+    -fx-scale-x: 1.3;
+}
+
+.loadtbtn:hover {
+    -fx-scale-y: 1.3;
+    -fx-scale-x: 1.3;
+}
+
+.savetbtn:hover {
     -fx-scale-y: 1.3;
     -fx-scale-x: 1.3;
 }

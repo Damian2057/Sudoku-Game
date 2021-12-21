@@ -1,12 +1,18 @@
 package com.example.gui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
+import factories.Dao;
+import factories.FileSudokuBoardDao;
+import factories.SudokuBoardDaoFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sudoku.BacktrackingSudokuSolver;
@@ -28,6 +34,10 @@ public class Game {
     public void startGame(Level level) throws IOException {
         initBoard(level);
 
+        putValues();
+    }
+
+    private void putValues() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (sudokuBoard.getSudokuField(i,j).getFieldValue() == 0) {
@@ -55,6 +65,7 @@ public class Game {
             @Override
             public void handle(ActionEvent event) {
                 try {
+                    //KeyEvent inputMethodEvent
                     setBoard(GridPane.getRowIndex(textField),
                             GridPane.getColumnIndex(textField), fieldVerification(textField));
                 } catch (IOException e) {
@@ -71,6 +82,12 @@ public class Game {
             textField.setText("");
             BadValueWindow badValueWindow = new BadValueWindow();
             badValueWindow.show();
+            textField.getStyleClass().remove("done");
+            textField.getStyleClass().add("custom");
+        } else {
+            textField.getStyleClass().remove("done");
+            textField.getStyleClass().remove("custom");
+            textField.getStyleClass().add("done");
         }
         return num;
     }
@@ -103,7 +120,25 @@ public class Game {
             WinWindow w = new WinWindow();
             w.show();
         } else {
-            System.out.println("pozniej bedzie zly uklad/przegrana?");
+            LostWindow l = new LostWindow();
+            l.show();
         }
+    }
+
+    public void loadBoard(MouseEvent mouseEvent) throws IOException {
+        System.out.println("load");
+        try {
+            FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save1.txt");
+            sudokuBoard = loader.read();
+            putValues();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void saveBoard(MouseEvent mouseEvent) throws IOException, FileNotFoundException {
+        System.out.println("save");
+            FileSudokuBoardDao<SudokuBoard> saver = new FileSudokuBoardDao<>("@../../saves/save1.txt");
+            saver.write(sudokuBoard);
     }
 }

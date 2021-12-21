@@ -34,7 +34,6 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
 
         this.sudokusolver = sudokusolver;
         this.board = new SudokuField[9][9];
-        //utworzenie strutury board
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 SudokuField field = new SudokuField();
@@ -142,10 +141,6 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
         List<SudokuColumn> copyC = List.copyOf(columns);
         return copyC.get(x);
     }
-    //y
-    // 0 1 2
-    //x// 3 4 5
-    // 6 7 8
 
     public SudokuBox getBox(int x, int y) {
         if (x == 1) {
@@ -227,7 +222,7 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
         try {
             SudokuBoard clone = (SudokuBoard) super.clone();
             clone.board = new SudokuField[9][9];
-            clone.sudokusolver = sudokusolver;
+            clone.sudokusolver = new BacktrackingSudokuSolver();
             clone.rows = Arrays.asList(new SudokuRow[9]);
             clone.columns = Arrays.asList(new SudokuColumn[9]);
             clone.boxes = Arrays.asList(new SudokuBox[9]);

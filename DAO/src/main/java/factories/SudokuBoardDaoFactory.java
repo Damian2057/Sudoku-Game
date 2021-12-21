@@ -1,5 +1,7 @@
+package factories;
+
 public class SudokuBoardDaoFactory<T> {
-    Dao<T> getFileDao(String fileName) {
+    public Dao<T> getFileDao(String fileName) {
         return new FileSudokuBoardDao<T>(fileName);
     }
 }

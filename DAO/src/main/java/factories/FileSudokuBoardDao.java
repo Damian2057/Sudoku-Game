@@ -1,3 +1,4 @@
+package factories;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
 
-    private final String fileName;
+    private  String fileName;
     private FileInputStream fis;
     private ObjectInputStream ois;
     private FileOutputStream fos;
@@ -31,6 +32,9 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
             os.writeObject(obj);
     }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     @Override
     public void close() throws Exception {
