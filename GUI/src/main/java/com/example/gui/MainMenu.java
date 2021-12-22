@@ -64,7 +64,9 @@ public class MainMenu {
         levelBar.setText("Hard");
     }
 
-    public void setSettings(MouseEvent mouseEvent) {
+    public void setSettings(MouseEvent mouseEvent) throws IOException {
         System.out.println("ustawienia");
+        Settings s = new Settings();
+        s.show();
     }
 }
