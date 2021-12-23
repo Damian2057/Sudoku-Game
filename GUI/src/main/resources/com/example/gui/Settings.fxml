@@ -12,7 +12,7 @@
    <children>
       <MenuButton fx:id="langButton" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" stylesheets="@../../../img/style.css" text="Choose your language">
         <items>
-            <MenuItem mnemonicParsing="false" onAction="#englishSet" text="english" />
+            <MenuItem mnemonicParsing="false" onAction="#englishSet" text="English" />
             <MenuItem mnemonicParsing="false" onAction="#polskiSet" text="Polski" />
         </items>
          <styleClass>
@@ -26,8 +26,8 @@
             <Font size="28.0" />
          </font>
       </Text>
-      <Button fx:id="cancel" layoutX="37.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelSettings" styleClass="allbtn" stylesheets="@../../../img/style.css" text="CANCEL" />
-      <Button fx:id="apply" layoutX="197.0" layoutY="340.0" mnemonicParsing="false" onAction="#applySettings" styleClass="allbtn" stylesheets="@../../../img/style.css" text="APPLY" />
+      <Button fx:id="exit" layoutX="108.0" layoutY="323.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="30.0" prefWidth="84.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="EXIT" />
+      <Button fx:id="apply" layoutX="108.0" layoutY="278.0" mnemonicParsing="false" onAction="#applySettings" prefHeight="30.0" prefWidth="84.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="APPLY" />
       <Text fx:id="authors" layoutX="187.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authors:" wrappingWidth="60.79995117187491" />
       <Text fx:id="a1" layoutX="188.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damian Biskupski" />
       <Text fx:id="a2" layoutX="186.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mateusz Dangreaux" />

@@ -5,6 +5,8 @@ import com.example.gui.resorc.ResourcesPl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
@@ -12,25 +14,24 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Settings {
+public class Settings implements Initializable  {
 
     @FXML
     public MenuButton langButton;
-    public Button cancel;
     public Button apply;
     public Text settingstext;
     public Text authors;
     public Text a1;
     public Text a2;
+    public Button exit;
 
     private Locale locale;
+    private ResourceBundle bundle;
 
-
-    public Settings() {
-    }
 
     public void show() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -43,7 +44,19 @@ public class Settings {
     }
 
 
-    public void applySettings(ActionEvent actionEvent) {
+    public void applySettings(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) apply.getScene().getWindow();
+        stage.close();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = loader.load();
+        MainMenu menu = loader.getController();
+        menu.send(bundle);
+        stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("SudokuMenu");
+        stage.show();
+
+
         if (locale == null) {
             locale = new Locale("eng", "ENG");
         }
@@ -51,16 +64,11 @@ public class Settings {
     }
 
     private void setNames(Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("bundle", locale);
-        cancel.setText(bundle.getString("cancel"));
+        bundle = ResourceBundle.getBundle("bundle", locale);
+        exit.setText(bundle.getString("exit"));
         apply.setText(bundle.getString("apply"));
         settingstext.setText(bundle.getString("settings"));
 
-    }
-
-    public void cancelSettings(ActionEvent actionEvent) {
-        Stage stage = (Stage) cancel.getScene().getWindow();
-        stage.close();
     }
 
     public void englishSet(ActionEvent actionEvent) {
@@ -81,5 +89,22 @@ public class Settings {
         a2.textProperty().set((String) list.getContents()[2][1]);
         langButton.setText("Polski");
         setNames(locale);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void exitAction(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) apply.getScene().getWindow();
+        stage.close();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = loader.load();
+        MainMenu menu = loader.getController();
+        stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("SudokuMenu");
+        stage.show();
     }
 }

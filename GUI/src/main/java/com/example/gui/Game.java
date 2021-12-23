@@ -9,10 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import sudoku.BacktrackingSudokuSolver;
@@ -23,27 +26,43 @@ import sudoku.level.Level;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 
 public class Game {
     @FXML
     public Label gameLevel;
+    public Button checker;
+    public Pane loadButton;
+    public Pane startConf;
+    public Pane saveButton;
+    public Pane startOldConf;
+    public Label Levell;
+
     @FXML
     private GridPane plansza;
     @FXML
-    private javafx.scene.control.Button closeButton;
+    private Button closeButton;
 
     private static SudokuBoard sudokuBoardActual;
     private static SudokuBoard sudokuBoardStart;
+    private ResourceBundle bundle;
 
-    public void startGame(Level level) {
+    public void startGame(Level level, ResourceBundle bundle) {
         initBoard(level);
+        this.bundle = bundle;
+        setNames(bundle);
 
         putValues(sudokuBoardActual);
         sudokuBoardStart = sudokuBoardActual.clone();
+        Tooltip.install(loadButton, new Tooltip(bundle.getString("load")));
+        Tooltip.install(startConf, new Tooltip(bundle.getString("startconf")));
+        Tooltip.install(saveButton, new Tooltip(bundle.getString("save")));
+        Tooltip.install(startOldConf, new Tooltip(bundle.getString("startoldconf")));
     }
 
     private void putValues(SudokuBoard board) {
+        decideLevel(bundle);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (board.getSudokuField(i, j).isEditable()) {
@@ -56,7 +75,9 @@ public class Game {
     }
 
     private void Verify(SudokuBoard board, int x, int y, int value) {
+
         board.getSudokuField(y,x).setFieldValue(value);
+
     }
 
 
@@ -121,7 +142,6 @@ public class Game {
         plansza.setVgap(3);
         sudokuBoardActual = new SudokuBoard(new BacktrackingSudokuSolver());
         sudokuBoardActual.solveGame();
-        gameLevel.setText(level.toString());
         level.removeFields(sudokuBoardActual);
     }
 
@@ -141,7 +161,6 @@ public class Game {
     }
 
     public void loadBoard(MouseEvent mouseEvent) throws IOException {
-        System.out.println("load");
         try {
             FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save1.txt");
             sudokuBoardActual = loader.read();
@@ -151,7 +170,6 @@ public class Game {
     }
 
     public void saveBoard(MouseEvent mouseEvent) throws IOException, FileNotFoundException {
-        System.out.println("save");
             FileSudokuBoardDao<SudokuBoard> saver = new FileSudokuBoardDao<>("@../../saves/save1.txt");
             saver.write(sudokuBoardActual);
             saver.setFileName("@../../saves/save2.txt");
@@ -159,7 +177,6 @@ public class Game {
     }
 
     public void startConf(MouseEvent mouseEvent) {
-        System.out.println("startConf");
         sudokuBoardActual = sudokuBoardStart.clone();
         putValues(sudokuBoardActual);
     }
@@ -173,5 +190,25 @@ public class Game {
         } catch (Exception ignored) {
         }
     }
+
+    private void setNames(ResourceBundle bundle) {
+        checker.setText(bundle.getString("check"));
+        closeButton.setText(bundle.getString("exit"));
+        Levell.setText(bundle.getString("level"));
+    }
+
+    private void decideLevel(ResourceBundle bundle) {
+        int n = sudokuBoardActual.getNumberOfEditable();
+        if(n == 55) {
+            gameLevel.setText(bundle.getString("hard"));
+        } else if (n == 50) {
+            gameLevel.setText(bundle.getString("medium"));
+        } else if(n == 40) {
+            gameLevel.setText(bundle.getString("easy"));
+        } else {
+            gameLevel.setText(bundle.getString("veryeasy"));
+        }
+    }
+
 
 }

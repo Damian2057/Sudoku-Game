@@ -253,14 +253,6 @@ public class SudokuBoardTest {
     }
 
     @Test
-    public void getBoardTest() {
-        SudokuSolver s = new BacktrackingSudokuSolver();
-        SudokuBoard sudokuA = new SudokuBoard(s);
-
-        assertEquals(sudokuA.getBoard()[0][0].getFieldValue(), 0);
-    }
-
-    @Test
     public void getBox() {
         SudokuSolver s = new BacktrackingSudokuSolver();
         SudokuBoard sudokuA = new SudokuBoard(s);
