@@ -9,19 +9,16 @@ public class FieldVerify {
     public FieldVerify() {
     }
 
-    public static int runTest(String regex, String text) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-        int matches = 0;
-        while (matcher.find()) {
-            matches++;
+    public static boolean runTest(String regex, String text) {
+        if (Pattern.matches(regex,text)) {
+            System.out.println("wykr");
+            return true;
         }
-        return matches;
+        return false;
     }
 
     public int verifyTextField(String textField) {
-        int matches = runTest("[1-9]", textField);
-        if (matches == 1) {
+        if (runTest("[1-9]", textField)) {
             if (Integer.parseInt(textField) > 0) {
                 return Integer.parseInt(textField);
             } else {

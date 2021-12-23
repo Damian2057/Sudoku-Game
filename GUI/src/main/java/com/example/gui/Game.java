@@ -1,6 +1,10 @@
 package com.example.gui;
 
 import factories.FileSudokuBoardDao;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,9 +14,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
+import sudoku.SudokuField;
 import sudoku.level.Level;
 
 import java.io.FileNotFoundException;
@@ -55,29 +61,26 @@ public class Game {
 
 
     private void fullTextField(SudokuBoard board, int i, int j) {
-        TextField textField = null;
-
-        textField = new TextField("");
+        TextField textField = new TextField();
         textField.getStyleClass().add("custom");
+        Bindings.bindBidirectional(textField.textProperty(), board.getSudokuField(i,j).fieldProperty());
 
         if(board.getSudokuField(i,j).getFieldValue() != 0) {
-            textField = new TextField(String.valueOf(board.getSudokuField(i,j).getFieldValue()));
             textField.getStyleClass().remove("custom");
             textField.getStyleClass().add("done");
+        } else {
+            textField.setText("");
         }
-
 
         textField.setMaxSize(100,100);
         textField.setAlignment(Pos.CENTER);
         plansza.add(textField, i, j);
-        TextField finalTextField = textField;
 
         textField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    setBoard(board, GridPane.getRowIndex(finalTextField),
-                            GridPane.getColumnIndex(finalTextField), fieldVerification(finalTextField));
+                    fieldVerification(textField);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -103,8 +106,9 @@ public class Game {
     }
 
     private void patchyTextField(SudokuBoard board, int i, int j) {
-        TextField textField = new TextField(String.valueOf(board
-                .getSudokuField(i,j).getFieldValue()));
+        TextField textField = new TextField();
+        Bindings.bindBidirectional(textField.textProperty(), board.getSudokuField(i,j).fieldProperty());
+
         textField.setAlignment(Pos.CENTER);
         textField.setMaxSize(100,100);
         textField.setEditable(false);
@@ -168,4 +172,5 @@ public class Game {
         } catch (Exception ignored) {
         }
     }
+
 }
