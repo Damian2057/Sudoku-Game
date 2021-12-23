@@ -170,7 +170,13 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
     }
 
     public boolean checkvalid() {
-        return checkColumn() && checkBox() && checkRow();
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sum = sum + board[i][j].getFieldValue();
+            }
+        }
+        return sum == 405;
     }
 
     public boolean checkRow() {

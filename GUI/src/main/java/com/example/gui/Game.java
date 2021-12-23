@@ -55,8 +55,8 @@ public class Game {
         }
     }
 
-    private void setBoard(SudokuBoard board, int x, int y, int value) {
-        board.set(y,x,value);
+    private void Verify(SudokuBoard board, int x, int y, int value) {
+        board.getSudokuField(y,x).setFieldValue(value);
     }
 
 
@@ -80,7 +80,8 @@ public class Game {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    fieldVerification(textField);
+                    Verify(board, GridPane.getRowIndex(textField),
+                            GridPane.getColumnIndex(textField), fieldVerification(textField));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

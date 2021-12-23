@@ -26,5 +26,7 @@ public class LostWindow {
     }
 
     public void tryAgain(ActionEvent actionEvent) {
+        Stage stage = (Stage) tryAgainButton.getScene().getWindow();
+        stage.close();
     }
 }

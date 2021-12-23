@@ -22,7 +22,6 @@ public abstract class SudokuElement implements Serializable, Cloneable {
     public boolean verify() {
         int expected = 362880;
         int begin = 1;
-
         for (SudokuField field : fields) {
             begin *= field.getFieldValue();
         }

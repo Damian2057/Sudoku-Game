@@ -11,7 +11,6 @@ public class FieldVerify {
 
     public static boolean runTest(String regex, String text) {
         if (Pattern.matches(regex,text)) {
-            System.out.println("wykr");
             return true;
         }
         return false;
