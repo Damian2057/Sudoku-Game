@@ -14,13 +14,8 @@ public class MainApp extends Application {
     public void start(Stage stage) {
 
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
-                    .getResource("MainMenu.fxml")));
-            Scene scene = new Scene(root,500,530);
-            stage.setResizable(false);
-            stage.setTitle("SudokuMenu");
-            stage.setScene(scene);
-            stage.show();
+            MainMenu m = new MainMenu();
+            m.menuShow();
 
 
         } catch (Exception e) {

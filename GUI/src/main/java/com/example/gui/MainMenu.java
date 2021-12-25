@@ -3,6 +3,7 @@ package com.example.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -39,6 +40,20 @@ public class MainMenu implements Initializable {
     @FXML
     public MenuButton levelBar;
 
+    private static Stage gameStage;
+    private static Stage menuStage;
+
+    public void menuShow() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
+                .getResource("MainMenu.fxml")));
+        Scene scene = new Scene(root,500,530);
+        menuStage = new Stage();
+        menuStage.setResizable(false);
+        menuStage.setTitle("SudokuMenu");
+        menuStage.setScene(scene);
+        menuStage.show();
+    }
+
     public void gameStart(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
         if (level == null) {
@@ -49,12 +64,14 @@ public class MainMenu implements Initializable {
         nullBundleSecure();
         game.startGame(level, bundle);
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        menuStage.close();
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root,525,650));
-        stage.setResizable(false);
-        stage.setTitle("SudokuGame");
-        stage.show();
+        gameStage = new Stage();
+        gameStage.setScene(new Scene(root,525,650));
+        gameStage.setResizable(false);
+        gameStage.setTitle("SudokuGame");
+        game.send(gameStage);
+        gameStage.show();
     }
 
     private void nullBundleSecure(){

@@ -2,15 +2,13 @@ package com.example.gui;
 
 import factories.FileSudokuBoardDao;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,13 +18,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
-import sudoku.SudokuField;
 import sudoku.level.Level;
 
 import java.io.FileNotFoundException;
@@ -41,6 +36,7 @@ public class Game implements Initializable {
     private static Stage stageBAD;
     private static Stage stageWin;
     private static Stage stageLost;
+    private static Stage game;
 
     @FXML
     public Label gameLevel;
@@ -251,9 +247,15 @@ public class Game implements Initializable {
             win.send(bundle);
             stageWin = new Stage();
             stageWin.setScene(new Scene(root));
+            stageWin.setAlwaysOnTop(true);
             stageWin.setTitle("Win");
             stageWin.show();
-            stageWin.setOnHidden(we -> stageWin = null);
+            setDisable(true);
+            stageWin.setOnHidden(we -> {
+                initNewGame();
+                stageWin = null;
+                setDisable(false);
+            });
         } else {
             stageWin.toFront();
         }
@@ -269,8 +271,14 @@ public class Game implements Initializable {
             stageLost = new Stage();
             stageLost.setScene(new Scene(root));
             stageLost.setTitle("Win");
+            stageLost.setAlwaysOnTop(true);
             stageLost.show();
-            stageLost.setOnHidden(we -> stageLost = null);
+            setDisable(true);
+            stageLost.setOnHidden(we -> {
+                initNewGame();
+                stageLost = null;
+                setDisable(false);
+            });
         } else {
             stageLost.toFront();
         }
@@ -288,4 +296,26 @@ public class Game implements Initializable {
             stageLost.close();
         }
     }
+
+    public void send(Stage menuStage) {
+        game = menuStage;
+    }
+    private void initNewGame() {
+        game.close();
+        MainMenu m = new MainMenu();
+        try {
+            m.menuShow();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void setDisable(boolean t) {
+        checker.setDisable(t);
+        loadButton.setDisable(t);
+        saveButton.setDisable(t);
+        startConf.setDisable(t);
+        startOldConf.setDisable(t);
+        plansza.setDisable(t);
+    }
+
 }
