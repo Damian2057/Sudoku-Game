@@ -7,11 +7,11 @@
 
 <AnchorPane prefHeight="150.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.LostWindow">
    <children>
-      <Text layoutX="35.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Przegrałeś" textAlignment="CENTER" wrappingWidth="150.80194091796875">
+      <Text fx:id="tryAgainText" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Przegrałeś" textAlignment="CENTER" wrappingWidth="220.0">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Text>
-      <Button fx:id="tryAgainButton" layoutX="84.0" layoutY="99.0" mnemonicParsing="false" onAction="#tryAgain" styleClass="allbtn" stylesheets="@../../../img/style.css" text="TRY AGAIN" />
+      <Button fx:id="tryAgainButton" layoutX="37.0" layoutY="96.0" mnemonicParsing="false" onAction="#tryAgain" prefHeight="26.0" prefWidth="146.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="TRY AGAIN" />
    </children>
 </AnchorPane>

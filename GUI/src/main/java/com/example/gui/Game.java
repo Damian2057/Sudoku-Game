@@ -158,8 +158,7 @@ public class Game implements Initializable {
         if (sudokuBoardActual.checkvalid()) {
             winValue();
         } else {
-            LostWindow l = new LostWindow();
-            l.show();
+            lostValue();
         }
     }
 
@@ -234,6 +233,17 @@ public class Game implements Initializable {
         Parent root = loader.load();
         WinWindow win = loader.getController();
         win.send(bundle);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Win");
+        stage.show();
+    }
+
+    private void lostValue() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LostStage.fxml"));
+        Parent root = loader.load();
+        LostWindow lostWindow = loader.getController();
+        lostWindow.send(bundle);
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Win");

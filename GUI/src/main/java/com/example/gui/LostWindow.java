@@ -2,27 +2,35 @@ package com.example.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LostWindow {
+public class LostWindow implements Initializable {
 
     public Button tryAgainButton;
+    public Text tryAgainText;
 
-    public LostWindow() {
+    private void setNames(ResourceBundle bundle) {
+        tryAgainText.setText(bundle.getString("losttext"));
+        tryAgainButton.setText(bundle.getString("lostbut"));
+        tryAgainButton.setAlignment(Pos.BASELINE_CENTER);
     }
 
-    public void show() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("LostStage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 220, 150);
-        Stage stage = new Stage();
-        stage.setTitle("Przegrales");
-        stage.setScene(scene);
-        stage.show();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void send(ResourceBundle bundle) {
+        setNames(bundle);
     }
 
     public void tryAgain(ActionEvent actionEvent) {
