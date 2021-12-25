@@ -156,8 +156,7 @@ public class Game implements Initializable {
 
     public void checkBoard(ActionEvent actionEvent) throws IOException {
         if (sudokuBoardActual.checkvalid()) {
-            WinWindow w = new WinWindow();
-            w.show();
+            winValue();
         } else {
             LostWindow l = new LostWindow();
             l.show();
@@ -229,4 +228,16 @@ public class Game implements Initializable {
         stage.setTitle("Bad");
         stage.show();
     }
+
+    private void winValue() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("WinStage.fxml"));
+        Parent root = loader.load();
+        WinWindow win = loader.getController();
+        win.send(bundle);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Win");
+        stage.show();
+    }
+
 }
