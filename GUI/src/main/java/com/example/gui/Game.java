@@ -8,7 +8,11 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,10 +30,11 @@ import sudoku.level.Level;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Game {
+public class Game implements Initializable {
     @FXML
     public Label gameLevel;
     public Button checker;
@@ -115,8 +120,7 @@ public class Game {
         int num = fieldVerify.verifyTextField(textField.getText());
         if (num == -1) {
             textField.setText("");
-            BadValueWindow badValueWindow = new BadValueWindow();
-            badValueWindow.show();
+            badValue();
             textField.getStyleClass().remove("done");
             textField.getStyleClass().add("custom");
         } else {
@@ -182,7 +186,6 @@ public class Game {
     }
 
     public void startOldConf(MouseEvent mouseEvent) {
-        System.out.println("loadOldConf");
         try {
             FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save2.txt");
             sudokuBoardActual = loader.read();
@@ -211,4 +214,19 @@ public class Game {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    private void badValue() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BadValueStage.fxml"));
+        Parent root = loader.load();
+        BadValueWindow bad = loader.getController();
+        bad.send(bundle);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Bad");
+        stage.show();
+    }
 }
