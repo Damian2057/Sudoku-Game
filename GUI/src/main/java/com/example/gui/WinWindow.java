@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -14,9 +16,10 @@ public class WinWindow implements Initializable {
 
 
     public Text text;
+    public Button winBut;
 
     private void setNames(ResourceBundle bundle) {
-//          closeButton.setText(bundle.getString("ok"));
+            winBut.setText(bundle.getString("winb"));
             text.setText(bundle.getString("win"));
     }
 
@@ -27,5 +30,10 @@ public class WinWindow implements Initializable {
 
     public void send(ResourceBundle bundle) {
         setNames(bundle);
+    }
+
+    public void winAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) winBut.getScene().getWindow();
+        stage.close();
     }
 }

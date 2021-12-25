@@ -20,6 +20,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import sudoku.BacktrackingSudokuSolver;
@@ -35,6 +36,12 @@ import java.util.ResourceBundle;
 
 
 public class Game implements Initializable {
+
+
+    private static Stage stageBAD;
+    private static Stage stageWin;
+    private static Stage stageLost;
+
     @FXML
     public Label gameLevel;
     public Button checker;
@@ -116,6 +123,7 @@ public class Game implements Initializable {
     }
 
     private int fieldVerification(TextField textField) throws IOException {
+        close();
         FieldVerify fieldVerify = new FieldVerify();
         int num = fieldVerify.verifyTextField(textField.getText());
         if (num == -1) {
@@ -150,11 +158,13 @@ public class Game implements Initializable {
     }
 
     public void closeApp(ActionEvent actionEvent) throws IOException {
+        close();
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
     public void checkBoard(ActionEvent actionEvent) throws IOException {
+        close();
         if (sudokuBoardActual.checkvalid()) {
             winValue();
         } else {
@@ -218,36 +228,64 @@ public class Game implements Initializable {
     }
 
     private void badValue() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("BadValueStage.fxml"));
-        Parent root = loader.load();
-        BadValueWindow bad = loader.getController();
-        bad.send(bundle);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Bad");
-        stage.show();
+        if(stageBAD == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("BadValueStage.fxml"));
+            Parent root = loader.load();
+            BadValueWindow bad = loader.getController();
+            bad.send(bundle);
+            stageBAD = new Stage();
+            stageBAD.setScene(new Scene(root));
+            stageBAD.setTitle("Bad");
+            stageBAD.show();
+            stageBAD.setOnHidden(we -> stageBAD = null);
+        } else {
+            stageBAD.toFront();
+        }
     }
 
     private void winValue() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("WinStage.fxml"));
-        Parent root = loader.load();
-        WinWindow win = loader.getController();
-        win.send(bundle);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Win");
-        stage.show();
+        if(stageWin == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("WinStage.fxml"));
+            Parent root = loader.load();
+            WinWindow win = loader.getController();
+            win.send(bundle);
+            stageWin = new Stage();
+            stageWin.setScene(new Scene(root));
+            stageWin.setTitle("Win");
+            stageWin.show();
+            stageWin.setOnHidden(we -> stageWin = null);
+        } else {
+            stageWin.toFront();
+        }
+
     }
 
     private void lostValue() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("LostStage.fxml"));
-        Parent root = loader.load();
-        LostWindow lostWindow = loader.getController();
-        lostWindow.send(bundle);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Win");
-        stage.show();
+        if(stageLost == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LostStage.fxml"));
+            Parent root = loader.load();
+            LostWindow lostWindow = loader.getController();
+            lostWindow.send(bundle);
+            stageLost = new Stage();
+            stageLost.setScene(new Scene(root));
+            stageLost.setTitle("Win");
+            stageLost.show();
+            stageLost.setOnHidden(we -> stageLost = null);
+        } else {
+            stageLost.toFront();
+        }
+
     }
 
+    private void close() {
+        if(stageWin != null) {
+            stageWin.close();
+        }
+        if(stageBAD != null) {
+            stageBAD.close();
+        }
+        if(stageLost != null) {
+            stageLost.close();
+        }
+    }
 }
