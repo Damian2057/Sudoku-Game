@@ -270,7 +270,7 @@ public class Game implements Initializable {
             lostWindow.send(bundle);
             stageLost = new Stage();
             stageLost.setScene(new Scene(root));
-            stageLost.setTitle("Win");
+            stageLost.setTitle("Last");
             stageLost.setAlwaysOnTop(true);
             stageLost.show();
             setDisable(true);

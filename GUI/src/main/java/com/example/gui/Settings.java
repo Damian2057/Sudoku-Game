@@ -50,6 +50,7 @@ public class Settings implements Initializable  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
         MainMenu menu = loader.getController();
+        checkNull();
         menu.send(bundle);
         stage = new Stage();
         stage.setScene(new Scene(root));
@@ -61,6 +62,13 @@ public class Settings implements Initializable  {
             locale = new Locale("eng", "ENG");
         }
         setNames(locale);
+    }
+
+    private void checkNull() {
+        if (bundle == null) {
+            locale = new Locale("eng", "ENG");
+            bundle = ResourceBundle.getBundle("bundle", locale);
+        }
     }
 
     private void setNames(Locale locale) {
