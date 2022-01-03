@@ -1,6 +1,5 @@
 package com.example.gui;
 
-import factories.FileSudokuBoardDao;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +28,7 @@ import javafx.util.converter.NumberStringConverter;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
+import sudoku.factories.FileSudokuBoardDao;
 import sudoku.level.Level;
 
 

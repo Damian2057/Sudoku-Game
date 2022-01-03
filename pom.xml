@@ -12,8 +12,6 @@
     <modules>
         <module>Model</module>
         <module>GUI</module>
-        <module>DAO</module>
-
     </modules>
 
     <properties>

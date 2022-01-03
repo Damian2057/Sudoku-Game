@@ -1,4 +1,4 @@
-package factories;
+package sudoku.factories;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
