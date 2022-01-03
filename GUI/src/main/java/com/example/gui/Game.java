@@ -75,14 +75,13 @@ public class Game implements Initializable {
         decideLevel(bundle);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-
                 TextField textField = new TextField();
-                JavaBeanIntegerPropertyBuilder builder = JavaBeanIntegerPropertyBuilder.create();
-                JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
-                        .name("FieldValue").build();
-                StringConverter<Number> converter = new NumberStringConverter();
-                Bindings.bindBidirectional(textField.textProperty(), test, converter);
 
+                    JavaBeanIntegerPropertyBuilder builder = JavaBeanIntegerPropertyBuilder.create();
+                    JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
+                            .name("FieldValue").build();
+                    StringConverter<Number> converter = new NumberStringConverter();
+                    Bindings.bindBidirectional(textField.textProperty(), test, converter);
 
                 if (board.getSudokuField(i, j).isEditable()) {
                     fullTextField(textField,board,i,j);
