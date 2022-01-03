@@ -63,4 +63,12 @@ class SudokuFieldTest {
         c1.setFieldValue(5);
         assertNotEquals(f1, c1);
     }
+
+    @Test
+    void isEditableTest() {
+        SudokuField f1 = new SudokuField();
+        assertFalse(f1.isEditable());
+        f1.setEditable(true);
+        assertTrue(f1.isEditable());
+    }
 }

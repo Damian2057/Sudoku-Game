@@ -1,6 +1,8 @@
 package sudoku;
 
 import org.junit.jupiter.api.Test;
+import sudoku.level.Level;
+import sudoku.level.VeryEasy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -346,6 +348,27 @@ public class SudokuBoardTest {
         s1.setAlreadyDeleted(true);
 
         assertTrue(s1.isAlreadyDeleted());
+    }
+
+    @Test
+    public void getNumberOfEditableTest() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        assertEquals(sudokuA.getNumberOfEditable(), 0);
+
+    }
+
+    @Test
+    public void checkvalid() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
+        sudokuA.solveGame();
+        assertTrue(sudokuA.checkvalid());
+        sudokuA.set(0,0,5);
+        sudokuA.set(0,1,5);
+        sudokuA.set(0,2,5);
+        assertFalse(sudokuA.checkvalid());
+
     }
 
 

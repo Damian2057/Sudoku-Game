@@ -183,8 +183,9 @@ public class Game implements Initializable {
             FileSudokuBoardDao<SudokuBoard> saver =
                     new FileSudokuBoardDao<>("@../../saves/save1.txt");
             saver.write(sudokuBoardActual);
-            saver.setFileName("@../../saves/save2.txt");
-            saver.write(sudokuBoardStart);
+        FileSudokuBoardDao<SudokuBoard> saver2 =
+                new FileSudokuBoardDao<>("@../../saves/save2.txt");
+            saver2.write(sudokuBoardStart);
     }
 
     public void startConf(MouseEvent mouseEvent) throws NoSuchMethodException {

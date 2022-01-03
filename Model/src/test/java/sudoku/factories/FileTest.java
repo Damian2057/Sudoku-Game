@@ -18,6 +18,7 @@ public class FileTest {
             SudokuBoard sudoku2 = file.read();
 
             assertEquals(sudoku, sudoku2);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

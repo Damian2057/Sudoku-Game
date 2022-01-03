@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
 
-    private  String fileName;
+    private String fileName;
     private FileInputStream fis;
     private ObjectInputStream ois;
     private FileOutputStream fos;
@@ -30,10 +30,6 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
             fos = new FileOutputStream(fileName);
             os = new ObjectOutputStream(fos);
             os.writeObject(obj);
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 
     @Override

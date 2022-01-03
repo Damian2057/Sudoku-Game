@@ -5,14 +5,8 @@ import java.util.regex.Pattern;
 
 public class FieldVerify {
 
-    public FieldVerify() {
-    }
-
     public static boolean runTest(String regex, String text) {
-        if (Pattern.matches(regex,text)) {
-            return true;
-        }
-        return false;
+        return Pattern.matches(regex, text);
     }
 
     public int verifyTextField(String textField) {
