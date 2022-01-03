@@ -17,7 +17,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="Levell" layoutX="282.0" layoutY="91.0" prefHeight="27.0" prefWidth="62.0" text="Poziom" />
+      <Label fx:id="levell" layoutX="282.0" layoutY="91.0" prefHeight="27.0" prefWidth="62.0" text="Poziom" />
       <Label fx:id="gameLevel" layoutX="376.0" layoutY="91.0" prefHeight="27.0" prefWidth="84.0" text="text" />
       <Button fx:id="closeButton" layoutX="7.0" layoutY="592.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="37.0" prefWidth="62.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="EXIT" />
       <GridPane fx:id="plansza" layoutX="23.0" layoutY="136.0" prefHeight="442.0" prefWidth="474.0">

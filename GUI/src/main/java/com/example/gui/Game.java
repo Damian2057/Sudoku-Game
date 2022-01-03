@@ -1,14 +1,19 @@
 package com.example.gui;
 
 import factories.FileSudokuBoardDao;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.adapter.JavaBeanIntegerProperty;
+import javafx.beans.property.adapter.JavaBeanIntegerPropertyBuilder;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,15 +24,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
 import sudoku.level.Level;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
 public class Game implements Initializable {
@@ -45,7 +47,7 @@ public class Game implements Initializable {
     public Pane startConf;
     public Pane saveButton;
     public Pane startOldConf;
-    public Label Levell;
+    public Label levell;
 
     @FXML
     private GridPane plansza;
@@ -56,7 +58,7 @@ public class Game implements Initializable {
     private static SudokuBoard sudokuBoardStart;
     private ResourceBundle bundle;
 
-    public void startGame(Level level, ResourceBundle bundle) {
+    public void startGame(Level level, ResourceBundle bundle) throws NoSuchMethodException {
         initBoard(level);
         this.bundle = bundle;
         setNames(bundle);
@@ -69,32 +71,33 @@ public class Game implements Initializable {
         Tooltip.install(startOldConf, new Tooltip(bundle.getString("startoldconf")));
     }
 
-    private void putValues(SudokuBoard board) {
+    private void putValues(SudokuBoard board) throws NoSuchMethodException {
         decideLevel(bundle);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
+
+                TextField textField = new TextField();
+                JavaBeanIntegerPropertyBuilder builder = JavaBeanIntegerPropertyBuilder.create();
+                JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
+                        .name("FieldValue").build();
+                StringConverter<Number> converter = new NumberStringConverter();
+                Bindings.bindBidirectional(textField.textProperty(), test, converter);
+
+
                 if (board.getSudokuField(i, j).isEditable()) {
-                    fullTextField(board,i,j);
+                    fullTextField(textField,board,i,j);
                 } else {
-                    patchyTextField(board,i,j);
+                    patchyTextField(textField,i,j);
                 }
             }
         }
     }
 
-    private void Verify(SudokuBoard board, int x, int y, int value) {
-
-        board.getSudokuField(y,x).setFieldValue(value);
-
-    }
-
-
-    private void fullTextField(SudokuBoard board, int i, int j) {
-        TextField textField = new TextField();
+    private void fullTextField(TextField textField, SudokuBoard board, int i, int j)
+            throws NoSuchMethodException {
         textField.getStyleClass().add("custom");
-        Bindings.bindBidirectional(textField.textProperty(), board.getSudokuField(i,j).fieldProperty());
 
-        if(board.getSudokuField(i,j).getFieldValue() != 0) {
+        if (board.getSudokuField(i,j).getFieldValue() != 0) {
             textField.getStyleClass().remove("custom");
             textField.getStyleClass().add("done");
         } else {
@@ -109,13 +112,20 @@ public class Game implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Verify(board, GridPane.getRowIndex(textField),
-                            GridPane.getColumnIndex(textField), fieldVerification(textField));
+                    fieldVerification(textField);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void patchyTextField(TextField textField, int i, int j)
+            throws NoSuchMethodException {
+        textField.setAlignment(Pos.CENTER);
+        textField.setMaxSize(100,100);
+        textField.setEditable(false);
+        plansza.add(textField, i, j);
     }
 
     private int fieldVerification(TextField textField) throws IOException {
@@ -133,16 +143,6 @@ public class Game implements Initializable {
             textField.getStyleClass().add("done");
         }
         return num;
-    }
-
-    private void patchyTextField(SudokuBoard board, int i, int j) {
-        TextField textField = new TextField();
-        Bindings.bindBidirectional(textField.textProperty(), board.getSudokuField(i,j).fieldProperty());
-
-        textField.setAlignment(Pos.CENTER);
-        textField.setMaxSize(100,100);
-        textField.setEditable(false);
-        plansza.add(textField, i, j);
     }
 
     private void initBoard(Level level) {
@@ -170,47 +170,52 @@ public class Game implements Initializable {
 
     public void loadBoard(MouseEvent mouseEvent) throws IOException {
         try {
-            FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save1.txt");
+            FileSudokuBoardDao<SudokuBoard> loader =
+                    new FileSudokuBoardDao<>("@../../saves/save1.txt");
             sudokuBoardActual = loader.read();
             putValues(sudokuBoardActual);
         } catch (Exception ignored) {
+            System.out.println("Read/write Error");
         }
     }
 
     public void saveBoard(MouseEvent mouseEvent) throws IOException, FileNotFoundException {
-            FileSudokuBoardDao<SudokuBoard> saver = new FileSudokuBoardDao<>("@../../saves/save1.txt");
+            FileSudokuBoardDao<SudokuBoard> saver =
+                    new FileSudokuBoardDao<>("@../../saves/save1.txt");
             saver.write(sudokuBoardActual);
             saver.setFileName("@../../saves/save2.txt");
             saver.write(sudokuBoardStart);
     }
 
-    public void startConf(MouseEvent mouseEvent) {
+    public void startConf(MouseEvent mouseEvent) throws NoSuchMethodException {
         sudokuBoardActual = sudokuBoardStart.clone();
         putValues(sudokuBoardActual);
     }
 
     public void startOldConf(MouseEvent mouseEvent) {
         try {
-            FileSudokuBoardDao<SudokuBoard> loader = new FileSudokuBoardDao<>("@../../saves/save2.txt");
+            FileSudokuBoardDao<SudokuBoard> loader =
+                    new FileSudokuBoardDao<>("@../../saves/save2.txt");
             sudokuBoardActual = loader.read();
             putValues(sudokuBoardActual);
         } catch (Exception ignored) {
+            System.out.println("Read/write Error");
         }
     }
 
     private void setNames(ResourceBundle bundle) {
         checker.setText(bundle.getString("check"));
         closeButton.setText(bundle.getString("exit"));
-        Levell.setText(bundle.getString("level"));
+        levell.setText(bundle.getString("level"));
     }
 
     private void decideLevel(ResourceBundle bundle) {
         int n = sudokuBoardActual.getNumberOfEditable();
-        if(n == 55) {
+        if (n == 55) {
             gameLevel.setText(bundle.getString("hard"));
         } else if (n == 50) {
             gameLevel.setText(bundle.getString("medium"));
-        } else if(n == 40) {
+        } else if (n == 40) {
             gameLevel.setText(bundle.getString("easy"));
         } else {
             gameLevel.setText(bundle.getString("veryeasy"));
@@ -220,11 +225,10 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     private void badValue() throws IOException {
-        if(stageBAD == null) {
+        if (stageBAD == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("BadValueStage.fxml"));
             Parent root = loader.load();
             BadValueWindow bad = loader.getController();
@@ -240,7 +244,7 @@ public class Game implements Initializable {
     }
 
     private void winValue() throws IOException {
-        if(stageWin == null) {
+        if (stageWin == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("WinStage.fxml"));
             Parent root = loader.load();
             WinWindow win = loader.getController();
@@ -263,7 +267,7 @@ public class Game implements Initializable {
     }
 
     private void lostValue() throws IOException {
-        if(stageLost == null) {
+        if (stageLost == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LostStage.fxml"));
             Parent root = loader.load();
             LostWindow lostWindow = loader.getController();
@@ -286,13 +290,13 @@ public class Game implements Initializable {
     }
 
     private void close() {
-        if(stageWin != null) {
+        if (stageWin != null) {
             stageWin.close();
         }
-        if(stageBAD != null) {
+        if (stageBAD != null) {
             stageBAD.close();
         }
-        if(stageLost != null) {
+        if (stageLost != null) {
             stageLost.close();
         }
     }
@@ -300,6 +304,7 @@ public class Game implements Initializable {
     public void send(Stage menuStage) {
         game = menuStage;
     }
+
     private void initNewGame() {
         game.close();
         MainMenu m = new MainMenu();
@@ -309,6 +314,7 @@ public class Game implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void setDisable(boolean t) {
         checker.setDisable(t);
         loadButton.setDisable(t);

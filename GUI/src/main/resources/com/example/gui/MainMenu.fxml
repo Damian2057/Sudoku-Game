@@ -17,9 +17,9 @@
       <MenuButton id="levelBar" fx:id="levelBar" layoutX="174.0" layoutY="209.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="155.0" stylesheets="@../../../img/style.css" text="Select Level">
         <items>
           <MenuItem mnemonicParsing="false"  fx:id="veryEasy" onAction="#veryEasy" text="Very Easy" />
-            <MenuItem mnemonicParsing="false" fx:id="Easy" onAction="#easy" text="Easy" />
-            <MenuItem mnemonicParsing="false" fx:id="Medium" onAction="#medium" text="Medium" />
-            <MenuItem mnemonicParsing="false" fx:id="Hard" onAction="#hard" text="Hard" />
+            <MenuItem mnemonicParsing="false" fx:id="menuEasy" onAction="#easy" text="Easy" />
+            <MenuItem mnemonicParsing="false" fx:id="menuMedium" onAction="#medium" text="Medium" />
+            <MenuItem mnemonicParsing="false" fx:id="menuHard" onAction="#hard" text="Hard" />
         </items>
          <styleClass>
             <String fx:value="context-menu" />

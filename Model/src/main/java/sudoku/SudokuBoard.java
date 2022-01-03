@@ -265,8 +265,8 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
         int sum = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if(board[i][j].isEditable()) {
-                    sum ++;
+                if (board[i][j].isEditable()) {
+                    sum++;
                 }
             }
         }

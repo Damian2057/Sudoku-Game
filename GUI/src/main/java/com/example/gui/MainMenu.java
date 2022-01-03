@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,9 +30,9 @@ public class MainMenu implements Initializable {
     public Pane setPane;
     public Button startButton;
     public MenuItem veryEasy;
-    public MenuItem Easy;
-    public MenuItem Medium;
-    public MenuItem Hard;
+    public MenuItem menuEasy;
+    public MenuItem menuMedium;
+    public MenuItem menuHard;
     private Level level;
     private ResourceBundle bundle;
 
@@ -44,38 +43,38 @@ public class MainMenu implements Initializable {
     private static Stage menuStage;
 
     public void menuShow() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
-                .getResource("MainMenu.fxml")));
-        Scene scene = new Scene(root,500,530);
+
         menuStage = new Stage();
         menuStage.setResizable(false);
         menuStage.setTitle("SudokuMenu");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
+                .getResource("MainMenu.fxml")));
+        Scene scene = new Scene(root,500,530);
         menuStage.setScene(scene);
         menuStage.show();
     }
 
-    public void gameStart(ActionEvent actionEvent) throws IOException {
+    public void gameStart(ActionEvent actionEvent) throws IOException, NoSuchMethodException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
         if (level == null) {
             level = new VeryEasy();
         }
         Parent root = loader.load();
+        gameStage = new Stage();
+        gameStage.setScene(new Scene(root,525,650));
         Game game = loader.getController();
         nullBundleSecure();
         game.startGame(level, bundle);
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
         menuStage.close();
-
-        gameStage = new Stage();
-        gameStage.setScene(new Scene(root,525,650));
         gameStage.setResizable(false);
         gameStage.setTitle("SudokuGame");
         game.send(gameStage);
         gameStage.show();
     }
 
-    private void nullBundleSecure(){
-        if(bundle == null) {
+    private void nullBundleSecure() {
+        if (bundle == null) {
             this.bundle = ResourceBundle.getBundle("bundle", new Locale("eng", "ENG"));
         }
     }
@@ -125,8 +124,8 @@ public class MainMenu implements Initializable {
         startButton.setText(bundle.getString("start"));
         levelBar.setText(bundle.getString("select"));
         veryEasy.setText(bundle.getString("veryeasy"));
-        Easy.setText(bundle.getString("easy"));
-        Medium.setText(bundle.getString("medium"));
-        Hard.setText(bundle.getString("hard"));
+        menuEasy.setText(bundle.getString("easy"));
+        menuMedium.setText(bundle.getString("medium"));
+        menuHard.setText(bundle.getString("hard"));
     }
 }

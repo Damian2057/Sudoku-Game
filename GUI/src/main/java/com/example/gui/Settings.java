@@ -2,6 +2,10 @@ package com.example.gui;
 
 import com.example.gui.resorc.ResourcesEng;
 import com.example.gui.resorc.ResourcesPl;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Settings implements Initializable  {
 
@@ -49,11 +48,11 @@ public class Settings implements Initializable  {
         stage.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
+        stage = new Stage();
+        stage.setScene(new Scene(root));
         MainMenu menu = loader.getController();
         checkNull();
         menu.send(bundle);
-        stage = new Stage();
-        stage.setScene(new Scene(root));
         stage.setTitle("SudokuMenu");
         stage.show();
 
@@ -109,7 +108,6 @@ public class Settings implements Initializable  {
         stage.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
-        MainMenu menu = loader.getController();
         stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("SudokuMenu");
