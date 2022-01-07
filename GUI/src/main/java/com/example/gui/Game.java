@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -77,10 +78,33 @@ public class Game implements Initializable {
             for (int j = 0; j < 9; j++) {
                 TextField textField = new TextField();
 
-                    JavaBeanIntegerPropertyBuilder builder = JavaBeanIntegerPropertyBuilder.create();
+                    JavaBeanIntegerPropertyBuilder builder =
+                            JavaBeanIntegerPropertyBuilder.create();
                     JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
                             .name("FieldValue").build();
                     StringConverter<Number> converter = new NumberStringConverter();
+
+                textField.setTextFormatter(new TextFormatter<>(c -> {
+                    if (c.isContentChange()) {
+                        if (c.getControlNewText().length() == 0) {
+                            return c;
+                        }
+
+                        try {
+                            Integer.parseInt(c.getControlNewText());
+                            if (Integer.parseInt(c.getControlNewText()) > 9
+                                    || Integer.parseInt(c.getControlNewText()) == 0) {
+                                return null;
+                            }
+
+                            return c;
+                        } catch (NumberFormatException ignored) {
+                            ignored.getMessage();
+                        }
+                        return null;
+                    }
+                    return c;
+                }));
                     Bindings.bindBidirectional(textField.textProperty(), test, converter);
 
                 if (board.getSudokuField(i, j).isEditable()) {
@@ -133,7 +157,6 @@ public class Game implements Initializable {
         int num = fieldVerify.verifyTextField(textField.getText());
         if (num == -1) {
             textField.setText("");
-            badValue();
             textField.getStyleClass().remove("done");
             textField.getStyleClass().add("custom");
         } else {
@@ -225,22 +248,6 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
-
-    private void badValue() throws IOException {
-        if (stageBAD == null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("BadValueStage.fxml"));
-            Parent root = loader.load();
-            BadValueWindow bad = loader.getController();
-            bad.send(bundle);
-            stageBAD = new Stage();
-            stageBAD.setScene(new Scene(root));
-            stageBAD.setTitle("Bad");
-            stageBAD.show();
-            stageBAD.setOnHidden(we -> stageBAD = null);
-        } else {
-            stageBAD.toFront();
-        }
     }
 
     private void winValue() throws IOException {
