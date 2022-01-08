@@ -104,7 +104,6 @@ public class MainMenu implements Initializable {
     }
 
     public void setSettings(MouseEvent mouseEvent) throws IOException {
-        System.out.println(bundle);
         Stage stage = (Stage) setPane.getScene().getWindow();
         stage.close();
         Settings s = new Settings();

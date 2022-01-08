@@ -36,7 +36,6 @@ import sudoku.level.Level;
 public class Game implements Initializable {
 
 
-    private static Stage stageBAD;
     private static Stage stageWin;
     private static Stage stageLost;
     private static Stage game;
