@@ -3,7 +3,10 @@ package sudoku.factories;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
+import sudoku.SudokuField;
 import sudoku.exceptions.FileNotFoundDaoException;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,4 +27,19 @@ public class FileTest {
             e.printStackTrace();
         }
     }
+
+//    @Test
+//    public void FileReadTest() {
+//        SudokuBoardDaoFactory<SudokuBoard> factory = new SudokuBoardDaoFactory<>();
+//        Dao<SudokuBoard> file = factory.getFileDao("test.txt");
+//        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+//        try{
+//            file.write(board);
+//            SudokuField field = new SudokuField();
+//            assertThrows(ClassNotFoundException.class,()-> field = file.read());
+//
+//        }
+//        catch(Exception e) {
+//        }
+//    }
 }
