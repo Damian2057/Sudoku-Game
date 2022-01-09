@@ -26,9 +26,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
+import sudoku.exceptions.ValueInconsistentException;
 import sudoku.factories.FileSudokuBoardDao;
 import sudoku.level.Level;
 
@@ -98,7 +101,8 @@ public class Game implements Initializable {
 
                             return c;
                         } catch (NumberFormatException ignored) {
-                            ignored.getMessage();
+                            Logger logger = LoggerFactory.getLogger(this.getClass());
+                            logger.error("Bad Value: "+c.getControlNewText());
                         }
                         return null;
                     }
@@ -178,6 +182,8 @@ public class Game implements Initializable {
         close();
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.error("Aplication close");
     }
 
     public void checkBoard(ActionEvent actionEvent) throws IOException {
@@ -190,17 +196,21 @@ public class Game implements Initializable {
     }
 
     public void loadBoard(MouseEvent mouseEvent) throws IOException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Load saved sudoku");
         try {
             FileSudokuBoardDao<SudokuBoard> loader =
                     new FileSudokuBoardDao<>("@../../saves/save1.txt");
             sudokuBoardActual = loader.read();
             putValues(sudokuBoardActual);
         } catch (Exception ignored) {
-            System.out.println("Read/write Error");
+            logger.error("Error occured");
         }
     }
 
     public void saveBoard(MouseEvent mouseEvent) throws IOException, FileNotFoundException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("saved sudoku");
             FileSudokuBoardDao<SudokuBoard> saver =
                     new FileSudokuBoardDao<>("@../../saves/save1.txt");
             saver.write(sudokuBoardActual);
@@ -210,18 +220,22 @@ public class Game implements Initializable {
     }
 
     public void startConf(MouseEvent mouseEvent) throws NoSuchMethodException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Load saved old sudoku");
         sudokuBoardActual = sudokuBoardStart.clone();
         putValues(sudokuBoardActual);
     }
 
     public void startOldConf(MouseEvent mouseEvent) {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Load saved old sudoku");
         try {
             FileSudokuBoardDao<SudokuBoard> loader =
                     new FileSudokuBoardDao<>("@../../saves/save2.txt");
             sudokuBoardActual = loader.read();
             putValues(sudokuBoardActual);
         } catch (Exception ignored) {
-            System.out.println("Read/write Error");
+            logger.error("Error occured");
         }
     }
 
@@ -250,6 +264,8 @@ public class Game implements Initializable {
     }
 
     private void winValue() throws IOException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Player has solved sudoku correctly");
         if (stageWin == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("WinStage.fxml"));
             Parent root = loader.load();
@@ -273,6 +289,8 @@ public class Game implements Initializable {
     }
 
     private void lostValue() throws IOException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Player has solved sudoku incorrectly");
         if (stageLost == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LostStage.fxml"));
             Parent root = loader.load();
@@ -299,9 +317,6 @@ public class Game implements Initializable {
         if (stageWin != null) {
             stageWin.close();
         }
-        if (stageBAD != null) {
-            stageBAD.close();
-        }
         if (stageLost != null) {
             stageLost.close();
         }
@@ -312,6 +327,8 @@ public class Game implements Initializable {
     }
 
     private void initNewGame() {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Initialize Game");
         game.close();
         MainMenu m = new MainMenu();
         try {

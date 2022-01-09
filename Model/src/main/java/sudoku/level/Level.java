@@ -1,7 +1,11 @@
 package sudoku.level;
 
 import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
+import sudoku.exceptions.LevelLogicalException;
 
 
 public class Level {
@@ -28,8 +32,11 @@ public class Level {
                 }
             }
             return true;
+        } else {
+            Logger logger = LoggerFactory.getLogger(this.getClass());
+            logger.error("Sudoku has already been processed by Lvl Module");
+            throw new LevelLogicalException();
         }
-        return false;
     }
 
     public int getNumberOfFieldsToRemove() {

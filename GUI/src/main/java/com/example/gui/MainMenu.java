@@ -18,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.slf4j.LoggerFactory;
 import sudoku.level.Easy;
 import sudoku.level.Hard;
 import sudoku.level.Level;
@@ -55,6 +56,7 @@ public class MainMenu implements Initializable {
     }
 
     public void gameStart(ActionEvent actionEvent) throws IOException, NoSuchMethodException {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
         if (level == null) {
             level = new VeryEasy();
@@ -71,6 +73,8 @@ public class MainMenu implements Initializable {
         gameStage.setTitle("SudokuGame");
         game.send(gameStage);
         gameStage.show();
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("Starting Game with Level set to "+level.toString());
     }
 
     private void nullBundleSecure() {
@@ -104,6 +108,8 @@ public class MainMenu implements Initializable {
     }
 
     public void setSettings(MouseEvent mouseEvent) throws IOException {
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("Load Options");
         Stage stage = (Stage) setPane.getScene().getWindow();
         stage.close();
         Settings s = new Settings();

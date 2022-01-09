@@ -3,6 +3,7 @@ target/
 %target%
 */target
 /DAO/test.txt
+logs
+logs/
+saves
 saves/
-**/saves
-%saves%

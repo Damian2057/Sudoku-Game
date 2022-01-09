@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.slf4j.LoggerFactory;
 
 public class Settings implements Initializable  {
 
@@ -57,10 +58,14 @@ public class Settings implements Initializable  {
         stage.show();
 
 
+
         if (locale == null) {
+            Locale.setDefault(new Locale("eng", "ENG"));
             locale = new Locale("eng", "ENG");
         }
         setNames(locale);
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("Load Settings with language set to "+locale);
     }
 
     private void checkNull() {
@@ -79,6 +84,7 @@ public class Settings implements Initializable  {
     }
 
     public void englishSet(ActionEvent actionEvent) {
+        Locale.setDefault(new Locale("eng", "ENG"));
         locale = new Locale("eng", "ENG");
         ResourcesEng list = new ResourcesEng();
         authors.textProperty().set((String) list.getContents()[0][1]);
@@ -86,9 +92,12 @@ public class Settings implements Initializable  {
         a2.textProperty().set((String) list.getContents()[2][1]);
         langButton.setText("English");
         setNames(locale);
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("Set English");
     }
 
     public void polskiSet(ActionEvent actionEvent) {
+        Locale.setDefault(new Locale("pl", "PL"));
         locale = new Locale("pl", "PL");
         ResourcesPl list = new ResourcesPl();
         authors.textProperty().set((String) list.getContents()[0][1]);
@@ -96,6 +105,8 @@ public class Settings implements Initializable  {
         a2.textProperty().set((String) list.getContents()[2][1]);
         langButton.setText("Polski");
         setNames(locale);
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("Set Polish");
     }
 
     @Override

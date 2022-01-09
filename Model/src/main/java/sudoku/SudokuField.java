@@ -5,10 +5,12 @@ import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import sudoku.exceptions.ValueInconsistentException;
 
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
@@ -33,7 +35,12 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
     }
 
     public void setFieldValue(int value) {
+         Logger logger = LoggerFactory.getLogger(this.getClass());
          if (value != this.value) {
+             if (value > 9 || value < 0) {
+                 logger.error("Value is out of range: "+ value);
+                 throw new ValueInconsistentException();
+             }
             changes.firePropertyChange("value",this.value,value);
             this.value = value;
         }

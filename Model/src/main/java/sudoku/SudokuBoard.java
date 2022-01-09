@@ -10,7 +10,9 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sudoku.exceptions.WrongIndexSudokuBoardException;
 
 
 public class SudokuBoard implements PropertyChangeListener, Serializable, Cloneable {
@@ -120,16 +122,37 @@ public class SudokuBoard implements PropertyChangeListener, Serializable, Clonea
     }
 
     public SudokuField getSudokuField(int i, int j) {
-        return board[i][j];
+        SudokuField field = null;
+        try {
+            field = board[i][j];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger logger = LoggerFactory.getLogger(this.getClass());
+            logger.error("Index is not in range of Sudoku Board");
+            throw new WrongIndexSudokuBoardException();
+        }
+        return field;
     }
 
     public void set(int x, int y, int value) {
-        board[x][y].setFieldValue(value);
+        try {
+            board[x][y].setFieldValue(value);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger logger = LoggerFactory.getLogger(this.getClass());
+            logger.error("Index is not in range of Sudoku Board");
+            throw new WrongIndexSudokuBoardException();
+        }
     }
 
     public int get(int x, int y) {
-
-        return board[x][y].getFieldValue();
+        int xx;
+        try {
+            xx =  board[x][y].getFieldValue();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger logger = LoggerFactory.getLogger(this.getClass());
+            logger.error("Index is not in range of Sudoku Board");
+            throw new WrongIndexSudokuBoardException();
+        }
+        return xx;
     }
 
     public SudokuRow getRow(int y) {
