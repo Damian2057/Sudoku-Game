@@ -183,7 +183,7 @@ public class Game implements Initializable {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
         Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.error("Aplication close");
+        logger.info("Aplication close");
     }
 
     public void checkBoard(ActionEvent actionEvent) throws IOException {
