@@ -74,7 +74,7 @@ public class MainMenu implements Initializable {
         game.send(gameStage);
         gameStage.show();
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("Starting Game with Level set to "+level.toString());
+        logger.debug("Starting Game with Level set to " + level.toString());
     }
 
     private void nullBundleSecure() {

@@ -1,6 +1,9 @@
 package sudoku;
 
+import com.sun.jdi.Value;
 import org.junit.jupiter.api.Test;
+import sudoku.exceptions.ValueInconsistentException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -267,12 +270,12 @@ public class ObjectMethodTest {
 
         //mieszane asercje
         SudokuField s = new SudokuField();
-        s.setFieldValue(10);
+        assertThrows(ValueInconsistentException.class, ()->s.setFieldValue(10));
         column1.fields.set(5, s);
         assertNotEquals(row1, column1);
         assertNotEquals(column1, box1);
         SudokuField b = new SudokuField();
-        b.setFieldValue(11);
+        assertThrows(ValueInconsistentException.class, ()->b.setFieldValue(11));
         box1.fields.set(5,b);
         assertNotEquals(row1, box1);
     }
@@ -286,8 +289,8 @@ public class ObjectMethodTest {
 
         assertEquals(s1, s1);
         assertEquals(s2, s2);
-        s2.set(0,0,10);
-        assertNotEquals(s1, s2);
+        assertThrows(ValueInconsistentException.class, ()->s2.set(0,0,10));
+        assertEquals(s1, s2);
         assertNotEquals(null, s1);
         assertFalse(s1.equals(null));
         assertNotEquals(s2, b2);
@@ -346,9 +349,9 @@ public class ObjectMethodTest {
 
         assertEquals(row1, c1);
 
-        c1.fields.get(0).setFieldValue(10);
+        assertThrows(ValueInconsistentException.class, ()->c1.fields.get(0).setFieldValue(10));
 
-        assertNotEquals(row1, c1);
+        assertEquals(row1, c1);
     }
 
 }

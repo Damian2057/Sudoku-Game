@@ -3,6 +3,8 @@ package sudoku.level;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
+import sudoku.exceptions.LevelLogicalException;
+import sudoku.exceptions.ValueInconsistentException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,7 +51,7 @@ public class LevelTest {
 
         s1.solveGame();
         assertTrue(ez.removeFields(s1));
-        assertFalse(ez.removeFields(s1));
+        assertThrows(LevelLogicalException.class, ()->ez.removeFields(s1));
 
     }
 }

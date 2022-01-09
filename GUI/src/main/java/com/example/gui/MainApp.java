@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class MainApp extends Application {
     public static final Logger logger = LogManager.getLogger(MainApp.class);
+
     @Override
     public void start(Stage stage) {
 

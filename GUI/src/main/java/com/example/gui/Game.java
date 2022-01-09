@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
-import sudoku.exceptions.ValueInconsistentException;
 import sudoku.factories.FileSudokuBoardDao;
 import sudoku.level.Level;
 
@@ -102,7 +101,7 @@ public class Game implements Initializable {
                             return c;
                         } catch (NumberFormatException ignored) {
                             Logger logger = LoggerFactory.getLogger(this.getClass());
-                            logger.error("Bad Value: "+c.getControlNewText());
+                            logger.error("Bad Value: " + c.getControlNewText());
                         }
                         return null;
                     }

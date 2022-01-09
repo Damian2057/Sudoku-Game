@@ -1,5 +1,11 @@
 package sudoku.factories;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
@@ -8,15 +14,10 @@ import sudoku.exceptions.FileNotFoundDaoException;
 import sudoku.exceptions.FileReadingDaoException;
 import sudoku.exceptions.FileWritingDaoException;
 
-import java.io.*;
 
 public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
 
     private String fileName;
-    private FileInputStream fis;
-    private ObjectInputStream ois;
-    private FileOutputStream fos;
-    private ObjectOutputStream os;
 
     public FileSudokuBoardDao(String fileName) {
         this.fileName = fileName;
@@ -58,9 +59,5 @@ public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable
 
     @Override
     public void close() throws Exception {
-        fis.close();
-        ois.close();
-        fos.close();
-        os.close();
     }
 }

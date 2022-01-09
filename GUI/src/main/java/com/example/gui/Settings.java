@@ -65,7 +65,7 @@ public class Settings implements Initializable  {
         }
         setNames(locale);
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("Load Settings with language set to "+locale);
+        logger.debug("Load Settings with language set to " + locale);
     }
 
     private void checkNull() {

@@ -1,6 +1,7 @@
 package sudoku;
 
 import org.junit.jupiter.api.Test;
+import sudoku.exceptions.ValueInconsistentException;
 import sudoku.level.Level;
 import sudoku.level.VeryEasy;
 
@@ -238,8 +239,8 @@ public class SudokuBoardTest {
         }
 
         int i = sudokuA.getRow(0).getFieldValue(0);
-        sudokuA.set(0,0,10);
-        assertTrue(i != sudokuA.getRow(0).getFieldValue(0));
+        assertThrows(ValueInconsistentException.class, ()->sudokuA.set(0,0,10));
+        assertFalse(i != sudokuA.getRow(0).getFieldValue(0));
     }
 
     @Test
