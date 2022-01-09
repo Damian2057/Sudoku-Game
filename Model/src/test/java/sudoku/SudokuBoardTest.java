@@ -1,7 +1,9 @@
 package sudoku;
 
+import com.sun.jdi.Value;
 import org.junit.jupiter.api.Test;
 import sudoku.exceptions.ValueInconsistentException;
+import sudoku.exceptions.WrongIndexSudokuBoardException;
 import sudoku.level.Level;
 import sudoku.level.VeryEasy;
 
@@ -373,5 +375,14 @@ public class SudokuBoardTest {
 
     }
 
+    @Test
+    public void exceptionTest() {
+        SudokuSolver s = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuA = new SudokuBoard(s);
 
+        assertThrows(WrongIndexSudokuBoardException.class, ()->sudokuA.get(11, 11));
+        assertThrows(WrongIndexSudokuBoardException.class, ()->sudokuA.getSudokuField(11, 11));
+        assertThrows(WrongIndexSudokuBoardException.class, ()->sudokuA.set(11, 11, 5));
+        assertThrows(ValueInconsistentException.class, ()->sudokuA.set(1, 1, 500));
+    }
 }

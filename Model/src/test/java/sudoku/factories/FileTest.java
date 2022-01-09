@@ -3,8 +3,9 @@ package sudoku.factories;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
+import sudoku.exceptions.FileNotFoundDaoException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileTest {
     @Test
