@@ -9,10 +9,10 @@ import java.io.ObjectOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
-import sudoku.exceptions.DaoException;
-import sudoku.exceptions.FileNotFoundDaoException;
-import sudoku.exceptions.FileReadingDaoException;
-import sudoku.exceptions.FileWritingDaoException;
+import sudoku.exceptions.dao.DaoException;
+import sudoku.exceptions.dao.FileNotFoundDaoException;
+import sudoku.exceptions.dao.FileReadingDaoException;
+import sudoku.exceptions.dao.FileWritingDaoException;
 
 
 public class FileSudokuBoardDao<T> implements Dao<T> { //AutoCloseable

@@ -3,10 +3,6 @@ package sudoku.factories;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
-import sudoku.SudokuField;
-import sudoku.exceptions.FileNotFoundDaoException;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

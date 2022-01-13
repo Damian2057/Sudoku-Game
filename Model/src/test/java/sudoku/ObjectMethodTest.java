@@ -1,8 +1,7 @@
 package sudoku;
 
-import com.sun.jdi.Value;
 import org.junit.jupiter.api.Test;
-import sudoku.exceptions.ValueInconsistentException;
+import sudoku.exceptions.model.ValueInconsistentException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;

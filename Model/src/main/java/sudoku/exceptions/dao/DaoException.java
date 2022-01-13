@@ -1,4 +1,6 @@
-package sudoku.exceptions;
+package sudoku.exceptions.dao;
+
+import sudoku.exceptions.LocalizedRunTimeException;
 
 public class DaoException extends LocalizedRunTimeException {
     public DaoException(String messageKey) {

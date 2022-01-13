@@ -3,8 +3,7 @@ package sudoku.level;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
-import sudoku.exceptions.LevelLogicalException;
-import sudoku.exceptions.ValueInconsistentException;
+import sudoku.exceptions.model.LevelLogicalException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

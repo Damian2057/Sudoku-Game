@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sudoku.exceptions.ValueInconsistentException;
+import sudoku.exceptions.model.ValueInconsistentException;
 
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {

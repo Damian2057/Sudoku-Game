@@ -1,15 +1,11 @@
 package sudoku;
 
-import com.sun.jdi.Value;
 import org.junit.jupiter.api.Test;
-import sudoku.exceptions.ValueInconsistentException;
-import sudoku.exceptions.WrongIndexSudokuBoardException;
-import sudoku.level.Level;
-import sudoku.level.VeryEasy;
+import sudoku.exceptions.model.ValueInconsistentException;
+import sudoku.exceptions.model.WrongIndexSudokuBoardException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;

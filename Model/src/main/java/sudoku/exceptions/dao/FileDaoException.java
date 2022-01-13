@@ -1,4 +1,4 @@
-package sudoku.exceptions;
+package sudoku.exceptions.dao;
 
 public class FileDaoException extends DaoException {
     public FileDaoException(String messageKey) {

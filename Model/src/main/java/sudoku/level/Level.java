@@ -4,7 +4,7 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
-import sudoku.exceptions.LevelLogicalException;
+import sudoku.exceptions.model.LevelLogicalException;
 
 
 public class Level {
