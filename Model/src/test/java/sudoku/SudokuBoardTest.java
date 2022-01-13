@@ -327,7 +327,6 @@ public class SudokuBoardTest {
         SudokuBoard sudokuA = new SudokuBoard(s);
         SudokuBoard sudokuB = new SudokuBoard(s);
 
-        System.out.println(sudokuA.equals(sudokuA));
     }
 
     @Test

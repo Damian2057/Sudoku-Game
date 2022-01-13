@@ -88,6 +88,7 @@ public class Game implements Initializable {
                 textField.setTextFormatter(new TextFormatter<>(c -> {
                     if (c.isContentChange()) {
                         if (c.getControlNewText().length() == 0) {
+                            //c jest niczym?
                             return c;
                         }
 
