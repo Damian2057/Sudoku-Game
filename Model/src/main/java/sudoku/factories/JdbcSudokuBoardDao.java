@@ -73,6 +73,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
         try {
             conn.setAutoCommit(false);
             int board_id = getBoardIdFromDataBase();
+            readFieldsFormDataBase(temp, board_id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -97,6 +98,34 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                 }
                 logger.debug("{}'s id is {}", boardName, boardId);
                 return boardId;
+            }
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        }
+    }
+
+    private void readFieldsFormDataBase(SudokuBoard tempSudokuBoard,
+                                        int boardId) throws SQLException {
+        String query = "SELECT value "
+                + "FROM SudokuFields "
+                + "WHERE (sudoku_board_id, column_index, row_index) = (?, ?, ?);";
+
+        try (var getFieldsFormDatabase = conn.prepareStatement(query)) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    getFieldsFormDatabase.setInt(1, boardId);
+                    getFieldsFormDatabase.setInt(2, i);
+                    getFieldsFormDatabase.setInt(3, j);
+
+                    try (var resultSet = getFieldsFormDatabase.executeQuery()) {
+                        if (resultSet.next()) {
+                            tempSudokuBoard.set(i, j, resultSet.getInt(1));
+                        } else {
+                            //throw new DataJdbcDaoException();
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             conn.rollback();
