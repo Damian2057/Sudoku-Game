@@ -237,12 +237,16 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                     }
                     return savedBoards;
                 }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.error("Cannot get all boards in database");
             //throw new JdbcDaoException();
             throw new DaoException();
         }
+        return null;
     }
 
     @Override
