@@ -55,6 +55,14 @@
             <artifactId>javafx-base</artifactId>
             <version>18-ea+6</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
