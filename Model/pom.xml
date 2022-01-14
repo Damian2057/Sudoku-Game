@@ -55,10 +55,6 @@
             <artifactId>javafx-base</artifactId>
             <version>18-ea+6</version>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
