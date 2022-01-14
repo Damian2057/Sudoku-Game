@@ -56,7 +56,7 @@ public class Game implements Initializable {
     private Button closeButton;
 
     private static SudokuBoard sudokuBoardActual;
-    private static SudokuBoard sudokuBoardStart;
+    public static SudokuBoard sudokuBoardStart;
     private ResourceBundle bundle;
 
     public void startGame(Level level, ResourceBundle bundle) throws NoSuchMethodException {
@@ -70,7 +70,8 @@ public class Game implements Initializable {
         Tooltip.install(saveButton, new Tooltip(bundle.getString("save")));
     }
 
-    private void putValues(SudokuBoard board) throws NoSuchMethodException {
+    public void putValues(SudokuBoard board) throws NoSuchMethodException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
         decideLevel(bundle);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -85,7 +86,6 @@ public class Game implements Initializable {
                 textField.setTextFormatter(new TextFormatter<>(c -> {
                     if (c.isContentChange()) {
                         if (c.getControlNewText().length() == 0) {
-                            //c jest niczym?
                             return c;
                         }
 
@@ -95,10 +95,9 @@ public class Game implements Initializable {
                                     || Integer.parseInt(c.getControlNewText()) == 0) {
                                 return null;
                             }
-
+                            logger.info("Value: " + c.getControlNewText());
                             return c;
                         } catch (NumberFormatException ignored) {
-                            Logger logger = LoggerFactory.getLogger(this.getClass());
                             logger.error("Bad Value: " + c.getControlNewText());
                         }
                         return null;
@@ -127,7 +126,7 @@ public class Game implements Initializable {
             textField.setText("");
         }
 
-        textField.setMaxSize(100,100);
+        textField.setMaxSize(1000,100);
         textField.setAlignment(Pos.CENTER);
         plansza.add(textField, i, j);
 
@@ -183,7 +182,7 @@ public class Game implements Initializable {
         logger.info("Aplication close");
     }
 
-    public void checkBoard(ActionEvent actionEvent) throws IOException {
+    public void checkBoard(ActionEvent actionEvent) throws IOException, NoSuchMethodException {
         close();
         if (sudokuBoardActual.checkvalid()) {
             winValue();
@@ -195,13 +194,26 @@ public class Game implements Initializable {
     public void loadBoard(MouseEvent mouseEvent) throws IOException {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Load saved sudoku");
-        try {
-            FileSudokuBoardDao<SudokuBoard> loader =
-                    new FileSudokuBoardDao<>("@../../saves/save1.txt");
-            sudokuBoardActual = loader.read();
-            putValues(sudokuBoardActual);
-        } catch (Exception ignored) {
-            logger.error("Error occured");
+        if(loadGame == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoadScene.fxml"));
+            Parent root = loader.load();
+            LoadScene load = loader.getController();
+
+            load.send(bundle, sudokuBoardActual, game);
+            loadGame = new Stage();
+            loadGame.setScene(new Scene(root));
+            loadGame.setAlwaysOnTop(true);
+            loadGame.setTitle("Load");
+            loadGame.show();
+            setDisable(true);
+
+            loadGame.setOnHidden(windowEvent -> {
+                loadGame = null;
+                setDisable(false);
+            });
+
+        } else {
+            loadGame.toFront();
         }
     }
 
@@ -312,8 +324,15 @@ public class Game implements Initializable {
         }
     }
 
-    public void send(Stage menuStage) {
-        game = menuStage;
+    public void send(Stage gameStage) throws NoSuchMethodException {
+        game = gameStage;
+    }
+
+    public void sendB(Stage gameStage, SudokuBoard board, ResourceBundle bundle) throws NoSuchMethodException {
+        this.game = gameStage;
+        sudokuBoardActual = board;
+        this.bundle = bundle;
+        putValues(board);
     }
 
     private void initNewGame() {
