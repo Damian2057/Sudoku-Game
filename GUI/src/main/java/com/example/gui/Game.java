@@ -37,7 +37,8 @@ import sudoku.level.Level;
 
 public class Game implements Initializable {
 
-
+    private static Stage saveGame;
+    private static Stage loadGame;
     private static Stage stageWin;
     private static Stage stageLost;
     private static Stage game;
@@ -46,9 +47,7 @@ public class Game implements Initializable {
     public Label gameLevel;
     public Button checker;
     public Pane loadButton;
-    public Pane startConf;
     public Pane saveButton;
-    public Pane startOldConf;
     public Label levell;
 
     @FXML
@@ -68,9 +67,7 @@ public class Game implements Initializable {
         putValues(sudokuBoardActual);
         sudokuBoardStart = sudokuBoardActual.clone();
         Tooltip.install(loadButton, new Tooltip(bundle.getString("load")));
-        Tooltip.install(startConf, new Tooltip(bundle.getString("startconf")));
         Tooltip.install(saveButton, new Tooltip(bundle.getString("save")));
-        Tooltip.install(startOldConf, new Tooltip(bundle.getString("startoldconf")));
     }
 
     private void putValues(SudokuBoard board) throws NoSuchMethodException {
@@ -211,31 +208,24 @@ public class Game implements Initializable {
     public void saveBoard(MouseEvent mouseEvent) throws IOException, FileNotFoundException {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("saved sudoku");
-            FileSudokuBoardDao<SudokuBoard> saver =
-                    new FileSudokuBoardDao<>("@../../saves/save1.txt");
-            saver.write(sudokuBoardActual);
-        FileSudokuBoardDao<SudokuBoard> saver2 =
-                new FileSudokuBoardDao<>("@../../saves/save2.txt");
-            saver2.write(sudokuBoardStart);
-    }
 
-    public void startConf(MouseEvent mouseEvent) throws NoSuchMethodException {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.info("Load saved old sudoku");
-        sudokuBoardActual = sudokuBoardStart.clone();
-        putValues(sudokuBoardActual);
-    }
+        if(saveGame == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SaveScene.fxml"));
+            Parent root = loader.load();
+            SaveScene save = loader.getController();
 
-    public void startOldConf(MouseEvent mouseEvent) {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.info("Load saved old sudoku");
-        try {
-            FileSudokuBoardDao<SudokuBoard> loader =
-                    new FileSudokuBoardDao<>("@../../saves/save2.txt");
-            sudokuBoardActual = loader.read();
-            putValues(sudokuBoardActual);
-        } catch (Exception ignored) {
-            logger.error("Error occured");
+            save.send(bundle, sudokuBoardActual);
+            saveGame = new Stage();
+            saveGame.setScene(new Scene(root));
+            saveGame.setAlwaysOnTop(true);
+            saveGame.setTitle("save");
+            saveGame.show();
+            setDisable(true);
+
+            saveGame.setOnHidden(windowEvent -> {saveGame = null; setDisable(false);} );
+
+        } else {
+            saveGame.toFront();
         }
     }
 
@@ -342,9 +332,8 @@ public class Game implements Initializable {
         checker.setDisable(t);
         loadButton.setDisable(t);
         saveButton.setDisable(t);
-        startConf.setDisable(t);
-        startOldConf.setDisable(t);
         plansza.setDisable(t);
     }
+
 
 }

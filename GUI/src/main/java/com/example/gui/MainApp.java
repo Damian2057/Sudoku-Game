@@ -25,6 +25,7 @@ public class MainApp extends Application {
 
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 
