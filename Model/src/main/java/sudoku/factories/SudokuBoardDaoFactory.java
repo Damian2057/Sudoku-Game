@@ -1,12 +1,16 @@
 package sudoku.factories;
 
-public class SudokuBoardDaoFactory<T> {
-    public Dao<T> getFileDao(String fileName) {
-        return new FileSudokuBoardDao<T>(fileName);
-    }
+import sudoku.SudokuBoard;
 
-    public Dao<T> getJdbcDao(String boardName, String databaseURL) {
-        return (Dao<T>) new JdbcSudokuBoardDao(boardName, databaseURL);
-    }
+import java.sql.SQLException;
 
+public class SudokuBoardDaoFactory {
+    private SudokuBoardDaoFactory() {}
+
+    public Dao<SudokuBoard> getFileDao(String fileName) {
+        return new FileSudokuBoardDao(fileName);
+    }
+    public static JdbcSudokuBoardDao getJdbcDao(String boardName, String databaseUrl) throws SQLException {
+        return new JdbcSudokuBoardDao(boardName, databaseUrl);
+    }
 }

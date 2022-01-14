@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
+import sudoku.factories.SudokuBoardDaoFactory;
 
 
 public class MainApp extends Application {
@@ -14,6 +15,9 @@ public class MainApp extends Application {
     public void start(Stage stage) {
 
         try {
+            var dao = SudokuBoardDaoFactory.getJdbcDao("board1","jdbc:derby:baza_sudoku;create=true");
+
+
             org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
             logger.debug("App run...");
             MainMenu m = new MainMenu();
