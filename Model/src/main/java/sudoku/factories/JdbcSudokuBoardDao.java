@@ -75,13 +75,19 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
     @Override
     public SudokuBoard read() throws IOException, ClassNotFoundException {
         SudokuBoard temp = new SudokuBoard(new BacktrackingSudokuSolver());
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Database read attempt");
         try {
+            createConnection();
             conn.setAutoCommit(false);
             int board_id = getBoardIdFromDataBase();
             readFieldsFormDataBase(temp, board_id);
+            disconnectConnection();
         } catch (SQLException throwables) {
+            logger.error("Read failure");
             throwables.printStackTrace();
         }
+        logger.info("Database read success");
         return temp;
     }
 
@@ -90,7 +96,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
         String query = "SELECT MAX(sudoku_board_id) "
                 + "FROM SudokuBoards "
                 + "WHERE sudoku_board_name = ?;";
-
+        logger.info("BoardID access attempt");
         try (var getBoardIDSStatement = conn.prepareStatement(query)) {
             getBoardIDSStatement.setString(1, boardName);
 
@@ -105,6 +111,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                 return boardId;
             }
         } catch (Exception e) {
+            logger.info("BoardID access another attempt");
             conn.rollback();
             throw e;
         }
@@ -115,7 +122,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
         String query = "SELECT value "
                 + "FROM SudokuFields "
                 + "WHERE (sudoku_board_id, column_index, row_index) = (?, ?, ?);";
-
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Database Fields read attempt");
         try (var getFieldsFormDatabase = conn.prepareStatement(query)) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
@@ -127,12 +135,14 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                         if (resultSet.next()) {
                             tempSudokuBoard.set(i, j, resultSet.getInt(1));
                         } else {
+                            logger.error("Could not read database fields");
                             //throw new DataJdbcDaoException();
                         }
                     }
                 }
             }
         } catch (Exception e) {
+
             conn.rollback();
             throw e;
         }
@@ -141,31 +151,32 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
     @Override
     public void write(SudokuBoard obj) {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("Starting writing to the database");
+        logger.debug("Database write attempt");
 
-        try (Connection connection = DriverManager.getConnection(dataBaseUrl)) {
-            connection.setAutoCommit(false);
+        try {
+            createConnection();
+            conn.setAutoCommit(false);
             int boardId = createBoardEntryInDataBase();
             saveFieldsInDatabase(obj, boardId);
-
-            logger.debug("Committing changes in database");
-            connection.commit();
-            logger.debug("The writing query was successful");
+            conn.commit();
+            logger.debug("Write success");
+            disconnectConnection();
 
         } catch (SQLDataException e) {
-            logger.error("SQL data error");
+            logger.error("Database data error");
             //throw new SyntaxJdbcDaoException();
         } catch (SQLSyntaxErrorException e) {
-            logger.error("SQL syntax error");
+            logger.error("Database syntax error");
             //throw new SyntaxJdbcDaoException();
         } catch (SQLException e) {
-            logger.error("Cant write {} to database", boardName);
+            logger.error("Cannot save board to database");
             //throw new WrittingJdbcDaoException();
         }
     }
 
-    private void saveFieldsInDatabase(SudokuBoard obj,
-                                      int boardId) throws SQLException {
+    private void saveFieldsInDatabase(SudokuBoard obj, int boardId) throws SQLException {
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Database save fields attempt");
         try (var createFieldStatement =
                      conn.prepareStatement("INSERT INTO SudokuFields VALUES(?, ?, ?, ?);")) {
             for (int i = 0; i < 9; i++) {
@@ -185,7 +196,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
 
     private int createBoardEntryInDataBase() throws SQLException {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("Creating {} Entry", boardName);
+        logger.debug("Database board entry attempt");
         String query = "INSERT INTO SudokuBoards VALUES (NULL, ?);";
 
         try (var createBoardStatement =
@@ -198,10 +209,11 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                 if (resultSet.next()) {
                     boardID = resultSet.getInt(1);
 
-                    logger.debug("Created {} Entry with id: {}", boardName, boardID);
+                    logger.debug("Created board entry with id {}", boardID);
                     return boardID;
                 } else {
                     //throw new WrittingJdbcDaoException();
+                    logger.error("Cannot write Entry");
                     throw new DaoException();
                 }
             }
@@ -212,14 +224,14 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
 
     }
 
-    public static List<String> getAllBoardsInDataBase(String dataBaseUrl) {
-        var logger = LoggerFactory.getLogger(JdbcSudokuBoardDao.class);
+    public List<String> getAllBoardsInDataBase(String dataBaseUrl) {
+        org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         String query = "SELECT sudoku_board_name FROM SudokuBoards GROUP BY sudoku_board_name;";
-
-        try (var connection = DriverManager.getConnection(dataBaseUrl)) {
+        logger.info("Getting all boards in database...");
+        try  {
             var savedBoards = new ArrayList<String>();
-            try (var statement = connection.createStatement()) {
-                try (var resultSet = statement.executeQuery(query)) {
+            try {
+                try (var resultSet = stmt.executeQuery(query)) {
                     while (resultSet.next()) {
                         savedBoards.add(resultSet.getString(1));
                     }
@@ -227,7 +239,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                 }
             }
         } catch (SQLException e) {
-            logger.error("Something goes wrong during Data base query");
+            logger.error("Cannot get all boards in database");
             //throw new JdbcDaoException();
             throw new DaoException();
         }
@@ -235,7 +247,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
 
     @Override
     public void close() throws Exception {
-
+        disconnectConnection();
     }
 
 
