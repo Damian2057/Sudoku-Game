@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
 
 import java.io.IOException;
@@ -61,9 +62,10 @@ public class LoadScene implements Initializable {
         Stage stage2 = new Stage();
         stage2.setScene(new Scene(root,525,650));
         Game game = loader.getController();
-        board.set(0,0,2);
-        board.set(0,1,2);
-        game.sendB(stage2, board, bundle);
+        SudokuBoard board3 = new SudokuBoard(new BacktrackingSudokuSolver());
+        board3.solveGame();
+        board3.getSudokuField(0,0).setEditable(true);
+        game.sendB(stage2, board3, bundle);
         stage2.setResizable(false);
         stage2.setTitle("SudokuMenu");
         stage2.show();
