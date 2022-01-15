@@ -1,5 +1,14 @@
 package sudoku.factories;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLDataException;
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.derby.shared.common.error.DerbySQLIntegrityConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import sudoku.BacktrackingSudokuSolver;
@@ -10,13 +19,8 @@ import sudoku.exceptions.jdbc.WrittingJdbcDaoException;
 import sudoku.exceptions.jdbc.WrongNameJdbcException;
 import sudoku.exceptions.model.LevelLogicalException;
 
-import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
-public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
+public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     private static String dataBaseUrl;
     private String boardName;
 
@@ -31,20 +35,19 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
 
     private void createDatabase() throws SQLException {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-        try
-        {
+        try {
             logger.info("Database creation attempt");
             conn = DriverManager.getConnection(dataBaseUrl);
             stmt = conn.createStatement();
 
-            String SQL = "CREATE TABLE SudokuBoards" +
-                    "(" +
-                    "id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
-                    "name VARCHAR(40) NOT NULL," +
-                    "PRIMARY KEY (id)" +
-                    ")";
-            stmt.execute(SQL);
-            SQL = "CREATE TABLE SudokuFields"
+            String sql1 = "CREATE TABLE SudokuBoards"
+                    + "("
+                    + "id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                    + "name VARCHAR(40) NOT NULL,"
+                    + "PRIMARY KEY (id)"
+                    + ")";
+            stmt.execute(sql1);
+            sql1 = "CREATE TABLE SudokuFields"
                     + "("
                     + "id INT NOT NULL,"
                     + "col_index INT NOT NULL,"
@@ -54,14 +57,11 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                     + "PRIMARY KEY (id, col_index, row_index),"
                     + "FOREIGN KEY (id) REFERENCES SudokuBoards(id)"
                     + ")";
-            stmt.execute(SQL);
+            stmt.execute(sql1);
             conn.commit();
-        }
-        catch (DerbySQLIntegrityConstraintViolationException except)
-        {
+        } catch (DerbySQLIntegrityConstraintViolationException except) {
             logger.error("Database integer error");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.debug("Database already exists");
         }
     }
@@ -72,7 +72,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
     }
 
     private void disconnectConnection() throws SQLException {
-        if(conn != null && stmt != null) {
+        if (conn != null && stmt != null) {
             conn.close();
             stmt.close();
         }
@@ -88,8 +88,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
         try {
             createConnection();
             conn.setAutoCommit(false);
-            int board_id = getBoardIdFromDataBase();
-            readFieldsFormDataBase(temp, board_id);
+            int boardid = getBoardIdFromDataBase();
+            readFieldsFormDataBase(temp, boardid);
             disconnectConnection();
         } catch (SQLException throwables) {
             logger.error("Read failure");
@@ -140,12 +140,12 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
                 resultSet.next();
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
-                        tempSudokuBoard.set(resultSet.getInt(2)
-                                ,resultSet.getInt(3)
-                                ,resultSet.getInt(4));
+                        tempSudokuBoard.set(resultSet.getInt(2),
+                                resultSet.getInt(3),
+                                resultSet.getInt(4));
 
-                        tempSudokuBoard.getSudokuField(resultSet.getInt(2)
-                                ,resultSet.getInt(3)).setEditable(itb(resultSet.getInt(5)));
+                        tempSudokuBoard.getSudokuField(resultSet.getInt(2),
+                                resultSet.getInt(3)).setEditable(itb(resultSet.getInt(5)));
                         resultSet.next();
                     }
                 }
@@ -192,7 +192,9 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
         logger.info("Database save fields attempt");
         try {
             var createFieldStatement =
-                    conn.prepareStatement("INSERT INTO SudokuFields(ID,col_index, row_index, value, editable) VALUES(?,?, ?, ?, ?)");
+                    conn.prepareStatement("INSERT INTO"
+                            + "SudokuFields(ID,col_index, row_index,value, editable)"
+                            + "VALUES(?,?, ?, ?, ?)");
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     createFieldStatement.setInt(1, boardId);
@@ -208,6 +210,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard>{
             throw e;
         }
     }
+
     int boolToInt(Boolean b) {
         return b.compareTo(false);
     }
