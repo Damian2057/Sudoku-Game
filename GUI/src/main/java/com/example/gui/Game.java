@@ -59,7 +59,7 @@ public class Game implements Initializable {
     private static SudokuBoard sudokuBoardActual;
     public static SudokuBoard sudokuBoardStart;
     private ResourceBundle bundle;
-    public final static String databaseURL
+    public static final String databaseURL
             = "jdbc:derby:baza_sudoku;create=true";
 
     public void startGame(Level level, ResourceBundle bundle) throws NoSuchMethodException {
@@ -197,7 +197,7 @@ public class Game implements Initializable {
     public void loadBoard(MouseEvent mouseEvent) throws IOException, SQLException {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Load saved sudoku");
-        if(loadGame == null) {
+        if (loadGame == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoadScene.fxml"));
             Parent root = loader.load();
             LoadScene load = loader.getController();
@@ -224,7 +224,7 @@ public class Game implements Initializable {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("saved sudoku");
 
-        if(saveGame == null) {
+        if (saveGame == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SaveScene.fxml"));
             Parent root = loader.load();
             SaveScene save = loader.getController();
@@ -237,7 +237,10 @@ public class Game implements Initializable {
             saveGame.show();
             setDisable(true);
 
-            saveGame.setOnHidden(windowEvent -> {saveGame = null; setDisable(false);} );
+            saveGame.setOnHidden(windowEvent -> {
+                saveGame = null;
+                setDisable(false);
+            });
 
         } else {
             saveGame.toFront();
@@ -331,7 +334,8 @@ public class Game implements Initializable {
         game = gameStage;
     }
 
-    public void sendB(Stage gameStage, SudokuBoard board, ResourceBundle bundle) throws NoSuchMethodException {
+    public void sendB(Stage gameStage, SudokuBoard board, ResourceBundle bundle)
+            throws NoSuchMethodException {
         this.game = gameStage;
         this.sudokuBoardActual = board.clone();
         this.bundle = bundle;

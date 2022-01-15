@@ -1,5 +1,7 @@
 package com.example.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,9 +10,6 @@ import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
 import sudoku.factories.SudokuBoardDaoFactory;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class SaveScene implements Initializable {
 
@@ -28,7 +27,7 @@ public class SaveScene implements Initializable {
     }
 
     public void onSaveBoard(ActionEvent actionEvent) {
-        if(saveTextField.getText() != ""  && saveTextField.getText() != " "){
+        if (saveTextField.getText() != ""  && saveTextField.getText() != " ") {
             org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
             try (var JDBCdao =
