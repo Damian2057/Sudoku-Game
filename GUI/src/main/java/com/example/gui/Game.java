@@ -3,6 +3,7 @@ package com.example.gui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.JavaBeanIntegerProperty;
@@ -58,6 +59,8 @@ public class Game implements Initializable {
     private static SudokuBoard sudokuBoardActual;
     public static SudokuBoard sudokuBoardStart;
     private ResourceBundle bundle;
+    public final static String databaseURL
+            = "jdbc:derby:baza_sudoku;create=true";
 
     public void startGame(Level level, ResourceBundle bundle) throws NoSuchMethodException {
         initBoard(level);
@@ -95,7 +98,6 @@ public class Game implements Initializable {
                                     || Integer.parseInt(c.getControlNewText()) == 0) {
                                 return null;
                             }
-                            logger.info("Value: " + c.getControlNewText());
                             return c;
                         } catch (NumberFormatException ignored) {
                             logger.error("Bad Value: " + c.getControlNewText());
@@ -134,6 +136,7 @@ public class Game implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
+                    sudokuBoardActual.set(i,j,Integer.parseInt(textField.getText()));
                     fieldVerification(textField);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -191,7 +194,7 @@ public class Game implements Initializable {
         }
     }
 
-    public void loadBoard(MouseEvent mouseEvent) throws IOException {
+    public void loadBoard(MouseEvent mouseEvent) throws IOException, SQLException {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Load saved sudoku");
         if(loadGame == null) {
@@ -199,7 +202,7 @@ public class Game implements Initializable {
             Parent root = loader.load();
             LoadScene load = loader.getController();
 
-            load.send(bundle, sudokuBoardActual, game);
+            load.send(bundle, sudokuBoardActual, game, databaseURL);
             loadGame = new Stage();
             loadGame.setScene(new Scene(root));
             loadGame.setAlwaysOnTop(true);
@@ -226,7 +229,7 @@ public class Game implements Initializable {
             Parent root = loader.load();
             SaveScene save = loader.getController();
 
-            save.send(bundle, sudokuBoardActual);
+            save.send(bundle, sudokuBoardActual, databaseURL);
             saveGame = new Stage();
             saveGame.setScene(new Scene(root));
             saveGame.setAlwaysOnTop(true);
@@ -330,9 +333,9 @@ public class Game implements Initializable {
 
     public void sendB(Stage gameStage, SudokuBoard board, ResourceBundle bundle) throws NoSuchMethodException {
         this.game = gameStage;
-        sudokuBoardActual = board;
+        this.sudokuBoardActual = board.clone();
         this.bundle = bundle;
-        putValues(board);
+        putValues(sudokuBoardActual);
     }
 
     private void initNewGame() {

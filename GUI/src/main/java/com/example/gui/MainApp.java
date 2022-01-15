@@ -15,9 +15,6 @@ public class MainApp extends Application {
     public void start(Stage stage) {
 
         try {
-            var dao = SudokuBoardDaoFactory.getJdbcDao("board1","jdbc:derby:baza_sudoku;create=true");
-
-
             org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
             logger.debug("App run...");
             MainMenu m = new MainMenu();

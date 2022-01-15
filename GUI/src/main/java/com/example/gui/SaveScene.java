@@ -5,7 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
+import sudoku.factories.SudokuBoardDaoFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +20,7 @@ public class SaveScene implements Initializable {
     public TextField saveTextField = new TextField();
     public Button cancelButton = new Button();
     public Button saveSaveButton = new Button();
+    private String url;
 
     public void onCancelBoard(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -25,14 +28,26 @@ public class SaveScene implements Initializable {
     }
 
     public void onSaveBoard(ActionEvent actionEvent) {
-        Stage stage = (Stage) saveSaveButton.getScene().getWindow();
-        stage.close();
+        if(saveTextField.getText() != ""  && saveTextField.getText() != " "){
+            org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
+            try (var JDBCdao =
+                         SudokuBoardDaoFactory.getJdbcDao(saveTextField.getText(), url)) {
+                JDBCdao.write(board);
+            } catch (Exception e) {
+                logger.error("Something goes wrong during loading board", e);
+            }
+
+
+            Stage stage = (Stage) saveSaveButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
-    public void send(ResourceBundle bundle, SudokuBoard board) {
+    public void send(ResourceBundle bundle, SudokuBoard board, String url) {
         this.board = board;
         this.bundle = bundle;
+        this.url = url;
         setNames();
     }
 

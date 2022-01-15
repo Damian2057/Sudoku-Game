@@ -1,20 +1,25 @@
 package com.example.gui;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sudoku.BacktrackingSudokuSolver;
+import org.slf4j.LoggerFactory;
 import sudoku.SudokuBoard;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import sudoku.factories.SudokuBoardDaoFactory;
 
 public class LoadScene implements Initializable {
     public ChoiceBox LevelLoader = new ChoiceBox();
@@ -24,6 +29,7 @@ public class LoadScene implements Initializable {
     private SudokuBoard board;
     private ResourceBundle bundle;
     private Stage stageGameCopy;
+    private String url;
 
     public void applyLoad(ActionEvent actionEvent) throws IOException, NoSuchMethodException {
         reloadGame();
@@ -38,16 +44,19 @@ public class LoadScene implements Initializable {
         stage.close();
     }
 
-    public void send(ResourceBundle bundle, SudokuBoard board, Stage stage) {
+    public void send(ResourceBundle bundle, SudokuBoard board, Stage stage, String URL) throws SQLException {
         this.board = board;
         this.bundle = bundle;
         this.stageGameCopy = stage;
+        this.url = URL;
         setNames();
+        loadBoards();
     }
 
     private void setNames() {
         applyLoad.setText(bundle.getString("apply"));
         cancelLoad.setText(bundle.getString("exit"));
+        LoadText.setText(bundle.getString("loader"));
     }
 
     @Override
@@ -62,13 +71,28 @@ public class LoadScene implements Initializable {
         Stage stage2 = new Stage();
         stage2.setScene(new Scene(root,525,650));
         Game game = loader.getController();
-        SudokuBoard board3 = new SudokuBoard(new BacktrackingSudokuSolver());
-        board3.solveGame();
-        board3.getSudokuField(0,0).setEditable(true);
-        game.sendB(stage2, board3, bundle);
+        game.sendB(stage2, board, bundle);
         stage2.setResizable(false);
         stage2.setTitle("SudokuMenu");
         stage2.show();
+    }
+
+    private void loadBoards() throws SQLException {
+        var listOfAvailableBoards = SudokuBoardDaoFactory
+                .getJdbcDao("loader",url).getAllBoardsInDataBase();
+
+        for(int i = 0; i< listOfAvailableBoards.size(); i++) {
+            LevelLoader.getItems().add(listOfAvailableBoards.get(i));
+        }
+        LevelLoader.setOnAction((event) -> {
+            String selectedItem = LevelLoader.getSelectionModel().getSelectedItem().toString();
+            try {
+                var jdbcDao = SudokuBoardDaoFactory.getJdbcDao(selectedItem, url);
+                board = jdbcDao.read();
+            } catch (Exception e) {
+
+            }
+        });
 
     }
 }

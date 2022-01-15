@@ -79,6 +79,7 @@ public class MainMenu implements Initializable {
 
     private void nullBundleSecure() {
         if (bundle == null) {
+            Locale.setDefault(new Locale("eng", "ENG"));
             this.bundle = ResourceBundle.getBundle("bundle", new Locale("eng", "ENG"));
         }
     }
