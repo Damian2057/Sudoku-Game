@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.FieldVerify;
 import sudoku.SudokuBoard;
-import sudoku.factories.FileSudokuBoardDao;
 import sudoku.level.Level;
 
 
