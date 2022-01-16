@@ -60,6 +60,8 @@ public class Game implements Initializable {
     private ResourceBundle bundle;
     public static final String databaseURL
             = "jdbc:derby:SudokuBase";
+    private JavaBeanIntegerPropertyBuilder builder =
+            JavaBeanIntegerPropertyBuilder.create();
 
     public void startGame(Level level, ResourceBundle bundle) throws NoSuchMethodException {
         initBoard(level);
@@ -79,8 +81,6 @@ public class Game implements Initializable {
             for (int j = 0; j < 9; j++) {
                 TextField textField = new TextField();
 
-                    JavaBeanIntegerPropertyBuilder builder =
-                            JavaBeanIntegerPropertyBuilder.create();
                     JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
                             .name("FieldValue").build();
                     StringConverter<Number> converter = new NumberStringConverter();
@@ -135,7 +135,6 @@ public class Game implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    sudokuBoardActual.set(i,j,Integer.parseInt(textField.getText()));
                     fieldVerification(textField);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -201,7 +200,7 @@ public class Game implements Initializable {
             Parent root = loader.load();
             LoadScene load = loader.getController();
 
-            load.send(bundle, sudokuBoardActual, game, databaseURL);
+            load.send(bundle, sudokuBoardActual, game, databaseURL, builder);
             loadGame = new Stage();
             loadGame.setScene(new Scene(root));
             loadGame.setAlwaysOnTop(true);
@@ -333,11 +332,13 @@ public class Game implements Initializable {
         game = gameStage;
     }
 
-    public void sendB(Stage gameStage, SudokuBoard board, ResourceBundle bundle)
+    public void sendB(Stage gameStage, SudokuBoard board, ResourceBundle bundle,
+                      JavaBeanIntegerPropertyBuilder builder)
             throws NoSuchMethodException {
         this.game = gameStage;
         this.sudokuBoardActual = board.clone();
         this.bundle = bundle;
+        this.builder = builder;
         putValues(sudokuBoardActual);
         setNames(bundle);
     }

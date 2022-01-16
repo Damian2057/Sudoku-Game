@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.beans.property.adapter.JavaBeanIntegerPropertyBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ public class LoadScene implements Initializable {
     private ResourceBundle bundle;
     private Stage stageGameCopy;
     private String url;
+    private JavaBeanIntegerPropertyBuilder builder;
 
     public void applyLoad(ActionEvent actionEvent) throws IOException, NoSuchMethodException {
         reloadGame();
@@ -40,12 +42,14 @@ public class LoadScene implements Initializable {
         stage.close();
     }
 
-    public void send(ResourceBundle bundle, SudokuBoard board, Stage stage, String url)
+    public void send(ResourceBundle bundle, SudokuBoard board, Stage stage, String url,
+                     JavaBeanIntegerPropertyBuilder builder)
             throws SQLException {
         this.board = board;
         this.bundle = bundle;
         this.stageGameCopy = stage;
         this.url = url;
+        this.builder = builder;
         setNames();
         loadBoards();
     }
@@ -68,7 +72,7 @@ public class LoadScene implements Initializable {
         Stage stage2 = new Stage();
         stage2.setScene(new Scene(root,525,650));
         Game game = loader.getController();
-        game.sendB(stage2, board, bundle);
+        game.sendB(stage2, board, bundle, builder);
         stage2.setResizable(false);
         stage2.setTitle("SudokuMenu");
         stage2.show();
