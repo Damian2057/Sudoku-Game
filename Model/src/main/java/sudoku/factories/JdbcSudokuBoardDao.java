@@ -24,8 +24,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     private static String dataBaseUrl;
     private String boardName;
 
-    private static Connection conn;
-    private static Statement stmt;
+    private Connection conn;
+    private Statement stmt;
 
     public JdbcSudokuBoardDao(String boardName, String dataBaseUrl) throws SQLException {
         this.boardName = boardName;
@@ -33,12 +33,13 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         createDatabase();
     }
 
-    private void createDatabase() throws SQLException {
+    public void createDatabase() throws SQLException {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         try {
             logger.info("Database creation attempt");
             conn = DriverManager.getConnection(dataBaseUrl);
             stmt = conn.createStatement();
+
 
             String sql1 = "CREATE TABLE SudokuBoards"
                     + "("
@@ -67,6 +68,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     }
 
     private void createConnection() throws SQLException {
+
         conn = DriverManager.getConnection(dataBaseUrl);
         stmt = conn.createStatement();
     }
@@ -164,14 +166,14 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     public void write(SudokuBoard obj) {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.debug("Database write attempt");
-
         try {
-            conn = DriverManager.getConnection(dataBaseUrl);
+            Connection conn = DriverManager.getConnection(dataBaseUrl);
             stmt = conn.createStatement();
             conn.setAutoCommit(false);
             int boardId = createBoardEntryInDataBase(conn);
-            saveFieldsInDatabase(obj, boardId);
+            saveFieldsInDatabase(obj, boardId, conn);
             conn.commit();
+            conn.setAutoCommit(true);
             logger.debug("Write success");
             disconnectConnection();
 
@@ -179,22 +181,24 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
             logger.error("Database data error");
             throw new SyntaxJdbcDaoException();
         } catch (SQLSyntaxErrorException e) {
+            e.printStackTrace();
             logger.error("Database syntax error");
             throw new SyntaxJdbcDaoException();
         } catch (SQLException e) {
+            e.printStackTrace();
             logger.error("Cannot save board to database");
             throw new WrittingJdbcDaoException();
         }
     }
 
-    private void saveFieldsInDatabase(SudokuBoard obj, int boardId) throws SQLException {
+    private void saveFieldsInDatabase(SudokuBoard obj, int boardId, Connection connection) throws SQLException {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Database save fields attempt");
-        try {
-            var createFieldStatement =
-                    conn.prepareStatement("INSERT INTO"
-                            + "SudokuFields(ID,col_index, row_index,value, editable)"
-                            + "VALUES(?,?, ?, ?, ?)");
+        String sql = "INSERT INTO "
+                + "SudokuFields "
+                + "VALUES (?,?,?,?,?)";
+        try (var createFieldStatement =
+                     connection.prepareStatement(sql)) {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     createFieldStatement.setInt(1, boardId);
@@ -206,7 +210,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                 }
             }
         } catch (Exception e) {
-            conn.rollback();
+            connection.rollback();
             throw e;
         }
     }
@@ -243,7 +247,6 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
     public List<String> getAllBoardsInDataBase() throws SQLException {
         createConnection();
-
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         String sql = "SELECT name FROM SudokuBoards";
         var savedBoards = new ArrayList<String>();

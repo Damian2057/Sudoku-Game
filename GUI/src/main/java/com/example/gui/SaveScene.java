@@ -29,7 +29,6 @@ public class SaveScene implements Initializable {
     public void onSaveBoard(ActionEvent actionEvent) {
         if (saveTextField.getText() != ""  && saveTextField.getText() != " ") {
             org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-
             try (var JDBCdao =
                          SudokuBoardDaoFactory.getJdbcDao(saveTextField.getText(), url)) {
                 JDBCdao.write(board);

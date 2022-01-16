@@ -6,5 +6,6 @@ target/
 logs
 logs/
 saves/
-baza_sudoku/
-derby.log
+derby.log/
+SudokuBase/
+config.txt/

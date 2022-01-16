@@ -59,7 +59,7 @@ public class Game implements Initializable {
     public static SudokuBoard sudokuBoardStart;
     private ResourceBundle bundle;
     public static final String databaseURL
-            = "jdbc:derby:baza_sudoku;create=true";
+            = "jdbc:derby:SudokuBase";
 
     public void startGame(Level level, ResourceBundle bundle) throws NoSuchMethodException {
         initBoard(level);
