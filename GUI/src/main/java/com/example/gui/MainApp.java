@@ -1,14 +1,12 @@
 package com.example.gui;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
-import sudoku.BacktrackingSudokuSolver;
-import sudoku.SudokuBoard;
 import sudoku.factories.SudokuBoardDaoFactory;
-import java.io.File;
 
 
 public class MainApp extends Application {
@@ -18,12 +16,13 @@ public class MainApp extends Application {
     public void start(Stage stage) {
         try {
             File f = new File("@../../config.txt");
-            if(!f.exists() && !f.isDirectory()) {
+            if (!f.exists() && !f.isDirectory()) {
                 File myObj = new File("config.txt");
                 myObj.createNewFile();
-                var JDBCdao =
-                        SudokuBoardDaoFactory.getJdbcDao("create", "jdbc:derby:SudokuBase;create=true");
-                JDBCdao.close();
+                var jdbcDao =
+                        SudokuBoardDaoFactory.getJdbcDao("create",
+                                "jdbc:derby:SudokuBase;create=true");
+                jdbcDao.close();
             }
 
 

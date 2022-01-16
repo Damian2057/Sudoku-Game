@@ -191,7 +191,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         }
     }
 
-    private void saveFieldsInDatabase(SudokuBoard obj, int boardId, Connection connection) throws SQLException {
+    private void saveFieldsInDatabase(SudokuBoard obj, int boardId, Connection connection)
+            throws SQLException {
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Database save fields attempt");
         String sql = "INSERT INTO "

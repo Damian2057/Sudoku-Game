@@ -8,4 +8,5 @@ logs/
 saves/
 derby.log/
 SudokuBase/
-config.txt/
+config.txt
+testowa_baza/
