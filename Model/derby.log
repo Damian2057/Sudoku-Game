@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Jan 16 13:42:52 CET 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017e-62e9-6cce-000012619b88 
+Sun Jan 16 20:32:27 CET 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017e-6460-68b8-00001222bfb0 
 on database directory C:\Users\Damian\Desktop\prace\II ROK\III SEM\KOMPO\SudokuGame\Model\testowa_baza with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@266474c2 
 Loaded from file:/C:/Users/Damian/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Oracle Corporation

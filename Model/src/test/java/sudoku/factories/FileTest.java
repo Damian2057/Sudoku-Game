@@ -3,7 +3,12 @@ package sudoku.factories;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
+import sudoku.SudokuField;
+import sudoku.exceptions.dao.FileNotFoundDaoException;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,6 +30,11 @@ public class FileTest {
             sudoku2 = (SudokuBoard) file.read();
 
             assertEquals(sudoku, sudoku2);
+
+            var factory2 = SudokuBoardDaoFactory.getFileDao("test.txt");
+            File myObj = new File("test.txt");
+            myObj.delete();
+            assertThrows(FileNotFoundDaoException.class, ()->factory2.read());
 
         } catch (Exception e) {
             e.printStackTrace();

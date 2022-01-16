@@ -17,7 +17,6 @@ import sudoku.exceptions.jdbc.JdbcDaoException;
 import sudoku.exceptions.jdbc.SyntaxJdbcDaoException;
 import sudoku.exceptions.jdbc.WrittingJdbcDaoException;
 import sudoku.exceptions.jdbc.WrongNameJdbcException;
-import sudoku.exceptions.model.LevelLogicalException;
 
 
 public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
@@ -43,7 +42,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
             String sql1 = "CREATE TABLE SudokuBoards"
                     + "("
-                    + "id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                    + "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+                    + "(START WITH 1, INCREMENT BY 1),"
                     + "name VARCHAR(40) NOT NULL,"
                     + "PRIMARY KEY (id)"
                     + ")";
@@ -216,7 +216,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         }
     }
 
-    int boolToInt(Boolean b) {
+    private int boolToInt(Boolean b) {
         return b.compareTo(false);
     }
 
@@ -237,12 +237,13 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                     logger.debug("Created {} Entry with id: {}", boardName, boardID);
                     return boardID;
                 } else {
-                    throw new LevelLogicalException();
+                    throw new SyntaxJdbcDaoException();
                 }
             }
         } catch (Exception e) {
             connection.rollback();
-            throw e;
+            logger.error("error eccured");
+            throw new SyntaxJdbcDaoException();
         }
     }
 

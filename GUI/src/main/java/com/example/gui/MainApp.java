@@ -21,7 +21,7 @@ public class MainApp extends Application {
                 myObj.createNewFile();
                 var jdbcDao =
                         SudokuBoardDaoFactory.getJdbcDao("create",
-                                "jdbc:derby:SudokuBase;create=true");
+                                    "jdbc:derby:SudokuBase;create=true");
                 jdbcDao.close();
             }
 

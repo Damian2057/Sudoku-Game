@@ -3,7 +3,9 @@ package sudoku.factories;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
+import sudoku.SudokuField;
 import sudoku.exceptions.jdbc.SyntaxJdbcDaoException;
+import sudoku.exceptions.jdbc.WrittingJdbcDaoException;
 import sudoku.exceptions.jdbc.WrongNameJdbcException;
 
 import java.sql.SQLException;
@@ -21,9 +23,22 @@ class JdbcSudokuBoardDaoTest {
             var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true");
             assertDoesNotThrow( ()->file.write(sudoku1));
             sudoku2 = file.read();
-
+            sudoku2.set(1,1,9);
+            sudoku2.set(1,2,9);
             assertNotEquals(sudoku1, sudoku2);
+
+            SudokuBoard sudoku3 = new SudokuBoard(new BacktrackingSudokuSolver());
+            var file2 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");
+            assertThrows(SyntaxJdbcDaoException.class, ()->file2.write(sudoku3));
+            var file3 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");
+            var file4 = SudokuBoardDaoFactory.getJdbcDao("null", "jdbc:derby:testowa_baza;create=true");
+            SudokuBoard d = file4.read();
+            assertDoesNotThrow( ()->file4.read());
+            assertDoesNotThrow(()->file3.close());
+
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -37,7 +52,7 @@ class JdbcSudokuBoardDaoTest {
             var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true");
 
             assertDoesNotThrow(()->file.getAllBoardsInDataBase());
-
+            SudokuField ss = new SudokuField();
         } catch (SQLException e) {
             e.printStackTrace();
         }

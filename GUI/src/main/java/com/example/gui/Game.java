@@ -339,6 +339,7 @@ public class Game implements Initializable {
         this.sudokuBoardActual = board.clone();
         this.bundle = bundle;
         putValues(sudokuBoardActual);
+        setNames(bundle);
     }
 
     private void initNewGame() {
