@@ -127,6 +127,8 @@ public class Settings implements Initializable  {
         stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("SudokuMenu");
+        Image image = new Image("/img/icon.png");
+        stage.getIcons().add(image);
         stage.show();
     }
 }

@@ -23,6 +23,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -131,6 +132,8 @@ public class Game implements Initializable {
         textField.setMaxSize(1000,100);
         textField.setAlignment(Pos.CENTER);
         plansza.add(textField, i, j);
+        plansza.setVgap(6);
+        plansza.setHgap(6);
 
         textField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -291,6 +294,7 @@ public class Game implements Initializable {
             stageWin.setTitle("Win");
             Image image = new Image("/img/icon.png");
             stageWin.getIcons().add(image);
+            stageWin.setResizable(false);
             stageWin.show();
             setDisable(true);
             stageWin.setOnHidden(we -> {
@@ -314,7 +318,8 @@ public class Game implements Initializable {
             lostWindow.send(bundle);
             stageLost = new Stage();
             stageLost.setScene(new Scene(root));
-            stageLost.setTitle("Last");
+            stageLost.setTitle("Lost");
+            stageLost.setResizable(false);
             stageLost.setAlwaysOnTop(true);
             Image image = new Image("/img/icon.png");
             stageLost.getIcons().add(image);

@@ -26,7 +26,7 @@
             <Font name="System Bold" size="18.0" />
          </font></Label>
       <Button fx:id="closeButton" layoutX="7.0" layoutY="592.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="37.0" prefWidth="62.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="EXIT" />
-      <GridPane fx:id="plansza" layoutX="23.0" layoutY="136.0" prefHeight="442.0" prefWidth="474.0">
+      <GridPane fx:id="plansza" hgap="6.0" layoutX="23.0" layoutY="136.0" prefHeight="442.0" prefWidth="474.0" vgap="6.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
