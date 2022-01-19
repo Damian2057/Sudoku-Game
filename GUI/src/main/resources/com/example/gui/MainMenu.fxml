@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="500.0" styleClass="bodybg" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.MainMenu">
+<AnchorPane prefHeight="530.0" prefWidth="493.0" styleClass="bodybg" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.MainMenu">
    <children>
       <Button id="startButton" fx:id="startButton" layoutX="139.0" layoutY="389.0" mnemonicParsing="false" onAction="#gameStart" prefHeight="67.0" prefWidth="225.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="Start">
          <font>
@@ -16,10 +16,10 @@
          </font></Button>
       <MenuButton id="levelBar" fx:id="levelBar" layoutX="174.0" layoutY="209.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="155.0" stylesheets="@../../../img/style.css" text="Select Level">
         <items>
-          <MenuItem mnemonicParsing="false"  fx:id="veryEasy" onAction="#veryEasy" text="Very Easy" />
-            <MenuItem mnemonicParsing="false" fx:id="menuEasy" onAction="#easy" text="Easy" />
-            <MenuItem mnemonicParsing="false" fx:id="menuMedium" onAction="#medium" text="Medium" />
-            <MenuItem mnemonicParsing="false" fx:id="menuHard" onAction="#hard" text="Hard" />
+          <MenuItem fx:id="veryEasy" mnemonicParsing="false" onAction="#veryEasy" text="Very Easy" />
+            <MenuItem fx:id="menuEasy" mnemonicParsing="false" onAction="#easy" text="Easy" />
+            <MenuItem fx:id="menuMedium" mnemonicParsing="false" onAction="#medium" text="Medium" />
+            <MenuItem fx:id="menuHard" mnemonicParsing="false" onAction="#hard" text="Hard" />
         </items>
          <styleClass>
             <String fx:value="context-menu" />
