@@ -1,5 +1,6 @@
 package com.example.gui;
 
+import javafx.scene.image.Image;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -52,6 +53,8 @@ public class MainMenu implements Initializable {
                 .getResource("MainMenu.fxml")));
         Scene scene = new Scene(root,500,530);
         menuStage.setScene(scene);
+        Image image = new Image("/img/icon.png");
+        menuStage.getIcons().add(image);
         menuStage.show();
     }
 
@@ -72,6 +75,8 @@ public class MainMenu implements Initializable {
         gameStage.setResizable(false);
         gameStage.setTitle("SudokuGame");
         game.send(gameStage);
+        Image image = new Image("/img/icon.png");
+        gameStage.getIcons().add(image);
         gameStage.show();
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.debug("Starting Game with Level set to " + level.toString());

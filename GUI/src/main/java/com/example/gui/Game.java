@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -81,9 +82,9 @@ public class Game implements Initializable {
             for (int j = 0; j < 9; j++) {
                 TextField textField = new TextField();
 
-                    JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
-                            .name("FieldValue").build();
-                    StringConverter<Number> converter = new NumberStringConverter();
+                JavaBeanIntegerProperty test =  builder.bean(board.getSudokuField(i,j))
+                        .name("FieldValue").build();
+                StringConverter<Number> converter = new NumberStringConverter();
 
                 textField.setTextFormatter(new TextFormatter<>(c -> {
                     if (c.isContentChange()) {
@@ -105,7 +106,7 @@ public class Game implements Initializable {
                     }
                     return c;
                 }));
-                    Bindings.bindBidirectional(textField.textProperty(), test, converter);
+                Bindings.bindBidirectional(textField.textProperty(), test, converter);
 
                 if (board.getSudokuField(i, j).isEditable()) {
                     fullTextField(textField,board,i,j);
@@ -136,6 +137,7 @@ public class Game implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     fieldVerification(textField);
+                    sudokuBoardActual.set(i,j,Integer.parseInt(textField.getText()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -205,7 +207,10 @@ public class Game implements Initializable {
             loadGame.setScene(new Scene(root));
             loadGame.setAlwaysOnTop(true);
             loadGame.setTitle("Load");
+            Image image = new Image("/img/icon.png");
+            loadGame.getIcons().add(image);
             loadGame.show();
+            loadGame.setResizable(false);
             setDisable(true);
 
             loadGame.setOnHidden(windowEvent -> {
@@ -232,6 +237,9 @@ public class Game implements Initializable {
             saveGame.setScene(new Scene(root));
             saveGame.setAlwaysOnTop(true);
             saveGame.setTitle("save");
+            saveGame.setResizable(false);
+            Image image = new Image("/img/icon.png");
+            saveGame.getIcons().add(image);
             saveGame.show();
             setDisable(true);
 
@@ -281,6 +289,8 @@ public class Game implements Initializable {
             stageWin.setScene(new Scene(root));
             stageWin.setAlwaysOnTop(true);
             stageWin.setTitle("Win");
+            Image image = new Image("/img/icon.png");
+            stageWin.getIcons().add(image);
             stageWin.show();
             setDisable(true);
             stageWin.setOnHidden(we -> {
@@ -306,6 +316,8 @@ public class Game implements Initializable {
             stageLost.setScene(new Scene(root));
             stageLost.setTitle("Last");
             stageLost.setAlwaysOnTop(true);
+            Image image = new Image("/img/icon.png");
+            stageLost.getIcons().add(image);
             stageLost.show();
             setDisable(true);
             stageLost.setOnHidden(we -> {

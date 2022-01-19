@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,8 @@ public class Settings implements Initializable  {
         Stage stage = new Stage();
         stage.setTitle("Settings");
         stage.setScene(scene);
+        Image image = new Image("/img/icon.png");
+        stage.getIcons().add(image);
         stage.show();
     }
 
@@ -55,6 +58,8 @@ public class Settings implements Initializable  {
         checkNull();
         menu.send(bundle);
         stage.setTitle("SudokuMenu");
+        Image image = new Image("/img/icon.png");
+        stage.getIcons().add(image);
         stage.show();
 
 

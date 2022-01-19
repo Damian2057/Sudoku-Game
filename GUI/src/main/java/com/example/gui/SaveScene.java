@@ -39,6 +39,8 @@ public class SaveScene implements Initializable {
 
             Stage stage = (Stage) saveSaveButton.getScene().getWindow();
             stage.close();
+        } else {
+            saveTextField.getStyleClass().set(1,"textbad");
         }
     }
 
@@ -56,6 +58,13 @@ public class SaveScene implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
+    public void textType(ActionEvent inputMethodEvent) {
+        if (saveTextField.getText() != ""  && saveTextField.getText() != " ") {
+            saveTextField.getStyleClass().set(1,"textgood");
+        } else {
+            saveTextField.getStyleClass().set(1,"textbad");
+        }
     }
 }

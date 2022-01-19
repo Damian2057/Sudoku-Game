@@ -97,3 +97,19 @@
     -fx-background-size: cover;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);
 }
+
+.textgood {
+    -fx-control-inner-background: #a0d585;
+}
+
+.textbad {
+    -fx-control-inner-background: #c46868;
+}
+
+.combo-box-popup {
+    -fx-color:black;
+    -fx-padding:4px;
+    -fx-background-color:#ff9b0f;
+    -fx-background-radius: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}

@@ -12,13 +12,19 @@
 
 <AnchorPane prefHeight="635.0" prefWidth="521.0" styleClass="bodybg" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Game">
    <children>
-      <Label alignment="CENTER" layoutX="145.0" layoutY="-2.0" prefHeight="78.0" prefWidth="232.0" styleClass="name">
+      <Label alignment="CENTER" layoutX="133.0" layoutY="14.0" prefHeight="78.0" prefWidth="232.0" styleClass="name">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="levell" layoutX="198.0" layoutY="78.0" prefHeight="27.0" prefWidth="62.0" text="Poziom" />
-      <Label fx:id="gameLevel" layoutX="254.0" layoutY="78.0" prefHeight="27.0" prefWidth="84.0" text="text" />
+      <Label fx:id="levell" layoutX="420.0" layoutY="23.0" prefHeight="27.0" prefWidth="62.0" text="Poziom">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Label fx:id="gameLevel" alignment="CENTER" contentDisplay="CENTER" layoutX="377.0" layoutY="50.0" prefHeight="27.0" prefWidth="137.0" text="text" textAlignment="CENTER" textFill="#ffbc2b">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
       <Button fx:id="closeButton" layoutX="7.0" layoutY="592.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="37.0" prefWidth="62.0" styleClass="allbtn" stylesheets="@../../../img/style.css" text="EXIT" />
       <GridPane fx:id="plansza" layoutX="23.0" layoutY="136.0" prefHeight="442.0" prefWidth="474.0">
         <columnConstraints>

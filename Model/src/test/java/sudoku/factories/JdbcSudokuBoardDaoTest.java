@@ -8,6 +8,7 @@ import sudoku.exceptions.jdbc.SyntaxJdbcDaoException;
 import sudoku.exceptions.jdbc.WrittingJdbcDaoException;
 import sudoku.exceptions.jdbc.WrongNameJdbcException;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,9 +24,10 @@ class JdbcSudokuBoardDaoTest {
             var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true");
             assertDoesNotThrow( ()->file.write(sudoku1));
             sudoku2 = file.read();
+            assertNotSame(sudoku1,sudoku2);
             sudoku2.set(1,1,9);
             sudoku2.set(1,2,9);
-            assertNotEquals(sudoku1, sudoku2);
+            assertNotEquals(sudoku1, sudoku2); //assertsame
 
             SudokuBoard sudoku3 = new SudokuBoard(new BacktrackingSudokuSolver());
             var file2 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");

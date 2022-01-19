@@ -4,11 +4,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="281.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.SaveScene">
+<AnchorPane prefHeight="281.0" prefWidth="290.0" styleClass="bodybg" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.SaveScene">
    <children>
-      <TextField fx:id="saveTextField" layoutX="70.0" layoutY="58.0" />
-      <Button fx:id="cancelButton" layoutX="71.0" layoutY="147.0" mnemonicParsing="false" onAction="#onCancelBoard" prefHeight="63.0" prefWidth="58.0" text="Button" />
-      <Button fx:id="saveSaveButton" layoutX="162.0" layoutY="147.0" mnemonicParsing="false" onAction="#onSaveBoard" prefHeight="63.0" prefWidth="58.0" text="Button" />
+      <TextField fx:id="saveTextField" layoutX="70.0" layoutY="58.0" onAction="#textType" />
+      <Button fx:id="cancelButton" layoutX="71.0" layoutY="147.0" mnemonicParsing="false" onAction="#onCancelBoard" prefHeight="63.0" prefWidth="58.0" styleClass="allbtn" text="Button" />
+      <Button fx:id="saveSaveButton" layoutX="162.0" layoutY="147.0" mnemonicParsing="false" onAction="#onSaveBoard" prefHeight="63.0" prefWidth="58.0" styleClass="allbtn" text="Button" />
    </children>
 </AnchorPane>
