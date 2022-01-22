@@ -29,6 +29,9 @@ public class Settings implements Initializable  {
     public Text a1;
     public Text a2;
     public Button exit;
+    public Text r2;
+    public Text r1;
+    public Text r3;
 
     private Locale locale;
     private ResourceBundle bundle;
@@ -85,6 +88,9 @@ public class Settings implements Initializable  {
         exit.setText(bundle.getString("exit"));
         apply.setText(bundle.getString("apply"));
         settingstext.setText(bundle.getString("settings"));
+        r1.setText(bundle.getString("r1"));
+        r2.setText(bundle.getString("r2"));
+        r3.setText(bundle.getString("r3"));
 
     }
 
@@ -108,6 +114,7 @@ public class Settings implements Initializable  {
         authors.textProperty().set((String) list.getContents()[0][1]);
         a1.textProperty().set((String) list.getContents()[1][1]);
         a2.textProperty().set((String) list.getContents()[2][1]);
+
         langButton.setText("Polski");
         setNames(locale);
         org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
