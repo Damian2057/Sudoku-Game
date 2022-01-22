@@ -363,9 +363,9 @@ public class SudokuBoardTest {
         SudokuBoard sudokuA = new SudokuBoard(s);
         sudokuA.solveGame();
         assertTrue(sudokuA.checkvalid());
-        sudokuA.set(0,0,5);
-        sudokuA.set(0,1,5);
-        sudokuA.set(0,2,5);
+        sudokuA.set(0,0,9);
+        sudokuA.set(0,1,9);
+        sudokuA.set(0,2,9);
         assertFalse(sudokuA.checkvalid());
 
     }
