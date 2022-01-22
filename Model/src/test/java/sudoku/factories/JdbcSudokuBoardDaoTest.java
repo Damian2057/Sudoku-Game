@@ -1,5 +1,7 @@
 package sudoku.factories;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.derby.iapi.services.io.FileUtil;
 import org.junit.jupiter.api.Test;
 import sudoku.BacktrackingSudokuSolver;
 import sudoku.SudokuBoard;
@@ -49,15 +51,17 @@ class JdbcSudokuBoardDaoTest {
 
     @Test
     void supertestTest() {
-        try {
+        try (var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true")){
             SudokuBoard sudoku1 = new SudokuBoard(new BacktrackingSudokuSolver());
             sudoku1.solveGame();
             SudokuBoard sudoku2 = new SudokuBoard(new BacktrackingSudokuSolver());
-            var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true");
+
 
             assertDoesNotThrow(()->file.getAllBoardsInDataBase());
             SudokuField ss = new SudokuField();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

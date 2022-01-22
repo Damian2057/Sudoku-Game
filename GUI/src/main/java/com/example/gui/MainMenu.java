@@ -1,6 +1,6 @@
 package com.example.gui;
 
-import javafx.scene.image.Image;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
