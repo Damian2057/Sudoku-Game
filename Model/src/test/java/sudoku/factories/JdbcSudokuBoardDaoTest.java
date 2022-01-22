@@ -17,11 +17,14 @@ class JdbcSudokuBoardDaoTest {
 
     @Test
     void readTest() {
-        try {
+        try (var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true");
+             var file2 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");
+             var file3 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");
+             var file4 = SudokuBoardDaoFactory.getJdbcDao("null", "jdbc:derby:testowa_baza;create=true")) {
             SudokuBoard sudoku1 = new SudokuBoard(new BacktrackingSudokuSolver());
             sudoku1.solveGame();
             SudokuBoard sudoku2 = new SudokuBoard(new BacktrackingSudokuSolver());
-            var file = SudokuBoardDaoFactory.getJdbcDao("test", "jdbc:derby:testowa_baza;create=true");
+
             assertDoesNotThrow( ()->file.write(sudoku1));
             sudoku2 = file.read();
             assertNotSame(sudoku1,sudoku2);
@@ -30,10 +33,9 @@ class JdbcSudokuBoardDaoTest {
             assertNotEquals(sudoku1, sudoku2); //assertsame
 
             SudokuBoard sudoku3 = new SudokuBoard(new BacktrackingSudokuSolver());
-            var file2 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");
+
             assertThrows(SyntaxJdbcDaoException.class, ()->file2.write(sudoku3));
-            var file3 = SudokuBoardDaoFactory.getJdbcDao(null, "jdbc:derby:testowa_baza;create=true");
-            var file4 = SudokuBoardDaoFactory.getJdbcDao("null", "jdbc:derby:testowa_baza;create=true");
+
             SudokuBoard d = file4.read();
             assertDoesNotThrow( ()->file4.read());
             assertDoesNotThrow(()->file3.close());
