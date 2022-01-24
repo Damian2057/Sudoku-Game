@@ -2,7 +2,6 @@ package com.example.gui;
 
 import java.io.File;
 import java.util.Locale;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;

@@ -139,6 +139,9 @@ public class Game implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
+                    if (textField.getText().isEmpty()) {
+                       return;
+                    }
                     fieldVerification(textField);
                     sudokuBoardActual.set(i,j,fieldVerification(textField));
                 } catch (IOException e) {

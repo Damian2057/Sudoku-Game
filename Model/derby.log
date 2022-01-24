@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Sat Jan 22 13:33:23 CET 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017e-81c6-e90d-00000cb71a10 
-on database directory E:\POLITECHNIKA\Semestr_3\SudokuProjekt\Model\testowa_baza with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@266474c2 
-Loaded from file:/C:/Users/mateu/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
+Mon Jan 24 10:23:32 CET 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017e-8b65-cecb-000013035770 
+on database directory C:\Users\Damian\Desktop\prace\II ROK\III SEM\KOMPO\SudokuGame\Model\testowa_baza with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@266474c2 
+Loaded from file:/C:/Users/Damian/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=17+35-LTS-2724
-user.dir=E:\POLITECHNIKA\Semestr_3\SudokuProjekt\Model
+user.dir=C:\Users\Damian\Desktop\prace\II ROK\III SEM\KOMPO\SudokuGame\Model
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

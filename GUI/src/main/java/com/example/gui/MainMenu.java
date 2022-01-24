@@ -33,9 +33,9 @@ public class MainMenu implements Initializable {
     public Pane setPane = new Pane();
     public Button startButton = new Button();
     public MenuItem veryEasy = new MenuItem();
-    public MenuItem menuEasy= new MenuItem();
-    public MenuItem menuMedium= new MenuItem();
-    public MenuItem menuHard= new MenuItem();
+    public MenuItem menuEasy = new MenuItem();
+    public MenuItem menuMedium = new MenuItem();
+    public MenuItem menuHard = new MenuItem();
     private Level level;
     private ResourceBundle bundle;
 
