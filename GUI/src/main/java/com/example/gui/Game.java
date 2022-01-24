@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.JavaBeanIntegerProperty;
@@ -139,7 +140,7 @@ public class Game implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     fieldVerification(textField);
-                    sudokuBoardActual.set(i,j,Integer.parseInt(textField.getText()));
+                    sudokuBoardActual.set(i,j,fieldVerification(textField));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -185,6 +186,7 @@ public class Game implements Initializable {
         stage.close();
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Aplication close");
+        System.exit(0);
     }
 
     public void checkBoard(ActionEvent actionEvent) throws IOException, NoSuchMethodException {
@@ -365,6 +367,8 @@ public class Game implements Initializable {
         game.close();
         MainMenu m = new MainMenu();
         try {
+            ResourceBundle localBundle = ResourceBundle.getBundle("bundle", Locale.getDefault());
+            m.setNames(localBundle);
             m.menuShow();
         } catch (IOException e) {
             e.printStackTrace();

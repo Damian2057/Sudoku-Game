@@ -30,23 +30,22 @@ import sudoku.level.VeryEasy;
 public class MainMenu implements Initializable {
 
     @FXML
-    public Pane setPane;
-    public Button startButton;
-    public MenuItem veryEasy;
-    public MenuItem menuEasy;
-    public MenuItem menuMedium;
-    public MenuItem menuHard;
+    public Pane setPane = new Pane();
+    public Button startButton = new Button();
+    public MenuItem veryEasy = new MenuItem();
+    public MenuItem menuEasy= new MenuItem();
+    public MenuItem menuMedium= new MenuItem();
+    public MenuItem menuHard= new MenuItem();
     private Level level;
     private ResourceBundle bundle;
 
     @FXML
-    public MenuButton levelBar;
+    public MenuButton levelBar = new MenuButton();
 
     private static Stage gameStage;
     private static Stage menuStage;
 
     public void menuShow() throws IOException {
-
         menuStage = new Stage();
         menuStage.setResizable(false);
         menuStage.setTitle("SudokuMenu");
@@ -104,7 +103,7 @@ public class MainMenu implements Initializable {
 
     public void medium(ActionEvent actionEvent) throws IOException {
         level = new Medium();
-        nullBundleSecure();
+          nullBundleSecure();
         levelBar.setText(bundle.getString("medium"));
     }
 
@@ -133,7 +132,7 @@ public class MainMenu implements Initializable {
         setNames(bundle);
     }
 
-    private void setNames(ResourceBundle bundle) {
+    public void setNames(ResourceBundle bundle) {
         startButton.setText(bundle.getString("start"));
         levelBar.setText(bundle.getString("select"));
         veryEasy.setText(bundle.getString("veryeasy"));

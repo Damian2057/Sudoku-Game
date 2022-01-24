@@ -1,6 +1,8 @@
 package com.example.gui;
 
 import java.io.File;
+import java.util.Locale;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +17,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            Locale.setDefault(new Locale("eng", "ENG"));
             File f = new File("@../../config.txt");
             if (!f.exists() && !f.isDirectory()) {
                 File myObj = new File("config.txt");
