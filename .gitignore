@@ -6,7 +6,7 @@ target/
 logs
 logs/
 saves/
-derby.log/
+derby.log
 SudokuBase/
 config.txt
 testowa_baza/

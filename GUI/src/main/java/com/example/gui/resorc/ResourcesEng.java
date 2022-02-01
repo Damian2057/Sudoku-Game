@@ -5,8 +5,8 @@ public class ResourcesEng extends java.util.ListResourceBundle {
     public Object[][] getContents() {
         return new Object[][] {
                 {"header", "Authors:"},
-                {"a1", "Damian Biskupski"},
-                {"a2", "Mateusz Dangreaux"},
+                {"a1", "Damian"},
+                {"a2", "Mateusz"},
         };
     }
 }
